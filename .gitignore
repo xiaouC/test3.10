@@ -1,1 +1,7 @@
 *.swp
+*.pyc
+
+xcuserdata
+userconf.ini
+runtime/mac/
+frameworks/runtime-src/proj.ios_mac/rainbow.xcodeproj/project.xcworkspace/

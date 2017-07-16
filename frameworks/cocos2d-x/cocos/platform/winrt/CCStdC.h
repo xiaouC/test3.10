@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 
 #include "platform/CCPlatformMacros.h"
-#include <float.h>
+//#include <float.h>
 #include <BaseTsd.h>
 
 #ifndef __SSIZE_T

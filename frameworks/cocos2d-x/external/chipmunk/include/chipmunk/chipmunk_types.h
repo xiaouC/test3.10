@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <float.h>
+//#include <float.h>
 
 #ifdef __APPLE__
    #include "TargetConditionals.h"

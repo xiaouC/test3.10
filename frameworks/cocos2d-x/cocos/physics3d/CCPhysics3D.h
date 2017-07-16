@@ -25,6 +25,7 @@
 #ifndef __PHYSICS_3D_H__
 #define __PHYSICS_3D_H__
 
+#include <float.h>
 #include "base/ccConfig.h"
 #include "math/CCMath.h"
 

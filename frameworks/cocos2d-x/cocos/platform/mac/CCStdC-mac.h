@@ -30,7 +30,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #include "platform/CCPlatformMacros.h"
-#include <float.h>
+//#include <float.h>
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>

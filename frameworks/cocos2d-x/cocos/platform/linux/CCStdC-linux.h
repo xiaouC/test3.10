@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 
-#include <float.h>
+//#include <float.h>
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>

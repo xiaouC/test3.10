@@ -13,7 +13,7 @@ subject to the following restrictions:
 
 */
 
-#include <float.h>
+//#include <float.h>
 #include <math.h>
 #include "bullet/LinearMath/btScalar.h"
 

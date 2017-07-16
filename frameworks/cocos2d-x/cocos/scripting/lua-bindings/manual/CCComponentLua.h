@@ -22,7 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#pragma once
+#ifndef __LUA_COMPONENT_H_
+#define __LUA_COMPONENT_H_
 
 #include <string>
 #include <unordered_map>
@@ -77,3 +78,4 @@ private:
 
 NS_CC_END
 
+#endif // __LUA_COMPONENT_H_
