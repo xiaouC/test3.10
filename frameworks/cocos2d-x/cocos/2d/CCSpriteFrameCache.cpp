@@ -120,7 +120,7 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
         vertexData[i].vertices = Vec3(vertices[i*2] / scaleFactor,
                                       (spriteSize.height - vertices[i*2+1]) / scaleFactor,
                                       0);
-        vertexData[i].texCoords = Tex2F(verticesUV[i*2] / textureSize.width,
+        vertexData[i].texCoords0 = Tex2F(verticesUV[i*2] / textureSize.width,
                                         verticesUV[i*2+1] / textureSize.height);
     }
 

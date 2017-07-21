@@ -488,14 +488,14 @@ void Sprite::setTextureCoords(Rect rect)
             std::swap(left, right);
         }
 
-        _quad.bl.texCoords.u = left;
-        _quad.bl.texCoords.v = top;
-        _quad.br.texCoords.u = left;
-        _quad.br.texCoords.v = bottom;
-        _quad.tl.texCoords.u = right;
-        _quad.tl.texCoords.v = top;
-        _quad.tr.texCoords.u = right;
-        _quad.tr.texCoords.v = bottom;
+        _quad.bl.texCoords0.u = left;
+        _quad.bl.texCoords0.v = top;
+        _quad.br.texCoords0.u = left;
+        _quad.br.texCoords0.v = bottom;
+        _quad.tl.texCoords0.u = right;
+        _quad.tl.texCoords0.v = top;
+        _quad.tr.texCoords0.u = right;
+        _quad.tr.texCoords0.v = bottom;
     }
     else
     {
@@ -521,14 +521,14 @@ void Sprite::setTextureCoords(Rect rect)
             std::swap(top, bottom);
         }
 
-        _quad.bl.texCoords.u = left;
-        _quad.bl.texCoords.v = bottom;
-        _quad.br.texCoords.u = right;
-        _quad.br.texCoords.v = bottom;
-        _quad.tl.texCoords.u = left;
-        _quad.tl.texCoords.v = top;
-        _quad.tr.texCoords.u = right;
-        _quad.tr.texCoords.v = top;
+        _quad.bl.texCoords0.u = left;
+        _quad.bl.texCoords0.v = bottom;
+        _quad.br.texCoords0.u = right;
+        _quad.br.texCoords0.v = bottom;
+        _quad.tl.texCoords0.u = left;
+        _quad.tl.texCoords0.v = top;
+        _quad.tr.texCoords0.u = right;
+        _quad.tr.texCoords0.v = top;
     }
 }
 

@@ -43,13 +43,11 @@ THE SOFTWARE.
 #include "base/CCNinePatchImageParser.h"
 
 
-
 using namespace std;
 
 NS_CC_BEGIN
 
 // implementation TextureCache
-
 int TextureCache::_texture_row = 0;
 int TextureCache::_texture_col = 0;
 Texture2D* TextureCache::_color_texture = nullptr;

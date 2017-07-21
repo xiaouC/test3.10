@@ -35,6 +35,7 @@
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCTextureCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"

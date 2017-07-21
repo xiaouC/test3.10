@@ -158,8 +158,8 @@ Tex2F ProgressTimer::textureCoordFromAlphaPoint(Vec2 alpha)
         return ret;
     }
     V3F_C4B_T2F_Quad quad = _sprite->getQuad();
-    Vec2 min(quad.bl.texCoords.u,quad.bl.texCoords.v);
-    Vec2 max(quad.tr.texCoords.u,quad.tr.texCoords.v);
+    Vec2 min(quad.bl.texCoords0.u,quad.bl.texCoords0.v);
+    Vec2 max(quad.tr.texCoords0.u,quad.tr.texCoords0.v);
     //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
     if (_sprite->isTextureRectRotated()) {
         std::swap(alpha.x, alpha.y);

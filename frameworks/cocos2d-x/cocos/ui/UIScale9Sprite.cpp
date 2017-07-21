@@ -1341,13 +1341,13 @@ namespace ui {
 
                 if (_spriteFrameRotated)
                 {
-                    vertextData.texCoords.u = uv[j].x;
-                    vertextData.texCoords.v = uv[i].y;
+                    vertextData.texCoords0.u = uv[j].x;
+                    vertextData.texCoords0.v = uv[i].y;
                 }
                 else
                 {
-                    vertextData.texCoords.u = uv[i].x;
-                    vertextData.texCoords.v = uv[j].y;
+                    vertextData.texCoords0.u = uv[i].x;
+                    vertextData.texCoords0.v = uv[j].y;
                 }
 
                 vertextData.colors = color4;

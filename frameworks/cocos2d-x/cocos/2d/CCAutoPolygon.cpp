@@ -635,8 +635,8 @@ void AutoPolygon::calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_
         // for every point, offset with the center point
         float u = (i->vertices.x*_scaleFactor + rect.origin.x) / texWidth;
         float v = (rect.origin.y+rect.size.height - i->vertices.y*_scaleFactor) / texHeight;
-        i->texCoords.u = u;
-        i->texCoords.v = v;
+        i->texCoords0.u = u;
+        i->texCoords0.v = v;
     }
 }
 

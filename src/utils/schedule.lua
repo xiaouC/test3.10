@@ -56,7 +56,7 @@ function unschedule(handler)
     all_circle_handles[handler] = nil
 end
 
-function unscheduleAll()
+function unschedule_all()
     for handler, _ in pairs(all_handlers) do
         scheduler:unscheduleScriptEntry(handler)
     end
