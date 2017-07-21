@@ -737,6 +737,16 @@ protected:
     float _originalFontSize;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
+
+public:
+	virtual void setGLProgram(GLProgram *glprogram);
+
+	void setColorTextureIndex(int index);
+
+protected:
+	int			_color_texture_index = -1;
+	GLuint		_color_texture_uniform_text_color;
+	GLProgramState* _color_texture_gl_program_state = nullptr; ///< OpenGL Program State
 };
 
 // end group

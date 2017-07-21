@@ -50,6 +50,27 @@ NS_CC_BEGIN
 
 // implementation TextureCache
 
+int TextureCache::_texture_row = 0;
+int TextureCache::_texture_col = 0;
+Texture2D* TextureCache::_color_texture = nullptr;
+
+void TextureCache::initColorTexture(int row, int col, const std::string& file) {
+	_texture_row = row;
+	_texture_col = col;
+
+	_color_texture = Director::getInstance()->getTextureCache()->addImage(file);
+}
+
+void TextureCache::getColorTexCoords(int color_index, float& ul, float& vt, float& ur, float& vb) {
+	int row = color_index / _texture_col;
+	int col = color_index % _texture_col;
+
+	ul = (float)col / (float)_texture_col;
+	vt = (float)row / (float)_texture_row;
+	ur = (float)(col + 1.0) / (float)_texture_col;
+	vb = (float)(row + 1.0) / (float)_texture_row;
+}
+
 TextureCache * TextureCache::getInstance()
 {
     return Director::getInstance()->getTextureCache();

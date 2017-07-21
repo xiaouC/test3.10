@@ -642,6 +642,33 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
+
+public:
+	virtual void setGLProgram(GLProgram *glprogram);
+
+protected:
+	int _color_texture_index = -1;
+
+	GLuint _uniform_custom_location = -1;
+	Vec4 _uniform_custom;
+
+	GLuint _uniform_custom_ex_location = -1;
+	Vec4 _uniform_custom_ex;
+
+public:
+	void setColorTextureIndex(int index);
+
+	void setUniformCustom(float x, float y, float z, float w);
+	void setUniformCustomX(float x);
+	void setUniformCustomY(float y);
+	void setUniformCustomZ(float z);
+	void setUniformCustomW(float w);
+
+	void setUniformCustomEx(float x, float y, float z, float w);
+	void setUniformCustomExX(float x);
+	void setUniformCustomExY(float y);
+	void setUniformCustomExZ(float z);
+	void setUniformCustomExW(float w);
 };
 
 

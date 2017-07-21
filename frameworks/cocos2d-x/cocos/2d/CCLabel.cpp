@@ -424,6 +424,9 @@ Label::~Label()
 
     CC_SAFE_RELEASE_NULL(_textSprite);
     CC_SAFE_RELEASE_NULL(_shadowNode);
+
+	// attributes
+	CC_SAFE_RELEASE_NULL(_color_texture_gl_program_state);
 }
 
 void Label::reset()
@@ -901,6 +904,10 @@ bool Label::updateQuads()
                 auto index = static_cast<int>(_batchNodes.at(letterDef.textureID)->getTextureAtlas()->getTotalQuads());
                 _lettersInfo[ctr].atlasIndex = index;
 
+				if (_color_texture_index != -1) {
+					_reusedLetter->setColorTextureIndex(_color_texture_index);
+				}
+
                 this->updateLetterSpriteScale(_reusedLetter);
 
                 _batchNodes.at(letterDef.textureID)->insertQuadFromSprite(_reusedLetter, index);
@@ -1155,6 +1162,11 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
     _textSprite->retain();
     _textSprite->updateDisplayedColor(_displayedColor);
     _textSprite->updateDisplayedOpacity(_displayedOpacity);
+
+	if (_color_texture_index != -1) {
+		_textSprite->setGLProgram(getGLProgram());
+		_textSprite->setColorTextureIndex(_color_texture_index);
+	}
 }
 
 void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
@@ -1378,18 +1390,23 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         switch (_currLabelEffect) {
         case LabelEffect::OUTLINE:
             //draw text with outline
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-            for (auto&& batchNode : _batchNodes)
-            {
+            glprogram->setUniformLocationWith4f(_uniformTextColor, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+            glprogram->setUniformLocationWith4f(_uniformEffectColor, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+            for (auto&& batchNode : _batchNodes) {
                 batchNode->getTextureAtlas()->drawQuads();
             }
 
-            //draw text without outline
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+			//draw text without outline
+			if (_color_texture_gl_program_state != nullptr) {
+				auto glprogram = _color_texture_gl_program_state->getGLProgram();
+				glprogram->use();
+				glprogram->setUniformsForBuiltins(transform);
+				glprogram->setUniformLocationWith4f(_color_texture_uniform_text_color, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+				//glprogram->setUniformLocationWith4f(_uniformEffectColor, _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+			}
+			else {
+				glprogram->setUniformLocationWith4f(_uniformEffectColor, _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+			}
             break;
         case LabelEffect::GLOW:
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
@@ -2021,6 +2038,59 @@ void Label::updateLetterSpriteScale(Sprite* sprite)
             sprite->setScale(1.0);
         }
     }
+}
+
+void Label::setGLProgram(GLProgram *glprogram) {
+	Node::setGLProgram(glprogram);
+
+	_uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_textColor");
+
+	if (_color_texture_index != -1) {
+		if (_color_texture_gl_program_state == nullptr || (_color_texture_gl_program_state && _color_texture_gl_program_state->getGLProgram() != glprogram)) {
+			CC_SAFE_RELEASE(_color_texture_gl_program_state);
+			_color_texture_gl_program_state = GLProgramState::getOrCreateWithGLProgram(glprogram);
+			_color_texture_gl_program_state->retain();
+
+			_color_texture_gl_program_state->setNodeBinding(this);
+
+			auto glprogram = _color_texture_gl_program_state->getGLProgram();
+			_color_texture_uniform_text_color = glGetUniformLocation(glprogram->getProgram(), "u_textColor");
+		}
+	}
+
+	if (_textSprite != nullptr) {
+		_textSprite->setGLProgram(glprogram);
+	}
+}
+
+void Label::setColorTextureIndex(int index) {
+	if (_color_texture_index != index) {
+		_color_texture_index = index;
+
+		float ul, vt, ur, vb;
+		Director::getInstance()->getTextureCache()->getColorTexCoords(_color_texture_index, ul, vt, ur, vb);
+
+		// update texture coords 1
+		cocos2d::TextureAtlas* textureAtlas;
+		V3F_C4B_T2F_Quad *quads;
+		for (auto&& batchNode : _batchNodes) {
+			textureAtlas = batchNode->getTextureAtlas();
+			quads = textureAtlas->getQuads();
+			auto count = textureAtlas->getTotalQuads();
+
+			for (int index = 0; index < count; ++index) {
+				quads[index].tl.texCoords1 = Tex2F(ul, vt);
+				quads[index].bl.texCoords1 = Tex2F(ul, vb);
+				quads[index].tr.texCoords1 = Tex2F(ur, vt);
+				quads[index].br.texCoords1 = Tex2F(ur, vb);
+				textureAtlas->updateQuad(&quads[index], index);
+			}
+		}
+
+		if (_textSprite != nullptr) {
+			_textSprite->setColorTextureIndex(index);
+		}
+	}
 }
 
 NS_CC_END

@@ -95,7 +95,10 @@ void TrianglesCommand::useMaterial() const
 {
     //Set texture
     GL::bindTexture2D(_textureID);
-    
+
+  	if (Director::getInstance()->getTextureCache()->getColorTexture() != nullptr) {
+		GL::bindTexture2DN(1, Director::getInstance()->getTextureCache()->getColorTexture()->getName());
+	}  
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
     

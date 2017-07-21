@@ -239,6 +239,16 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
+
+public:
+	static void initColorTexture(int row, int col, const std::string& file);
+	static Texture2D* getColorTexture() { return _color_texture; }
+	static void getColorTexCoords(int color_index, float& ul, float& vt, float& ur, float& vb);
+
+public:
+	static int _texture_row;
+	static int _texture_col;
+	static Texture2D* _color_texture;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

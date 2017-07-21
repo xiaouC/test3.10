@@ -644,6 +644,14 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
+		if (_uniform_custom_location != -1) {
+			getGLProgramState()->setUniformVec4(_uniform_custom_location, _uniform_custom);
+		}
+
+		if (_uniform_custom_ex_location != -1) {
+			getGLProgramState()->setUniformVec4(_uniform_custom_ex_location, _uniform_custom_ex);
+		}
+
         _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
         
@@ -1148,6 +1156,74 @@ PolygonInfo& Sprite::getPolygonInfo()
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
+}
+
+void Sprite::setGLProgram(GLProgram *glprogram) {
+	Node::setGLProgram(glprogram);
+
+	_uniform_custom_location = glGetUniformLocation(getGLProgram()->getProgram(), "u_custom");
+	_uniform_custom_ex_location = glGetUniformLocation(getGLProgram()->getProgram(), "u_custom_ex");
+}
+
+void Sprite::setColorTextureIndex(int index){
+	if (_color_texture_index != index) {
+		_color_texture_index = index;
+
+		float ul, vt, ur, vb;
+		Director::getInstance()->getTextureCache()->getColorTexCoords(_color_texture_index, ul, vt, ur, vb);
+
+		// update texture coords 1
+		_quad.tl.texCoords1 = Tex2F(ul, vt);
+		_quad.bl.texCoords1 = Tex2F(ul, vb);
+		_quad.tr.texCoords1 = Tex2F(ur, vt);
+		_quad.br.texCoords1 = Tex2F(ur, vb);
+	}
+}
+
+void Sprite::setUniformCustom(float x, float y, float z, float w) {
+	_uniform_custom.x = x;
+	_uniform_custom.y = y;
+	_uniform_custom.z = z;
+	_uniform_custom.w = w;
+}
+
+void Sprite::setUniformCustomX(float x) {
+	_uniform_custom.x = x;
+}
+
+void Sprite::setUniformCustomY(float y) {
+	_uniform_custom.y = y;
+}
+
+void Sprite::setUniformCustomZ(float z) {
+	_uniform_custom.z = z;
+}
+
+void Sprite::setUniformCustomW(float w) {
+	_uniform_custom.w = w;
+}
+
+void Sprite::setUniformCustomEx(float x, float y, float z, float w) {
+	_uniform_custom_ex.x = x;
+	_uniform_custom_ex.y = y;
+	_uniform_custom_ex.z = z;
+	_uniform_custom_ex.w = w;
+}
+
+void Sprite::setUniformCustomExX(float x) {
+	_uniform_custom_ex.x = x;
+}
+
+void Sprite::setUniformCustomExY(float y) {
+	_uniform_custom_ex.y = y;
+}
+
+void Sprite::setUniformCustomExZ(float z) {
+	_uniform_custom_ex.z = z;
+}
+
+void Sprite::setUniformCustomExW(float w) {
+	_uniform_custom_ex.w = w;
 }
 
 NS_CC_END
