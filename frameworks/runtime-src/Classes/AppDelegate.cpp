@@ -92,6 +92,8 @@ void AppDelegate::applicationDidEnterBackground()
     Director::getInstance()->stopAnimation();
 
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+
+    LuaEngine::getInstance()->getLuaStack()->executeGlobalFunction("enterBackground");
 }
 
 // this function will be called when the app is active again
@@ -100,4 +102,6 @@ void AppDelegate::applicationWillEnterForeground()
     Director::getInstance()->startAnimation();
 
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+
+    LuaEngine::getInstance()->getLuaStack()->executeGlobalFunction("enterForeground");
 }

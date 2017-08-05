@@ -6,8 +6,14 @@ cc.FileUtils:getInstance():addSearchPath("res/")
 require "config"
 require "cocos.init"
 
+function enterBackground()
+end
+
+function enterForeground()
+    enterForegroundReloadShaders()
+end
+
 local function main()
-    require("app.MyApp"):create():run()
 end
 
 local status, msg = xpcall(main, __G__TRACKBACK__)
