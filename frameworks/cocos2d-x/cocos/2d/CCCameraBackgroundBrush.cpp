@@ -114,10 +114,10 @@ bool CameraBackgroundDepthBrush::init()
     
     _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = Color4B(0,0,0,1);
     
-    _quad.bl.texCoords = Tex2F(0,0);
-    _quad.br.texCoords = Tex2F(1,0);
-    _quad.tl.texCoords = Tex2F(0,1);
-    _quad.tr.texCoords = Tex2F(1,1);
+    _quad.bl.texCoords0 = Tex2F(0,0);
+    _quad.br.texCoords0 = Tex2F(1,0);
+    _quad.tl.texCoords0 = Tex2F(0,1);
+    _quad.tr.texCoords0 = Tex2F(1,1);
     return true;
 }
 
@@ -157,8 +157,11 @@ void CameraBackgroundDepthBrush::drawBackground(Camera* camera)
         // colors
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), &_quad.tl.colors);
         
-        // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_quad.tl.texCoords);
+        // tex coords 0
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_quad.tl.texCoords0);
+        
+        // tex coords 1
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD1, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_quad.tl.texCoords1);
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);

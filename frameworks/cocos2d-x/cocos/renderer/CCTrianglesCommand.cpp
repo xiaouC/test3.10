@@ -28,6 +28,8 @@
 #include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTextureCache.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 

@@ -195,17 +195,17 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
     for(unsigned int i=start; i<end; i++) 
     {
         // bottom-left vertex:
-        quads[i].bl.texCoords.u = left;
-        quads[i].bl.texCoords.v = bottom;
+        quads[i].bl.texCoords0.u = left;
+        quads[i].bl.texCoords0.v = bottom;
         // bottom-right vertex:
-        quads[i].br.texCoords.u = right;
-        quads[i].br.texCoords.v = bottom;
+        quads[i].br.texCoords0.u = right;
+        quads[i].br.texCoords0.v = bottom;
         // top-left vertex:
-        quads[i].tl.texCoords.u = left;
-        quads[i].tl.texCoords.v = top;
+        quads[i].tl.texCoords0.u = left;
+        quads[i].tl.texCoords0.v = top;
         // top-right vertex:
-        quads[i].tr.texCoords.u = right;
-        quads[i].tr.texCoords.v = top;
+        quads[i].tr.texCoords0.u = right;
+        quads[i].tr.texCoords0.v = top;
     }
 }
 
@@ -572,9 +572,13 @@ void ParticleSystemQuad::setupVBOandVAO()
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
 
-    // tex coords
+    // tex coords 0
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords0));
+    
+    // tex coords 1
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD1);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD1, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords1));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);

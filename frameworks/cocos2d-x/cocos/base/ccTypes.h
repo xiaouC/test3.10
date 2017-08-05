@@ -291,8 +291,11 @@ struct CC_DLL V3F_C4B_T2F
     /// colors (4B)
     Color4B      colors;              // 4 bytes
 
-    // tex coords (2F)
-    Tex2F        texCoords;           // 8 bytes
+    // tex coords 0 (2F)
+    Tex2F        texCoords0;           // 8 bytes
+
+    // tex coords 1 (2F)
+    Tex2F        texCoords1;           // 8 bytes
 };
 
 /** @struct V3F_T2F

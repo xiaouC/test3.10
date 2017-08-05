@@ -297,7 +297,8 @@ void TMXLayer::updateVertexBuffer()
         _vData = VertexData::create();
         _vData->setStream(_vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
         _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords0), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords1), GLProgram::VERTEX_ATTRIB_TEX_COORD1, GL_FLOAT, 2));
         CC_SAFE_RETAIN(_vData);
         CC_SAFE_RETAIN(_vertexBuffer);
     }
@@ -536,14 +537,14 @@ void TMXLayer::updateTotalQuads()
                 bottom = (tileTexture.origin.y / texSize.height);
                 top    = bottom + (tileTexture.size.height / texSize.height);
                 
-                quad.bl.texCoords.u = left;
-                quad.bl.texCoords.v = bottom;
-                quad.br.texCoords.u = right;
-                quad.br.texCoords.v = bottom;
-                quad.tl.texCoords.u = left;
-                quad.tl.texCoords.v = top;
-                quad.tr.texCoords.u = right;
-                quad.tr.texCoords.v = top;
+                quad.bl.texCoords0.u = left;
+                quad.bl.texCoords0.v = bottom;
+                quad.br.texCoords0.u = right;
+                quad.br.texCoords0.v = bottom;
+                quad.tl.texCoords0.u = left;
+                quad.tl.texCoords0.v = top;
+                quad.tr.texCoords0.u = right;
+                quad.tr.texCoords0.v = top;
                 
                 quad.bl.colors = Color4B::WHITE;
                 quad.br.colors = Color4B::WHITE;

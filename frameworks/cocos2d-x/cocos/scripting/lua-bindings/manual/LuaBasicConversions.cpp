@@ -2189,7 +2189,7 @@ bool luaval_to_v3f_c4b_t2f(lua_State* L,int lo,cocos2d::V3F_C4B_T2F * outValue, 
             lua_pop(L, 1);
             return false;
         }
-        ok &= luaval_to_tex2f(L, lua_gettop(L), &outValue->texCoords);
+        ok &= luaval_to_tex2f(L, lua_gettop(L), &outValue->texCoords0);
         if (!ok)
         {
             lua_pop(L, 1);

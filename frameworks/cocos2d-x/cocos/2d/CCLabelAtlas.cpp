@@ -168,14 +168,14 @@ void LabelAtlas::updateAtlasValues()
         float bottom    = top + itemHeightInPixels / textureHigh;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-        quads[i].tl.texCoords.u = left;
-        quads[i].tl.texCoords.v = top;
-        quads[i].tr.texCoords.u = right;
-        quads[i].tr.texCoords.v = top;
-        quads[i].bl.texCoords.u = left;
-        quads[i].bl.texCoords.v = bottom;
-        quads[i].br.texCoords.u = right;
-        quads[i].br.texCoords.v = bottom;
+        quads[i].tl.texCoords0.u = left;
+        quads[i].tl.texCoords0.v = top;
+        quads[i].tr.texCoords0.u = right;
+        quads[i].tr.texCoords0.v = top;
+        quads[i].bl.texCoords0.u = left;
+        quads[i].bl.texCoords0.v = bottom;
+        quads[i].br.texCoords0.u = right;
+        quads[i].br.texCoords0.v = bottom;
 
         quads[i].bl.vertices.x = (float) (i * _itemWidth);
         quads[i].bl.vertices.y = 0;

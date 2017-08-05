@@ -191,14 +191,14 @@ void TileMapAtlas::updateAtlasValueAt(const Vec2& pos, const Color3B& value, int
     float bottom      = top + itemHeightInPixels / textureHigh;
 #endif
 
-    quad->tl.texCoords.u = left;
-    quad->tl.texCoords.v = top;
-    quad->tr.texCoords.u = right;
-    quad->tr.texCoords.v = top;
-    quad->bl.texCoords.u = left;
-    quad->bl.texCoords.v = bottom;
-    quad->br.texCoords.u = right;
-    quad->br.texCoords.v = bottom;
+    quad->tl.texCoords0.u = left;
+    quad->tl.texCoords0.v = top;
+    quad->tr.texCoords0.u = right;
+    quad->tr.texCoords0.v = top;
+    quad->bl.texCoords0.u = left;
+    quad->bl.texCoords0.v = bottom;
+    quad->br.texCoords0.u = right;
+    quad->br.texCoords0.v = bottom;
 
     quad->bl.vertices.x = (float) (x * _itemWidth);
     quad->bl.vertices.y = (float) (y * _itemHeight);
