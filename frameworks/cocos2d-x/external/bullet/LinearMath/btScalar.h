@@ -446,6 +446,10 @@ SIMD_FORCE_INLINE btScalar btFmod(btScalar x,btScalar y) { return fmodf(x,y); }
 #define btRecipSqrt(x) ((btScalar)(btScalar(1.0)/btSqrt(btScalar(x))))		/* reciprocal square root */
 #define btRecip(x) (btScalar(1.0)/btScalar(x))
 
+#ifndef FLT_EPSILON
+#define FLT_EPSILON     1.192092896e-07F
+#endif // FLT_EPSILON
+
 #ifdef BT_USE_DOUBLE_PRECISION
 #define SIMD_EPSILON      DBL_EPSILON
 #define SIMD_INFINITY     DBL_MAX

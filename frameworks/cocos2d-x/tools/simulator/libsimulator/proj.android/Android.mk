@@ -2,6 +2,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := cocos2d_simulator_static
+LOCAL_ARM_MODE := arm
 
 LOCAL_MODULE_FILENAME := libsimulator
 

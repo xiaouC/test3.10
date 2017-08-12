@@ -3,6 +3,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := recast_static
+LOCAL_ARM_MODE := arm
 
 LOCAL_MODULE_FILENAME := librecast
 

@@ -31,9 +31,7 @@ LOCAL_MODULE    := cocos2d_lua_static
 
 LOCAL_MODULE_FILENAME := libluacocos2d
 
-ifeq ($(COCOS_SIMULATOR_BUILD),1)
 LOCAL_ARM_MODE := arm
-endif
 
 LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/CCLuaEngine.cpp \
@@ -75,7 +73,6 @@ LOCAL_SRC_FILES += ../manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
 #network
 LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../manual/network/lua_extensions.c \
-                   ../manual/network/Lua_web_socket.cpp \
                    ../manual/network/lua_xml_http_request.cpp \
                    ../../../../external/lua/luasocket/auxiliar.c \
                    ../../../../external/lua/luasocket/buffer.c \
@@ -93,6 +90,8 @@ LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../../../../external/lua/luasocket/udp.c \
                    ../../../../external/lua/luasocket/unix.c \
                    ../../../../external/lua/luasocket/usocket.c
+
+                   # ../manual/network/Lua_web_socket.cpp \
 
 #cocosbuilder
 LOCAL_SRC_FILES += ../manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp \

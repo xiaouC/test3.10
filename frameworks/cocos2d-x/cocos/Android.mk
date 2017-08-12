@@ -6,9 +6,7 @@ LOCAL_MODULE := cocos2dx_internal_static
 
 LOCAL_MODULE_FILENAME := libcocos2dxinternal
 
-ifeq ($(USE_ARM_MODE),1)
 LOCAL_ARM_MODE := arm
-endif
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 MATHNEONFILE := math/MathUtil.cpp.neon
@@ -321,6 +319,6 @@ $(call import-module,extensions)
 $(call import-module,Box2D)
 $(call import-module,bullet)
 $(call import-module,recast)
-# $(call import-module,curl/prebuilt/android)
+$(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)
