@@ -1,0 +1,24 @@
+id,title,icon_not_read,icon_read,desc,note,time
+1,同门基础奖励,0,1,"[colorindex:colorIndex=2]{}[colorindex:colorIndex=0] 同门在本次闯七星阵的表现如下：
+团队总伤害：[colorindex:colorIndex=3]{}[colorindex:colorIndex=0][endl:num=1]
+个人伤害：[colorindex:colorIndex=3]{}[colorindex:colorIndex=0][endl:num=1]
+个人评分：[colorindex:colorIndex=3]{}[colorindex:colorIndex=0][endl:num=1]
+奖励加成：[colorindex:colorIndex=3]{}%[colorindex:colorIndex=0][endl:num=1]
+你获得了以下奖励",同门名 | 队伍总伤害 | 个人伤害 | 个人评分 | 奖励加成（非百分比）,0
+2,同门排名奖励,0,1,"[colorindex:colorIndex=2]{}[colorindex:colorIndex=0] 同门在本次闯七星阵的同门中脱颖而出，团队总伤害达到 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] ，在所有参与闯阵的同门中排名第 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0]
+星官特此嘉赏各位贤能异士，请查收以下奖励",同门名 | 队伍总伤害 | 队伍排名,0
+3,同门邀请,0,1,    你的好友 [colorindex:colorIndex=2]{} [colorindex:colorIndex=0]在同门中亟需你两肋插刀，快出发吧！同门id [colorindex:colorIndex=3]{}[colorindex:colorIndex=0],邀请者的玩家名字 | 同门id,0
+4,同门消息,0,1,    您于 [colorindex:colorIndex=10]{} [colorindex:colorIndex=0]被 [colorindex:colorIndex=2]{}[colorindex:colorIndex=0] 逐出同门，24小时内无法加入新同门。,被踢时间 | 大师兄名字,0
+5,公会消息,0,1,    您于 [colorindex:colorIndex=10]{} [colorindex:colorIndex=0]被 [colorindex:colorIndex=2]{}[colorindex:colorIndex=0] 会长请出了公会。,被踢时间 | 会长名字,0
+6,狭间BOSS击杀,0,1,    你和你的好友共同击杀了狭间BOSS，你对BOSS共造成了 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 伤害，在好友中排名第 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0]，获得了以下奖励,个人伤害 | 伤害排名,0
+7,狭间BOSS,0,1,    你的好友 [colorindex:colorIndex=2]{}[colorindex:colorIndex=0] 邀请你共同挑战狭间BOSS [colorindex:colorIndex=5]{}[colorindex:colorIndex=0]。可通过 [colorindex:colorIndex=2]历练—时之狭间[colorindex:colorIndex=0] 中查看。,好友名字 | 秘境名字,0
+8,能量赠送,0,1,    你的好友 [colorindex:colorIndex=2]{}[colorindex:colorIndex=0]赠送了能量给你,好友名字,0
+9,世界BOSS击杀,5,6,    在全服训练家的努力下，世界BOSS已被击杀，你对BOSS共造成了 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 伤害，全服排名第 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0]，获得了以下奖励,个人伤害 | 伤害排名,43200
+10,竞技场每日奖励,3,4,你在 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 的竞技场中脱颖而出，排名达到 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] ，可获得,日期 | 排名,86400
+11,巅峰战力每日奖励,0,1,你在 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 的巅峰战力榜的排名达到 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] ，可获得,日期 | 排名,86400
+12,城堡争霸每日奖励,3,4,你在 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 的联盟大赛中脱颖而出，排名达到 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] ，可获得,日期 | 排名,86400
+13,7天排行奖励,0,1,你在第{}天的{}排行榜活动里排名达到{}，可获得,排名|描述,86400
+14,梦幻转盘奖励,0,1,你在本期梦幻转盘活动中共获得 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 点梦幻点数，获得了以下奖励,梦幻点数数量,6000
+15,黄金城周六城堡争夺奖励,0,1,你在本期周六黄金城城堡争夺中[colorindex:colorIndex=2]个人伤害排名[colorindex:colorIndex=3]{}[colorindex:colorIndex=0]，获得以下奖励,个人排名,86400
+16,活动排名奖励,0,1,    在全服训练家的努力下，活动BOSS已消失，你对BOSS共造成了 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 伤害，全服排名第 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0]，获得了以下奖励,个人伤害 | 伤害排名,43200
+17,幻影之塔派驻奖励,0,1,你在 [colorindex:colorIndex=3]{}[colorindex:colorIndex=0] 的幻影之塔精灵驻守中获得,日期,86400

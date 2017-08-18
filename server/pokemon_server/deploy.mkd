@@ -1,0 +1,132 @@
+# Ubuntu
+## 安装Python
+    依赖python2.7.6
+## 安装依赖
+    sudo apt-get install -y python-virtualenv python-pip git python-dev swig libssh-dev
+## 搭建Python独立环境:    
+    virtualenv ${HOME}/envs/game
+   # source ${HOME}/envs/game/bin/activate
+## 项目代码
+#### 在本地主机：
+    git clone -b develop http://192.168.0.85/yzzh/server.git
+    
+#### 在远程主机：
+    mkdir -p ${HOME}/repos/game
+    cd ${HOME}/repos/game
+    git init --bare
+    mkdir -p ${HOME}/src
+    cd ${HOME}/src
+    
+    cat > checkout.sh << 'EOF'
+    #!/bin/bash
+    [ $# -lt 2 ] && echo "ERROR! No enough arguments." && exit
+    GITPATH=${HOME}/repos/game
+    rm -rf "$2.tmp" && \
+    git clone -b $1 $GITPATH "$2.tmp" && \
+    cd "$2.tmp" && \
+    source ${HOME}/envs/game/bin/activate && \
+    [ "$3" != "pure" ] && ./gen_model.sh
+    cd - && \
+    rm -rf $2 && \
+    mv "$2.tmp" $2
+    EOF
+    
+    chmod u+x checkout.sh
+#### 在本地主机：
+    git push [user]@[remotehost]:${HOME}/repos/game develop:develop
+#### 在远程主机：
+    cd ${HOME}/src
+    ./checkout.sh develop develop pure
+    cd develop
+    source ${HOME}/envs/game/bin/activate
+    pip install cython 
+    pip install mako
+    pip install -r requirements.txt
+    cd ${HOME}/src
+    ./checkout.sh develop develop
+
+## 安装数据库
+    cd ${HOME}/repos
+    git clone -b nds-2.6 https://github.com/yihuang/redis.git
+    make
+    make PREFIX=.. install # 当前目录会出现bin目录，所有可执行文件都在这里
+    ./utils/install_server.sh
+    # Please select the redis executable path [] 这行填入 bin 目录下的redis-server的绝对路径
+
+## 项目配置和数据目录
+#### \**注意替换公网地址，内网地址*
+    mkdir -p servers/game/{data,log}
+    sed -f <(echo "
+    s/%REDIS_URL%/redis:\/\/localhost:10001/
+    s/%WORLD_ID%/100/
+    s/%WORLD_HOST%/公网地址/
+    s/%REGION_ID%/100/
+    s/%SESSION_ID%/100/
+    s/%SESSION_HOST%/0.0.0.0/
+    s/%SESSION_PORT%/20000/
+    s/%PROXY_HOST%/\*内网地址\*/
+    s/%PROXY_PORT%/20001/
+    s/%SDKAPP_HOST%/0.0.0.0/
+    s/%SDKAPP_PORT%/20002/") \
+    ${HOME}/src/develop/local_settings.py.simple > local_settings.py
+## 进程管理
+#### 安装supervisor
+    pip install supervisor
+    mkdir -p ${HOME}/service/conf.d
+    cd ${HOME}/service
+    cat > supervisord.conf << 'EOF'
+    [supervisord]
+    logfile = %(here)s/supervisord.log
+
+    [supervisorctl]
+    serverurl = unix://%(here)s/supervisord.sock
+
+    [unix_http_server]
+    file = %(here)s/supervisord.sock
+
+    [inet_http_server]
+    port = 127.0.0.1:9001
+    
+    [rpcinterface:supervisor]
+    supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+    
+    [include]
+    files = conf.d/*.conf
+    
+    ; vim: set ft=dosini:
+    EOF
+#### 配置服务器
+    cat > ${HOME}/service/conf.d/game.conf << EOF
+    [program:world100]
+    command=${HOME}/envs/game/bin/python -mworld.main
+    environment=PYTHONPATH=${HOME}/src/develop
+    directory=${HOME}/servers/game
+    startsecs=3
+    redirect_stderr=true
+    stdout_logfile=%(here)s/world100.log
+    stderr_logfile=%(here)s/world100.log
+    
+    [program:session100]
+    command=${HOME}/envs/game/bin/python -msession.main
+    environment=PYTHONPATH=${HOME}/src/develop
+    directory=${HOME}/servers/game
+    startsecs=3
+    redirect_stderr=true
+    stdout_logfile=%(here)s/session100.log
+    stderr_logfile=%(here)s/session100.log
+    
+    [program:gm100]
+    command=${HOME}/envs/game/bin/python -mgm.main
+    environment=PYTHONPATH=${HOME}/src/develop
+    directory=${HOME}/servers/game
+    startsecs=3
+    redirect_stderr=true
+    stdout_logfile=%(here)s/gm100.log
+    stderr_logfile=%(here)s/gm100.log
+    EOF
+#### 启动服务器
+    cd ${HOME}/service/
+    supervisord -c supervisord.conf
+
+
+   

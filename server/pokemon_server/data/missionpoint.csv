@@ -1,0 +1,14 @@
+id,point,pointtype,reward,desc
+1,10,abs_hp,100,达到[colorindex:colorIndex=3]10[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]血量[colorindex:colorIndex=3]＋100[colorindex:colorIndex=0]
+2,50,abs_hp,200,达到[colorindex:colorIndex=3]50[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]血量[colorindex:colorIndex=3]＋200[colorindex:colorIndex=0]
+3,100,abs_atk,100,达到[colorindex:colorIndex=3]100[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]攻击[colorindex:colorIndex=3]＋100[colorindex:colorIndex=0]
+4,200,abs_def,100,达到[colorindex:colorIndex=3]200[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]防御[colorindex:colorIndex=3]＋100[colorindex:colorIndex=0]
+5,300,abs_hp,500,达到[colorindex:colorIndex=3]300[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]血量[colorindex:colorIndex=3]＋500[colorindex:colorIndex=0][endl:num=1]开启[colorindex:colorIndex=3]无尽迷宫[colorindex:colorIndex=0]一键探索功能
+6,400,abs_atk,200,达到[colorindex:colorIndex=3]400[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]攻击[colorindex:colorIndex=3]＋200[colorindex:colorIndex=0]
+7,500,abs_def,200,达到[colorindex:colorIndex=3]500[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]防御[colorindex:colorIndex=3]＋200[colorindex:colorIndex=0]
+8,600,per_hp,5,达到[colorindex:colorIndex=3]600[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]血量[colorindex:colorIndex=3]＋5%[colorindex:colorIndex=0]
+9,700,per_atk,5,达到[colorindex:colorIndex=3]700[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]攻击[colorindex:colorIndex=3]＋5%[colorindex:colorIndex=0]
+10,800,per_def,5,达到[colorindex:colorIndex=3]800[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]防御[colorindex:colorIndex=3]＋5%[colorindex:colorIndex=0]
+11,900,per_hp,10,达到[colorindex:colorIndex=3]900[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]血量[colorindex:colorIndex=3]＋10%[colorindex:colorIndex=0]
+12,1000,per_atk,10,达到[colorindex:colorIndex=3]1000[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]攻击[colorindex:colorIndex=3]＋10%[colorindex:colorIndex=0]
+13,1100,per_def,10,达到[colorindex:colorIndex=3]1100[colorindex:colorIndex=0]，精灵[colorindex:colorIndex=10]防御[colorindex:colorIndex=3]＋10%[colorindex:colorIndex=0]

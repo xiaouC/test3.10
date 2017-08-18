@@ -1,0 +1,350 @@
+id,type,index,name,piece_index,iconid,rarity,maskIcon,desc,tips
+710001,7,0,麻布,0,710001,1,0,[colorindex:colorIndex=0]【装备进阶】以各种麻类植物纤维制成的布,0
+710002,7,0,皮革,0,710002,2,0,[colorindex:colorIndex=0]【装备进阶】经脱毛和鞣制得到的动物皮,0
+710003,7,0,棉布,0,710003,3,0,[colorindex:colorIndex=0]【装备进阶】用棉纱织成的布，吸湿性、透气性甚佳,0
+710004,7,0,丝绸,0,710004,4,0,[colorindex:colorIndex=0]【装备进阶】蚕丝或人造丝纯织或交织而成的织品,0
+710005,7,0,兽皮,0,710005,5,0,[colorindex:colorIndex=0]【装备进阶】某种远古兽类的皮毛，散发着一股奇怪的气息,0
+710006,7,0,星羽绡,0,710006,6,0,[colorindex:colorIndex=0]【装备进阶】用传说中的精灵羽毛织成的羽绡,0
+710007,7,0,彩虹绢,0,710007,7,0,[colorindex:colorIndex=0]【装备进阶】远古魔法师用神秘材料编织的布料,0
+720001,7,0,石料,0,720001,1,0,[colorindex:colorIndex=0]【装备进阶】普通的石头加工而成,0
+720002,7,0,铁矿石,0,720002,2,0,[colorindex:colorIndex=0]【装备进阶】经过工业加工后的精铁原料,0
+720003,7,0,辉铜矿,0,720003,3,0,[colorindex:colorIndex=0]【装备进阶】比普通铜矿石含铜量高，看起来金光闪闪,0
+720004,7,0,碎银块,0,720004,4,0,[colorindex:colorIndex=0]【装备进阶】从银矿石中提取出来的纯银块,0
+720005,7,0,褐金矿,0,720005,5,0,[colorindex:colorIndex=0]【装备进阶】吸收了某种能量的金子，褐色的部分价值更高,0
+720006,7,0,秘晶,0,720006,6,0,[colorindex:colorIndex=0]【装备进阶】传说中矿石，据说所在之处都有幻之精灵守护,0
+720007,7,0,梦星陨,0,720007,7,0,[colorindex:colorIndex=0]【装备进阶】梦境行星陨落后的碎屑，存世量极低,0
+730001,7,0,树枝,0,730001,1,0,[colorindex:colorIndex=0]【装备进阶】常见树木的枝梢，常作为装饰,0
+730002,7,0,原木,0,730002,2,0,[colorindex:colorIndex=0]【装备进阶】常见树木加工成的圆木段,0
+730003,7,0,妖木,0,730003,3,0,[colorindex:colorIndex=0]【装备进阶】东方的高级木料，带有一些妖精气息,0
+730004,7,0,暗纹木,0,730004,4,0,[colorindex:colorIndex=0]【装备进阶】原木被腐化后形成的变异木料，只能通过原木变异获得,0
+730005,7,0,珍珠木,0,730005,5,0,[colorindex:colorIndex=0]【装备进阶】精灵们的圣地产出的木料，与精灵的契合性非常之高,0
+730006,7,0,血木,0,730006,6,0,[colorindex:colorIndex=0]【装备进阶】以精灵血浇灌的腐木，却拥有极为强盛的生命力,0
+730007,7,0,精灵木,0,730007,7,0,[colorindex:colorIndex=0]【装备进阶】少数精灵死后，耗尽灵魂而形成的树木,0
+711001,7,0,白水晶,0,711001,1,0,[colorindex:colorIndex=0]【装备进阶】水晶中较为常见，常作为灯饰,0
+711002,7,0,绿水晶,0,711002,2,0,[colorindex:colorIndex=0]【装备进阶】简单附魔的水晶，有一定的魔力,0
+711003,7,0,蓝水晶,0,711003,3,0,[colorindex:colorIndex=0]【装备进阶】深蓝色水晶，是一种常见的魔法材料,0
+711004,7,0,紫水晶,0,711004,4,0,[colorindex:colorIndex=0]【装备进阶】神秘的紫色水晶，占星师们的收藏品,0
+711005,7,0,黄水晶,0,711005,5,0,[colorindex:colorIndex=0]【装备进阶】澄黄色的水晶，据说是远古炼金术士实验的副产物,0
+711006,7,0,血晶石,0,711006,6,0,[colorindex:colorIndex=0]【装备进阶】血晶石，传说其蕴含极强的生命力,0
+711007,7,0,魔晶石,0,711007,7,0,[colorindex:colorIndex=0]【装备进阶】远古炼金实验创造出来的神秘晶石，存世极少,0
+712003,7,0,蓝宝石,0,712003,3,0,[colorindex:colorIndex=0]【专属进阶】含特定元素的刚玉宝石，一般以蓝色为主,0
+712004,7,0,紫宝石,0,712004,4,0,[colorindex:colorIndex=0]【专属进阶】蓝宝石中少见的紫色宝石，但大多是人工合成的,0
+712005,7,0,黄宝石,0,712005,5,0,[colorindex:colorIndex=0]【专属进阶】据说是太空中的宝石，也有人说这是传说精灵的灵魂凝结,0
+712006,7,0,红宝石,0,712006,6,0,[colorindex:colorIndex=0]【专属进阶】精灵们喜爱的红宝石，拥有罕见的亲和性,0
+712007,7,0,神秘石,0,712007,7,0,[colorindex:colorIndex=0]【专属进阶】远古炼金实验创造出来的神秘宝石，存世极少,0
+713003,7,0,蓝色徽章,0,713003,3,0,[colorindex:colorIndex=0]【徽章进阶】徽章进阶所需的特殊道具，非常难得,0
+713004,7,0,紫色徽章,0,713004,4,0,[colorindex:colorIndex=0]【徽章进阶】徽章进阶所需的特殊道具，非常难得,0
+713005,7,0,金色徽章,0,713005,5,0,[colorindex:colorIndex=0]【徽章进阶】徽章进阶所需的特殊道具，非常难得,0
+713006,7,0,红色徽章,0,713006,6,0,[colorindex:colorIndex=0]【徽章进阶】徽章进阶所需的特殊道具，非常难得,0
+713007,7,0,粉红徽章,0,713007,7,0,[colorindex:colorIndex=0]【徽章进阶】徽章进阶所需的特殊道具，非常难得,0
+740001,7,0,火系果实,0,740001,1,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=5]火系[colorindex:colorIndex=0]精灵进化】,0
+740002,7,0,火系果实,0,740002,2,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=5]火系[colorindex:colorIndex=0]精灵进化】,0
+740003,7,0,辣茄,0,740003,3,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=5]火系[colorindex:colorIndex=0]精灵进化】常见的番茄品种，果皮上的刺非常辛辣,0
+740004,7,0,红蔓莓,0,740004,4,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=5]火系[colorindex:colorIndex=0]精灵进化】酸味十足的果实，生长缓慢，但是胜在数量太多,0
+740005,7,0,麻雾果,0,740005,5,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=5]火系[colorindex:colorIndex=0]精灵进化】非常罕见的致幻果实，能提升精灵的战斗能力,0
+740006,7,0,赤迦果,0,740006,6,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=5]火系[colorindex:colorIndex=0]精灵进化】顶级果实之一，只生长在赤道沙漠地区，非常难得,0
+740007,7,0,红阳榴,0,740007,7,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=5]火系[colorindex:colorIndex=0]精灵进化】顶级果实之一，据说是神灵都爱食用的零嘴果实,0
+750001,7,0,水系果实,0,750001,1,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=4]水系[colorindex:colorIndex=0]精灵进化】,0
+750002,7,0,水系果实,0,750002,2,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=4]水系[colorindex:colorIndex=0]精灵进化】,0
+750003,7,0,冰瓜,0,750003,3,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=4]水系[colorindex:colorIndex=0]精灵进化】在寒冰原生长的小长瓜品种，受到水系精灵喜爱,0
+750004,7,0,水葡萄,0,750004,4,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=4]水系[colorindex:colorIndex=0]精灵进化】生长在水中的葡萄，是水系精灵常食用的果实,0
+750005,7,0,莲雾果,0,750005,5,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=4]水系[colorindex:colorIndex=0]精灵进化】性喜寒冷怕炎热，越是寒冷的地方长出的果实越饱满,0
+750006,7,0,冰迦果,0,750006,6,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=4]水系[colorindex:colorIndex=0]精灵进化】顶级果实之一，一般只能生长在极北寒冰原,0
+750007,7,0,浮番果,0,750007,7,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=4]水系[colorindex:colorIndex=0]精灵进化】顶级果实之一，据说是神灵都爱食用的零嘴果实,0
+760001,7,0,木系果实,0,760001,1,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=3]木系[colorindex:colorIndex=0]精灵进化】,0
+760002,7,0,木系果实,0,760002,2,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=3]木系[colorindex:colorIndex=0]精灵进化】,0
+760003,7,0,绿姆果,0,760003,3,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=3]木系[colorindex:colorIndex=0]精灵进化】随处可见却并不受欢迎的果实，味道略苦,0
+760004,7,0,苦琏,0,760004,4,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=3]木系[colorindex:colorIndex=0]精灵进化】最苦的木系果实，但是蕴含了不少的能量,0
+760005,7,0,黄斑青果,0,760005,5,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=3]木系[colorindex:colorIndex=0]精灵进化】生吃稍稍有些苦味，但也是非常有营养价值的果实,0
+760006,7,0,绿毛丹,0,760006,6,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=3]木系[colorindex:colorIndex=0]精灵进化】顶级果实之一，生命力十足，有生命果实之称,0
+760007,7,0,藤斑梨,0,760007,7,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=3]木系[colorindex:colorIndex=0]精灵进化】顶级果实之一，据说是神灵都爱食用的零嘴果实,0
+770001,7,0,光系果实,0,770001,1,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=10]光系[colorindex:colorIndex=0]精灵进化】,0
+770002,7,0,光系果实,0,770002,2,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=10]光系[colorindex:colorIndex=0]精灵进化】,0
+770003,7,0,酸柠,0,770003,3,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=10]光系[colorindex:colorIndex=0]精灵进化】人类也喜欢食用的水果，味道的包容性非常高,0
+770004,7,0,嘉宝果,0,770004,4,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=10]光系[colorindex:colorIndex=0]精灵进化】硬硬的果实，晒干后当零食吃可以锻炼咬合力,0
+770005,7,0,灯笼果,0,770005,5,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=10]光系[colorindex:colorIndex=0]精灵进化】罕见的野生果实，常用来制作果酱或酿酒,0
+770006,7,0,奇拉果,0,770006,6,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=10]光系[colorindex:colorIndex=0]精灵进化】顶级果实之一，传说是蕴含光与天空力量的果实,0
+770007,7,0,佛笑瓜,0,770007,7,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=10]光系[colorindex:colorIndex=0]精灵进化】顶级果实之一，据说是神灵都爱食用的零嘴果实,0
+780001,7,0,暗系果实,0,780001,1,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=9]暗系[colorindex:colorIndex=0]精灵进化】,0
+780002,7,0,暗系果实,0,780002,2,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=9]暗系[colorindex:colorIndex=0]精灵进化】,0
+780003,7,0,紫椰,0,780003,3,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=9]暗系[colorindex:colorIndex=0]精灵进化】常见的果实，人们喜欢将其制作名为面宝的甜点,0
+780004,7,0,紫莓,0,780004,4,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=9]暗系[colorindex:colorIndex=0]精灵进化】把它埋在软土里就能生长，也是面宝的材料之一,0
+780005,7,0,暗葫芦,0,780005,5,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=9]暗系[colorindex:colorIndex=0]精灵进化】濒临绝种的果实，据说除了食用还有其他用途,0
+780006,7,0,龙佳果,0,780006,6,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=9]暗系[colorindex:colorIndex=0]精灵进化】顶级果实之一，传说是蕴含暗与大陆力量的果实,0
+780007,7,0,魔栗,0,780007,7,0,[colorindex:colorIndex=0]【[colorindex:colorIndex=9]暗系[colorindex:colorIndex=0]精灵进化】顶级果实之一，据说是神灵都爱食用的零嘴果实,0
+790001,7,0,通用果实,0,790001,1,0,[colorindex:colorIndex=0]【精灵进化】,0
+790002,7,0,通用果实,0,790002,2,0,[colorindex:colorIndex=0]【精灵进化】,0
+790003,7,0,甜桃,0,790003,3,0,[colorindex:colorIndex=0]【精灵进化】味道十分甜美，由于十分柔软，在运送的时候要小心,0
+790004,7,0,粉蕉,0,790004,4,0,[colorindex:colorIndex=0]【精灵进化】又苦又甜的果实，当然一般没有谁会吃它的皮吧,0
+790005,7,0,粉枇杷,0,790005,5,0,[colorindex:colorIndex=0]【精灵进化】亲和度非常高的果实，不过好像吃了会有副作用,0
+790006,7,0,阿开果,0,790006,6,0,[colorindex:colorIndex=0]【精灵进化】顶级果实之一，生长极为缓慢，未成熟时吃了会呕吐,0
+790007,7,0,奇乐椒,0,790007,7,0,[colorindex:colorIndex=0]【精灵进化】顶级果实之一，据说是神灵都爱食用的零嘴果实,0
+700001,7,0,进化石,0,700001,1,0,[colorindex:colorIndex=0]【精灵进化】精灵进化到一定程度后所需的进化道具，非常难得,0
+700002,7,0,进化石,0,700002,2,0,[colorindex:colorIndex=0]【精灵进化】精灵进化到一定程度后所需的进化道具，非常难得,0
+700003,7,0,进化石,0,700003,3,0,[colorindex:colorIndex=0]【精灵进化】精灵进化到一定程度后所需的进化道具，非常难得,0
+700004,7,0,进化石,0,700004,4,0,[colorindex:colorIndex=0]【精灵进化】精灵进化到一定程度后所需的进化道具，非常难得,0
+700005,7,0,进化石,0,700005,5,0,[colorindex:colorIndex=0]【精灵进化】精灵进化到一定程度后所需的进化道具，非常难得,0
+700006,7,0,进化石,0,700006,6,0,[colorindex:colorIndex=0]【精灵进化】精灵进化到一定程度后所需的进化道具，非常难得,0
+700007,7,0,进化石,0,700007,7,0,[colorindex:colorIndex=0]【精灵进化】精灵进化到一定程度后所需的进化道具，非常难得,0
+800001,8,0,【智爷】头像,0,41001,3,0,[colorindex:colorIndex=0]普通的训练家头像,0
+800002,8,0,【福爷】头像,0,41002,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]2[colorindex:colorIndex=0] 章可获得,0
+800003,8,0,【小菊儿】头像,0,41003,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]3[colorindex:colorIndex=0] 章可获得,0
+800004,8,0,【夏伯】头像,0,41004,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]4[colorindex:colorIndex=0] 章可获得,0
+800005,8,0,【梅丽莎】头像,0,41005,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]5[colorindex:colorIndex=0] 章可获得,0
+800006,8,0,【山男】头像,0,41006,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]6[colorindex:colorIndex=0] 章可获得,0
+800007,8,0,【紫罗兰】头像,0,41007,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]7[colorindex:colorIndex=0] 章可获得,0
+800008,8,0,【吉宪】头像,0,41008,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]8[colorindex:colorIndex=0] 章可获得,0
+800009,8,0,【菊老大】头像,0,41009,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]9[colorindex:colorIndex=0] 章可获得,0
+800010,8,0,【葛吉花】头像,0,41010,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 章可获得,0
+800011,8,0,【坂木】头像,0,41011,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]11[colorindex:colorIndex=0] 章可获得,0
+800012,8,0,【南】头像,0,41012,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]12[colorindex:colorIndex=0] 章可获得,0
+800013,8,0,【得抚】头像,0,41013,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]13[colorindex:colorIndex=0] 章可获得,0
+800014,8,0,【玛绣】头像,0,41014,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]14[colorindex:colorIndex=0] 章可获得,0
+800015,8,0,【莉佳】头像,0,41015,4,0,[colorindex:colorIndex=0]首次通关精英副本第 [colorindex:colorIndex=3]15[colorindex:colorIndex=0] 章可获得,0
+800016,8,0,【红豆杉】头像,0,41018,5,0,[colorindex:colorIndex=10]VIP2[colorindex:colorIndex=0]后可在成就中领取，是VIP的象征,0
+800017,8,0,【小次郎】头像,0,41017,5,0,[colorindex:colorIndex=10]VIP7[colorindex:colorIndex=0]后可在成就中领取，是高级VIP的象征,0
+800018,8,0,【武藏】头像,0,41016,5,0,[colorindex:colorIndex=10]VIP11[colorindex:colorIndex=0]后可在成就中领取，是尊贵VIP的象征,0
+800019,8,0,【喷火龙】头像,0,41022,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=5]【喷火龙】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800020,8,0,【水箭龟】头像,0,41020,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=4]【水箭龟】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800021,8,0,【妙蛙花】头像,0,41021,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=3]【妙蛙花】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800022,8,0,【盖亚多拉斯】头像,0,41023,6,0,[colorindex:colorIndex=0]击杀世界BOSS[colorindex:colorIndex=5]【盖亚多拉斯】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800023,8,0,【矶龙卷】头像,0,41024,6,0,[colorindex:colorIndex=0]击杀世界BOSS[colorindex:colorIndex=4]【矶龙卷】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800024,8,0,【奥西里斯】头像,0,41025,6,0,[colorindex:colorIndex=0]击杀世界BOSS[colorindex:colorIndex=3]【奥西里斯】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800025,8,0,【圣诞皮神】头像,0,41031,6,0,[colorindex:colorIndex=0]击杀圣诞世界BOSS[colorindex:colorIndex=3]【圣诞皮神】[colorindex:colorIndex=0][endl:num=1]且伤害排名前10后可获得,0
+800026,8,0,【雷丘】头像,0,41040,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=10]【雷丘】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800027,8,0,【耿鬼】头像,0,41041,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=9]【耿鬼】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800028,8,0,【鸭嘴焰龙】头像,0,41042,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=5]【鸭嘴焰龙】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800029,8,0,【超暴鲤龙】头像,0,41043,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=4]【超暴鲤龙】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800030,8,0,【土台龟】头像,0,41044,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=3]【土台龟】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800031,8,0,【波克基斯】头像,0,41045,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=10]【波克基斯】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800032,8,0,【魔童娃娃】头像,0,41046,5,0,[colorindex:colorIndex=0]击杀狭间BOSS[colorindex:colorIndex=9]【魔童娃娃】[colorindex:colorIndex=0][endl:num=1]且伤害排名第1后可获得,0
+800033,8,0,【猴赛雷】头像,0,41047,6,0,[colorindex:colorIndex=0]击杀[colorindex:colorIndex=5]猴年春节[colorindex:colorIndex=0]世界BOSS[colorindex:colorIndex=5]【猴赛雷】[colorindex:colorIndex=0][endl:num=1]且伤害排名前10后可获得,0
+800034,8,0,【喵喵】头像,0,41019,6,0,[colorindex:colorIndex=0]参与[colorindex:colorIndex=5]3.15维权大战[colorindex:colorIndex=0]活动且排名前[colorindex:colorIndex=3] 3 [colorindex:colorIndex=0]后可获得,0
+900001,9,0,普通头像框,0,42001,3,0,[colorindex:colorIndex=0]普通的训练家头像框,0
+900002,9,0,VIP2头像框,0,42002,5,0,[colorindex:colorIndex=10]VIP2[colorindex:colorIndex=0]后可在成就中领取，是VIP的象征,0
+900003,9,0,VIP7头像框,0,42003,5,0,[colorindex:colorIndex=10]VIP7[colorindex:colorIndex=0]后可在成就中领取，是高级VIP的象征,0
+900004,9,0,VIP11头像框,0,42004,5,0,[colorindex:colorIndex=10]VIP11[colorindex:colorIndex=0]后可在成就中领取，是尊贵VIP的象征,0
+900005,9,0,竞技王者头像框,0,42005,5,0,[colorindex:colorIndex=3]竞技场[colorindex:colorIndex=0]结算时排名达到第 [colorindex:colorIndex=3]1[colorindex:colorIndex=0] 名后可获得,0
+900006,9,0,城堡伯爵头像框,0,42010,5,0,[colorindex:colorIndex=3]？？？[colorindex:colorIndex=0],0
+900007,9,0,圣诞头像框,0,42012,6,0,[colorindex:colorIndex=3]圣诞节[colorindex:colorIndex=0]当日登陆即可获得,0
+900008,9,0,春节头像框,0,42013,6,0,[colorindex:colorIndex=3]除夕[colorindex:colorIndex=0]当日登陆即可获得,0
+350031,3,50031,单手火炮碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小鸭嘴龙[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]单手火炮[colorindex:colorIndex=0]】,0
+350032,3,50032,防火鞍碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]小马驹[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]防火鞍[colorindex:colorIndex=0]】,0
+350033,3,50033,火焰耳环碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]火狐狸[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]火焰耳环[colorindex:colorIndex=0]】,0
+350034,3,50034,忍者飞镖碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]呱呱泡蛙[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]忍者飞镖[colorindex:colorIndex=0]】,0
+350035,3,50035,燕尾服碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]波加曼[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]燕尾服[colorindex:colorIndex=0]】,0
+350036,3,50036,晨光墨汁碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]墨海马[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]晨光墨汁[colorindex:colorIndex=0]】,0
+350037,3,50037,蛇皮斗篷碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]藤藤蛇[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]蛇皮斗篷[colorindex:colorIndex=0]】,0
+350038,3,50038,菊花茶碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]菊草叶[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]菊花茶[colorindex:colorIndex=0]】,0
+350039,3,50039,软猬手甲碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]哈力栗[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]软猬手甲[colorindex:colorIndex=0]】,0
+350040,3,50040,南孚电池碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]咩利羊[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]南孚电池[colorindex:colorIndex=0]】,0
+350041,3,50041,闪电星碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]小猫怪[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]闪电星[colorindex:colorIndex=0]】,0
+350042,3,50042,艾德曼合金碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]铁甲犀牛[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]艾德曼合金[colorindex:colorIndex=0]】,0
+350043,3,50043,图鲁毒角碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]尼多朗[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]图鲁毒角[colorindex:colorIndex=0]】,0
+350044,3,50044,拳击手套碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]腕力[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]拳击手套[colorindex:colorIndex=0]】,0
+350045,3,50045,诅咒娃娃碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]怨影娃娃[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]诅咒娃娃[colorindex:colorIndex=0]】,0
+350046,3,50046,尼龙皮裤碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]火稚鸡[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]尼龙皮裤[colorindex:colorIndex=0]】,0
+350047,3,50047,水晶焰碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小火龙[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]水晶焰[colorindex:colorIndex=0]】,0
+350048,3,50048,炎纹护肩碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]小火焰猴[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]炎纹护肩[colorindex:colorIndex=0]】,0
+350049,3,50049,龙王须碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]鲤鱼王[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]龙王须[colorindex:colorIndex=0]】,0
+350050,3,50050,巨舰炮甲碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]杰尼龟[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]巨舰炮甲[colorindex:colorIndex=0]】,0
+350051,3,50051,切割双轮碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]水跃鱼[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]切割双轮[colorindex:colorIndex=0]】,0
+350052,3,50052,森树龟壳碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]草苗龟[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]森树龟壳[colorindex:colorIndex=0]】,0
+350053,3,50053,荆棘藤条碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]妙蛙种子[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]荆棘藤条[colorindex:colorIndex=0]】,0
+350054,3,50054,扫射尾刺碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]木守宫[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]扫射尾刺[colorindex:colorIndex=0]】,0
+350055,3,50055,波克比蛋碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]波克比[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]波克比蛋[colorindex:colorIndex=0]】,0
+350056,3,50056,乌克丽丽碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]皮丘[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]乌克丽丽[colorindex:colorIndex=0]】,0
+350057,3,50057,超能汤勺碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]凯西[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]超能汤勺[colorindex:colorIndex=0]】,0
+350058,3,50058,奇怪粘液碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]黏黏宝[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]奇怪粘液[colorindex:colorIndex=0]】,0
+350059,3,50059,色情杂志碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]鬼斯[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]花花公子[colorindex:colorIndex=0]】,0
+350060,3,50060,锅盖头发碎片,0,0,1,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]单首龙[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]锅盖头发[colorindex:colorIndex=0]】,0
+350061,3,50061,超新星碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]不死鸟[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]超新星[colorindex:colorIndex=0]】,0
+350062,3,50062,岩浆空间碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]席多蓝[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]岩浆空间[colorindex:colorIndex=0]】,0
+350063,3,50063,蔚蓝宝珠碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]洛亚鸟[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]蔚蓝宝珠[colorindex:colorIndex=0]】,0
+350064,3,50064,睫毛刷碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]霏米纳[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]睫毛刷[colorindex:colorIndex=0]】,0
+350065,3,50065,芭蕾舞裙碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]拉鲁拉丝[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]芭蕾舞裙[colorindex:colorIndex=0]】,0
+350066,3,50066,时光蛋碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]雪拉比[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]时光蛋[colorindex:colorIndex=0]】,0
+350067,3,50067,最终幻想碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]超梦[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]最终幻想[colorindex:colorIndex=0]】,0
+350068,3,50068,梦幻口琴碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]梦幻[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]梦幻口琴[colorindex:colorIndex=0]】,0
+350069,3,50069,噩梦仪碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]达克莱伊[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]噩梦仪[colorindex:colorIndex=0]】,0
+350070,3,50070,死神镰刀碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]利欧路[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]死神镰刀[colorindex:colorIndex=0]】,0
+350071,3,50071,比蒙利爪碎片,0,0,1,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]固拉多[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]比蒙利爪[colorindex:colorIndex=0]】,0
+350072,3,50072,矶龙卷碎片,0,0,1,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]盖欧卡[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]矶龙卷[colorindex:colorIndex=0]】,0
+350073,3,50073,奥里斯之瞳碎片,0,0,1,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]烈空坐[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]奥里斯之瞳[colorindex:colorIndex=0]】,0
+350074,3,50074,创世苦环碎片,0,0,1,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]阿尔宙斯[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]创世苦环[colorindex:colorIndex=0]】,0
+350075,3,50075,永恒原角碎片,0,0,1,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]生命鹿[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]永恒原角[colorindex:colorIndex=0]】,0
+350076,3,50076,火焰羽毛碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小火鸟[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]火焰羽毛[colorindex:colorIndex=0]】,0
+350077,3,50077,急冻雪花碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小冰鸟[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]急冻雪花[colorindex:colorIndex=0]】,0
+350078,3,50078,樱花戒碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]洁咪[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]樱花戒[colorindex:colorIndex=0]】,0
+350079,3,50079,闪电盾碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小雷鸟[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]闪电盾[colorindex:colorIndex=0]】,0
+350080,3,50080,八尺玉碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]鬼龙[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]八尺玉[colorindex:colorIndex=0]】,0
+350081,3,50081,炎龙心碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]噬火兽[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]炎龙心[colorindex:colorIndex=0]】,0
+350082,3,50082,北风冰瞳碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]北风狼[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]北风冰瞳[colorindex:colorIndex=0]】,0
+350083,3,50083,基因核心碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]吉伽德[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]基因核心[colorindex:colorIndex=0]】,0
+350084,3,50084,雷纹剑齿碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]吞电虎[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]雷纹剑齿[colorindex:colorIndex=0]】,0
+350085,3,50085,电浆管碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]钢虫神[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]电浆管[colorindex:colorIndex=0]】,0
+350086,3,50086,岩石之心碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]岩牛[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]岩石之心[colorindex:colorIndex=0]】,0
+350087,3,50087,蓝钢之心碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]钢羊[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]蓝钢之心[colorindex:colorIndex=0]】,0
+350088,3,50088,草木之心碎片,0,0,1,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]草鹿[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]草木之心[colorindex:colorIndex=0]】,0
+350089,3,50089,焰白之心碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]白拉姆[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]焰白之心[colorindex:colorIndex=0]】,0
+350090,3,50090,暗炎之心碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]黑罗姆[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]暗炎之心[colorindex:colorIndex=0]】,0
+350091,3,50091,空间转盘碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]珍珠兽[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]空间转盘[colorindex:colorIndex=0]】,0
+350092,3,50092,时间转轮碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]钻石兽[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]时间转轮[colorindex:colorIndex=0]】,0
+350094,3,50094,水晶鞋碎片,0,0,1,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]迷唇女娃[colorindex:colorIndex=0]】的专属装备【[colorindex:colorIndex=3]水晶鞋[colorindex:colorIndex=0]】,0
+21000301,2,1000301,小箭雀碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]小箭雀[colorindex:colorIndex=0]】,0
+21000302,2,1000302,爆香猿碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]爆香猴[colorindex:colorIndex=0]】,0
+21000303,2,1000303,六尾碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]三尾[colorindex:colorIndex=0]】,0
+21000304,2,1000304,角金鱼碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]角金鱼[colorindex:colorIndex=0]】,0
+21000305,2,1000305,海星星碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]小海星[colorindex:colorIndex=0]】,0
+21000306,2,1000306,蚊香蝌蚪碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]蚊香蝌蚪[colorindex:colorIndex=0]】,0
+21000307,2,1000307,绿毛虫碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]绿毛虫[colorindex:colorIndex=0]】,0
+21000308,2,1000308,毽子草碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]毽子草[colorindex:colorIndex=0]】,0
+21000309,2,1000309,喇叭芽碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]喇叭芽[colorindex:colorIndex=0]】,0
+21000310,2,1000310,宝宝丁碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]宝宝丁[colorindex:colorIndex=0]】,0
+21000311,2,1000311,小磁怪碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]小磁怪[colorindex:colorIndex=0]】,0
+21000312,2,1000312,小拳石碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]小拳石[colorindex:colorIndex=0]】,0
+21000313,2,1000313,臭泥碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]臭泥[colorindex:colorIndex=0]】,0
+21000314,2,1000314,瓦斯弹碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]瓦斯球[colorindex:colorIndex=0]】,0
+21000315,2,1000315,阿柏蛇碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]小柏蛇[colorindex:colorIndex=0]】,0
+21000316,2,1000316,火球鼠碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]火球鼠[colorindex:colorIndex=0]】,0
+21000317,2,1000317,呆火驼碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]呆火驼[colorindex:colorIndex=0]】,0
+21000318,2,1000318,卡蒂狗碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]卡蒂狗[colorindex:colorIndex=0]】,0
+21000319,2,1000319,小锯鳄碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]小锯鳄[colorindex:colorIndex=0]】,0
+21000320,2,1000320,露力丽碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]露力丽[colorindex:colorIndex=0]】,0
+21000321,2,1000321,水水獭碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]水水獭[colorindex:colorIndex=0]】,0
+21000322,2,1000322,莲叶童子碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]莲叶童子[colorindex:colorIndex=0]】,0
+21000323,2,1000323,走路草碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]走路草[colorindex:colorIndex=0]】,0
+21000324,2,1000324,虫宝包碎片,0,0,2,0,[colorindex:colorIndex=0]集齐10个，可合成得到C级精灵【[colorindex:colorIndex=3]虫宝包[colorindex:colorIndex=0]】,0
+21000325,2,1000325,迷唇娃碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]迷唇娃[colorindex:colorIndex=0]】,0
+21000326,2,1000326,皮宝宝碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]皮宝宝[colorindex:colorIndex=0]】,0
+21000327,2,1000327,电击怪碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]电击怪[colorindex:colorIndex=0]】,0
+21000328,2,1000328,超音蝠碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]超音蝠[colorindex:colorIndex=0]】,0
+21000329,2,1000329,烛光灵碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]烛光灵[colorindex:colorIndex=0]】,0
+21000330,2,1000330,夜骷颅碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到B级精灵【[colorindex:colorIndex=3]夜骷颅[colorindex:colorIndex=0]】,0
+21000331,2,1000331,小鸭嘴龙碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小鸭嘴龙[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强攻击辅助,0
+21000332,2,1000332,小火马碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]小马驹[colorindex:colorIndex=0]】,0
+21000333,2,1000333,火狐狸碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]火狐狸[colorindex:colorIndex=0]】,0
+21000334,2,1000334,呱呱泡蛙碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]呱呱泡蛙[colorindex:colorIndex=0]】,0
+21000335,2,1000335,波加曼碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]波加曼[colorindex:colorIndex=0]】,0
+21000336,2,1000336,墨海马碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]墨海马[colorindex:colorIndex=0]】,0
+21000337,2,1000337,藤藤蛇碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]藤藤蛇[colorindex:colorIndex=0]】,0
+21000338,2,1000338,菊草叶碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]菊草叶[colorindex:colorIndex=0]】,0
+21000339,2,1000339,哈力栗碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]哈力栗[colorindex:colorIndex=0]】,0
+21000340,2,1000340,咩利羊碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]咩利羊[colorindex:colorIndex=0]】,0
+21000341,2,1000341,小猫怪碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]小猫怪[colorindex:colorIndex=0]】,0
+21000342,2,1000342,铁甲犀牛碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]铁甲犀牛[colorindex:colorIndex=0]】,0
+21000343,2,1000343,尼多朗碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]尼多朗[colorindex:colorIndex=0]】,0
+21000344,2,1000344,腕力碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]腕力[colorindex:colorIndex=0]】,0
+21000345,2,1000345,怨影娃娃碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]怨影娃娃[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强攻击辅助,0
+21000346,2,1000346,火稚鸡碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]火稚鸡[colorindex:colorIndex=0]】,0
+21000347,2,1000347,小火龙碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小火龙[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强综合输出,0
+21000348,2,1000348,小火焰猴碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]小火焰猴[colorindex:colorIndex=0]】,0
+21000349,2,1000349,鲤鱼王碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]鲤鱼王[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强肉盾,0
+21000350,2,1000350,杰尼龟碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]杰尼龟[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强技能反击,0
+21000351,2,1000351,水跃鱼碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]水跃鱼[colorindex:colorIndex=0]】,0
+21000352,2,1000352,草苗龟碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]草苗龟[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强肉盾,0
+21000353,2,1000353,妙蛙种子碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]妙蛙种子[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强控场,0
+21000354,2,1000354,木守宫碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]木守宫[colorindex:colorIndex=0]】,0
+21000355,2,1000355,波克比碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]波克比[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强治疗,0
+21000356,2,1000356,皮丘碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]皮丘[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强控场,0
+21000357,2,1000357,凯西碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]凯西[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强防守辅助,0
+21000358,2,1000358,黏黏宝碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]黏黏宝[colorindex:colorIndex=0]】,0
+21000359,2,1000359,鬼斯碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]鬼斯[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强防守辅助,0
+21000360,2,1000360,单首龙碎片,0,0,2,0,[colorindex:colorIndex=0]集齐20个，可合成得到A级精灵【[colorindex:colorIndex=3]单首龙[colorindex:colorIndex=0]】,0
+21000361,2,1000361,凤王碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]不死鸟[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强暴击伤害,0
+21000362,2,1000362,席多蓝恩碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]席多蓝[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强法术输出,0
+21000363,2,1000363,洛奇亚碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]洛亚鸟[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强治疗,0
+21000364,2,1000364,霏欧纳碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]霏米纳[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强物理反击,0
+21000365,2,1000365,拉鲁拉丝碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]拉鲁拉丝[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强闪避大师,0
+21000366,2,1000366,雪拉比碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]雪拉比[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强攻击辅助,0
+21000367,2,1000367,超梦碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]超梦[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强单挑王,0
+21000368,2,1000368,梦幻碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]梦幻[colorindex:colorIndex=0]】,0
+21000369,2,1000369,达克莱伊碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]达克莱伊[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强单挑王,0
+21000370,2,1000370,利欧路碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]利欧路[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强补刀王,0
+21000371,2,1000371,固拉多碎片,0,0,2,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]固拉多[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强物理输出,0
+21000372,2,1000372,盖欧卡碎片,0,0,2,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]盖欧卡[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强治疗打手,0
+21000373,2,1000373,烈空坐碎片,0,0,2,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]烈空坐[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强控场,0
+21000374,2,1000374,阿尔宙斯碎片,0,0,2,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]阿尔宙斯[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强爆发输出,0
+21000375,2,1000375,哲尔尼亚斯碎片,0,0,2,0,[colorindex:colorIndex=0]集齐80个，可合成得到S级精灵【[colorindex:colorIndex=3]生命鹿[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强治疗,0
+21000376,2,1000376,小火鸟碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小火鸟[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强防守辅助,0
+21000377,2,1000377,小冰鸟碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小冰鸟[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强防守辅助,0
+21000378,2,1000378,洁咪碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]洁咪[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强治疗,0
+21000379,2,1000379,小雷鸟碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]小雷鸟[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强攻击辅助,0
+21000380,2,1000380,鬼龙碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]鬼龙[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强光环王,0
+21000381,2,1000381,噬火兽碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]噬火兽[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强暴击光环,0
+21000382,2,1000382,北风狼碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]北风狼[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强进攻辅助,0
+21000383,2,1000383,吉伽德碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]吉伽德[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强防守辅助,0
+21000384,2,1000384,吞电虎碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]吞电虎[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强补刀王,0
+21000385,2,1000385,钢虫神碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]钢虫神[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强用毒大师,0
+21000386,2,1000386,岩牛碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]岩牛[colorindex:colorIndex=0]】[colorindex:colorIndex=5][endl:num=1]火系最强肉盾,0
+21000387,2,1000387,钢羊碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]钢羊[colorindex:colorIndex=0]】[colorindex:colorIndex=4][endl:num=1]水系最强单挑王,0
+21000388,2,1000388,草鹿碎片,0,0,2,0,[colorindex:colorIndex=0]集齐50个，可合成得到S级精灵【[colorindex:colorIndex=3]草鹿[colorindex:colorIndex=0]】[colorindex:colorIndex=3][endl:num=1]木系最强单挑王,0
+21000389,2,1000389,白拉姆碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]白拉姆[colorindex:colorIndex=0]】[colorindex:colorIndex=10][endl:num=1]光系最强物理输出,0
+21000390,2,1000390,黑罗姆碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]黑罗姆[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强物理输出,0
+21000391,2,1000391,珍珠兽碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]珍珠兽[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]暗系最强空间控制,0
+21000392,2,1000392,钻石兽碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]钻石兽[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]光系最强时间控制,0
+21000394,2,1000394,迷唇女娃碎片,0,0,2,0,[colorindex:colorIndex=0]集齐60个，可合成得到S级精灵【[colorindex:colorIndex=3]迷唇女娃[colorindex:colorIndex=0]】[colorindex:colorIndex=9][endl:num=1]光系最肉技能输出,0
+100001,10,10,能量药剂(小),0,600001,3,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 点能量,成功恢复 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 点能量
+100002,10,30,能量药瓶(中),0,600002,4,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]30[colorindex:colorIndex=0] 点能量,成功恢复 [colorindex:colorIndex=3]30[colorindex:colorIndex=0] 点能量
+100003,10,60,能量药罐(大),0,600003,5,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]60[colorindex:colorIndex=0] 点能量,成功恢复 [colorindex:colorIndex=3]60[colorindex:colorIndex=0] 点能量
+110001,11,6,探索药剂(小),0,610001,3,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]6[colorindex:colorIndex=0] 点探索次数,成功恢复 [colorindex:colorIndex=3]6[colorindex:colorIndex=0] 点探索次数
+110002,11,12,探索药瓶(中),0,610002,4,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]12[colorindex:colorIndex=0] 点探索次数,成功恢复 [colorindex:colorIndex=3]12[colorindex:colorIndex=0] 点探索次数
+110003,11,30,探索药罐(大),0,610003,5,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]30[colorindex:colorIndex=0] 点探索次数,成功恢复 [colorindex:colorIndex=3]30[colorindex:colorIndex=0] 点探索次数
+120001,12,10,魔法卷轴(中),0,620001,4,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 点技能点,成功恢复 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 点技能点
+120002,12,20,魔法书典(大),0,620002,5,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]20[colorindex:colorIndex=0] 点技能点,成功恢复 [colorindex:colorIndex=3]20[colorindex:colorIndex=0] 点技能点
+130001,13,-5,竞技场门票,0,630001,5,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]5[colorindex:colorIndex=0] 点联盟大赛挑战次数,成功恢复 [colorindex:colorIndex=3]5[colorindex:colorIndex=0] 点联盟大赛挑战次数
+140001,14,5000,金币(绿),0,640001,2,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]5000[colorindex:colorIndex=0] 金币,获得 [colorindex:colorIndex=3]5000[colorindex:colorIndex=0] 金币
+140002,14,10000,金币(蓝),0,640002,3,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]10000[colorindex:colorIndex=0] 金币,获得 [colorindex:colorIndex=3]10000[colorindex:colorIndex=0] 金币
+140003,14,20000,金币(紫),0,640003,4,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]20000[colorindex:colorIndex=0] 金币,获得 [colorindex:colorIndex=3]20000[colorindex:colorIndex=0] 金币
+140004,14,50000,金币(金),0,640004,5,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]50000[colorindex:colorIndex=0] 金币,获得 [colorindex:colorIndex=3]50000[colorindex:colorIndex=0] 金币
+140005,14,100000,金币(红),0,640005,6,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]100000[colorindex:colorIndex=0] 金币,获得 [colorindex:colorIndex=3]100000[colorindex:colorIndex=0] 金币
+150001,15,1000,水晶(绿),0,650001,2,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]1000[colorindex:colorIndex=0] 水晶,获得 [colorindex:colorIndex=3]1000[colorindex:colorIndex=0] 水晶
+150002,15,5000,水晶(蓝),0,650002,3,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]5000[colorindex:colorIndex=0] 水晶,获得 [colorindex:colorIndex=3]5000[colorindex:colorIndex=0] 水晶
+150003,15,10000,水晶(紫),0,650003,4,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]10000[colorindex:colorIndex=0] 水晶,获得 [colorindex:colorIndex=3]10000[colorindex:colorIndex=0] 水晶
+150004,15,25000,水晶(金),0,650004,5,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]25000[colorindex:colorIndex=0] 水晶,获得 [colorindex:colorIndex=3]25000[colorindex:colorIndex=0] 水晶
+150005,15,50000,水晶(红),0,650005,6,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]50000[colorindex:colorIndex=0] 水晶,获得 [colorindex:colorIndex=3]50000[colorindex:colorIndex=0] 水晶
+160001,16,10,红包(绿),0,660001,2,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 钻石,获得 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 钻石
+160002,16,20,红包(蓝),0,660002,3,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]20[colorindex:colorIndex=0] 钻石,获得 [colorindex:colorIndex=3]20[colorindex:colorIndex=0] 钻石
+160003,16,50,红包(紫),0,660003,4,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]50[colorindex:colorIndex=0] 钻石,获得 [colorindex:colorIndex=3]50[colorindex:colorIndex=0] 钻石
+160004,16,100,红包(金),0,660004,5,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]100[colorindex:colorIndex=0] 钻石,获得 [colorindex:colorIndex=3]100[colorindex:colorIndex=0] 钻石
+160005,16,200,红包(红),0,660005,6,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]200[colorindex:colorIndex=0] 钻石,获得 [colorindex:colorIndex=3]200[colorindex:colorIndex=0] 钻石
+170001,17,5,扩充工具箱(小),0,670001,3,0,[colorindex:colorIndex=0]使用后可扩充 [colorindex:colorIndex=3]5[colorindex:colorIndex=0] 格精灵空间,获得 [colorindex:colorIndex=3]5[colorindex:colorIndex=0] 格精灵空间
+170002,17,10,扩充工具箱(中),0,670002,4,0,[colorindex:colorIndex=0]使用后可扩充 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 格精灵空间,获得 [colorindex:colorIndex=3]10[colorindex:colorIndex=0] 格精灵空间
+170003,17,20,扩充工具箱(大),0,670003,5,0,[colorindex:colorIndex=0]使用后可扩充 [colorindex:colorIndex=3]20[colorindex:colorIndex=0] 格精灵空间,获得 [colorindex:colorIndex=3]20[colorindex:colorIndex=0] 格精灵空间
+180001,18,3,抢夺旗(小),0,680001,3,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]3[colorindex:colorIndex=0] 次精灵村庄抢夺次数,成功恢复 [colorindex:colorIndex=3]3[colorindex:colorIndex=0] 次精灵村庄抢夺次数
+180002,18,6,抢夺旗(中),0,680002,4,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]6[colorindex:colorIndex=0] 次精灵村庄抢夺次数,成功恢复 [colorindex:colorIndex=3]6[colorindex:colorIndex=0] 次精灵村庄抢夺次数
+180003,18,12,抢夺旗(大),0,680003,5,0,[colorindex:colorIndex=0]使用后可恢复 [colorindex:colorIndex=3]12[colorindex:colorIndex=0] 次精灵村庄抢夺次数,成功恢复 [colorindex:colorIndex=3]12[colorindex:colorIndex=0] 次精灵村庄抢夺次数
+190001,19,10010,C级扭蛋机,0,600012,2,0,[colorindex:colorIndex=0]使用后可获得1只[colorindex:colorIndex=3] C [colorindex:colorIndex=0]级【精灵】,0
+190002,19,10009,B级扭蛋机,0,600013,3,0,[colorindex:colorIndex=0]使用后可获得1只[colorindex:colorIndex=4] B [colorindex:colorIndex=0]级【精灵】,0
+190003,19,10008,A级扭蛋机,0,600014,4,0,[colorindex:colorIndex=0]使用后可获得1只[colorindex:colorIndex=9] A [colorindex:colorIndex=0]级【精灵】,0
+190004,19,10007,S级扭蛋机,0,600015,5,0,[colorindex:colorIndex=0]使用后可获得1只[colorindex:colorIndex=10] S [colorindex:colorIndex=0]级【精灵】,0
+190005,19,10007,五星精灵蛋,0,600010,5,0,[colorindex:colorIndex=0]热点[colorindex:colorIndex=10] S [colorindex:colorIndex=0]级精灵，更有机会直接获得[colorindex:colorIndex=10] 5 [colorindex:colorIndex=0]星S精灵,0
+190007,19,10022,A级专属箱,0,600024,5,0,[colorindex:colorIndex=0]A级专属工具箱，可召唤出 A 级精灵的专属装备,0
+190008,19,10022,S级专属箱,0,600025,5,0,[colorindex:colorIndex=0]使用后可获得1件[colorindex:colorIndex=10] S [colorindex:colorIndex=0]级【专属装备】,0
+190011,19,10051,白色材料宝箱,0,600051,1,0,[colorindex:colorIndex=0]使用后可获得 白色材料*5,0
+190012,19,10052,绿色材料宝箱,0,600052,2,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=3]绿色[colorindex:colorIndex=0]材料*3,0
+190013,19,10053,蓝色材料宝箱,0,600053,3,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=4]蓝色[colorindex:colorIndex=0]材料*3,0
+190014,19,10054,紫色材料宝箱,0,600054,4,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=9]紫色[colorindex:colorIndex=0]材料*3,0
+190015,19,10055,金色材料宝箱,0,600055,5,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=10]金色[colorindex:colorIndex=0]材料*3,0
+190016,19,10056,红色材料宝箱,0,600056,6,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=5]红色[colorindex:colorIndex=0]材料*3,0
+190017,19,10063,蓝色果实礼盒,0,600063,3,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=4]蓝色[colorindex:colorIndex=0]果实*5,0
+190018,19,10064,紫色果实礼盒,0,600064,4,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=9]紫色[colorindex:colorIndex=0]果实*5,0
+190019,19,10065,金色果实礼盒,0,600065,5,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=10]金色[colorindex:colorIndex=0]果实*5,0
+190020,19,10066,红色果实礼盒,0,600066,6,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=5]红色[colorindex:colorIndex=0]果实*5,0
+190021,19,10067,粉色材料宝箱,0,600067,7,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=5]粉色[colorindex:colorIndex=0]材料*3,0
+190022,19,10068,粉色果实礼盒,0,600068,7,0,[colorindex:colorIndex=0]使用后可获得 [colorindex:colorIndex=5]粉色[colorindex:colorIndex=0]果实*5,0
+721003,7,0,圣诞袜,0,80062,6,0,[colorindex:colorIndex=0]圣诞节挑战[colorindex:colorIndex=3]普通副本[colorindex:colorIndex=0]或[colorindex:colorIndex=3]精英副本[colorindex:colorIndex=0]有机会获得,0
+721004,20,0,玫瑰花,0,80076,6,0,[colorindex:colorIndex=0]挑战[colorindex:colorIndex=3]普通副本[colorindex:colorIndex=0]或[colorindex:colorIndex=3]精英副本[colorindex:colorIndex=0]有机会获得,0
+721005,7,0,元宵,0,80064,6,0,[colorindex:colorIndex=0]元旦节挑战[colorindex:colorIndex=3]普通副本[colorindex:colorIndex=0]或[colorindex:colorIndex=3]精英副本[colorindex:colorIndex=0]有机会获得,0
+721007,7,0,鞭炮,0,80066,6,0,[colorindex:colorIndex=0]春节挑战[colorindex:colorIndex=3]普通副本[colorindex:colorIndex=0]或[colorindex:colorIndex=3]精英副本[colorindex:colorIndex=0]有机会获得,0
+721008,7,0,凤梨牌香水,0,80079,6,0,迷唇娃换装活动所需道具，收集足够数量可使迷唇娃换装成S级精灵,0
+721009,7,0,魔性安全裤,0,80080,6,0,迷唇娃换装活动所需道具，收集足够数量可使迷唇娃换装成S级精灵,0
+190024,19,4444,巧克力,0,80075,5,0,[colorindex:colorIndex=0]使用后可获得随机道具或材料奖励,0
+190025,19,4444,新年礼盒,0,80069,5,0,[colorindex:colorIndex=0]使用后可获得随机道具或材料奖励,0
+190026,19,4444,金蛋,0,80072,5,0,[colorindex:colorIndex=0]使用后可获得随机道具或材料奖励,0
+200001,20,0,火系种子,0,80085,5,0,成熟后会结出3个火系S级精灵果实，但只要被取走1个，植物就会枯萎，种子无法被分解。,0
+200002,20,0,水系种子,0,80082,5,0,成熟后会结出3个水系S级精灵果实，但只要被取走1个，植物就会枯萎，种子无法被分解。,0
+200003,20,0,木系种子,0,80081,5,0,成熟后会结出3个木系S级精灵果实，但只要被取走1个，植物就会枯萎，种子无法被分解。,0
+200004,20,0,光系种子,0,80084,5,0,成熟后会结出3个光系S级精灵果实，但只要被取走1个，植物就会枯萎，种子无法被分解。,0
+200005,20,0,暗系种子,0,80083,5,0,成熟后会结出3个暗系S级精灵果实，但只要被取走1个，植物就会枯萎，种子无法被分解。,0
+200006,20,0,神奇种子,0,80086,6,0,成熟后会结出1个特殊精灵果实，种子无法被分解，4月1日起才可种植。,0

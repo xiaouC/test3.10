@@ -1,0 +1,53 @@
+# coding: utf-8
+from global_settings import *
+
+WORLD = {
+    'ID': %WORLD_ID%,
+    'ip': '%WORLD_HOST%',  # session服务器发送给客户端连接用
+    'port': 1%WORLD_ID%1,
+    'mode':'NORMAL',# NORMAL 或者 DEBUG
+    'managehost': '127.0.0.1',
+    'manageport': 1%WORLD_ID%2,     # 用于内部管理任务，比如监控，定时任务
+    'backdoorport': 1%WORLD_ID%3,     # python shell
+    'name': u'测试1',
+}
+
+REGION = {
+    'ID': %REGION_ID%,
+    'name': '服务器',
+}
+
+SESSION = {
+    'ID': %SESSION_ID%,
+    'host': '%SESSION_HOST%',
+    'port': %SESSION_PORT%,
+}
+
+PROXY = {
+    'host': '%PROXY_HOST%',
+    'port': %PROXY_PORT%
+}
+
+SDKAPP = {
+    'host': '%SDKAPP_HOST%',
+    'port': %SDKAPP_PORT%
+}
+
+REDISES = {
+    # 登录验证
+    'session': '%REDIS_URL%',
+    # ID生成器
+    'identity': '%REDIS_URL%',
+    # 用户数据
+    'user': '%REDIS_URL%',
+    # 角色，游戏数据
+    'entity': '%REDIS_URL%',
+    # 服务器配置
+    'settings': '%REDIS_URL%',
+    # 各种索引，公会等级排行，玩家等级排行，玩家竞技场排行，用户名索引，角色名索引，公会名索引
+    'index': '%REDIS_URL%',
+    # cdkey
+    'giftkey': '%REDIS_URL%',
+    'payment': '%REDIS_URL%',
+    'friendfb': '%REDIS_URL%',
+}

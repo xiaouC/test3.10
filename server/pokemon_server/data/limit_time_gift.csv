@@ -1,0 +1,7 @@
+id,cd_time,particle_effect,gift_png,type|itemID|amount1,type|itemID|amount2,type|itemID|amount3,type|itemID|amount4
+1,1,particle/ui_denglu2,5Nb_049.png,3|1000353|1,0,0,0
+2,2,particle/ui_libao01,5Nb_048.png,3|1000350|1,0,0,0
+3,3,particle/ui_libao01,5Nb_047.png,3|1000347|1,0,0,0
+4,4,particle/ui_libao01,5Nb_053.png,8|8|1000000,0,0,0
+5,5,particle/ui_libao01,5Nb_054.png,14|100003|3,14|110003|3,0,0
+6,6,particle/ui_libao01,5Nb_046.png,3|1000367|1,0,0,0

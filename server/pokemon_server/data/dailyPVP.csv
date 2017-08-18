@@ -1,0 +1,4 @@
+id,type,argv,desc
+1,1,name|redbag_num,{}拿到了第一滴血[endl:num=1]为全服训练家发放{}个红包
+2,2,name|name|murder_num|murder_num|murder_num,{}终结了{}的{}连杀[endl:num=1]连杀数+{}，连杀达到{}
+3,3,name|标语|murder_num|redbag_num,{}正在{}，连杀达到{}[endl:num=1]为全服训练家发放{}个红包

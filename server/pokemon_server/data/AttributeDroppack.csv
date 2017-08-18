@@ -1,0 +1,11 @@
+Attribute,RewardDroppack,integral,IntegDroppack,reward,again_summon,this_summon,,
+1,10001,-10000,10001,,,,,普通道具单抽
+2,10002,-10000,10002,,,,,普通道具十连抽
+3,10003,3024,10007,S,再买[colorindex:colorIndex=9] %d [colorindex:colorIndex=0]次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,本次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,,普通元宝单抽
+4,10004,0,10004,S,再买[colorindex:colorIndex=9] %d [colorindex:colorIndex=0]次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,必得[colorindex:colorIndex=10]%s[colorindex:colorIndex=0]级精灵,,普通元宝十连抽
+5,10001,-10000,10001,,,,,道具引导首抽
+6,10000,252,10000,S,再买[colorindex:colorIndex=9] %d [colorindex:colorIndex=0]次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,再买[colorindex:colorIndex=9] 2 [colorindex:colorIndex=0]次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,,元宝引导首抽
+7,10001,-10000,10001,,,,,道具自主首抽（含免费）
+8,20000,252,20000,S,再买[colorindex:colorIndex=9] %d [colorindex:colorIndex=0]次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,本次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,,元宝自主首抽（含免费）
+9,10002,-10000,10002,,,,,道具十连首抽
+10,10004,0,10004,S,再买[colorindex:colorIndex=9] %d [colorindex:colorIndex=0]次必得[colorindex:colorIndex=9]%s[colorindex:colorIndex=0]级精灵,必得[colorindex:colorIndex=10]%s[colorindex:colorIndex=0]级精灵,,元宝十连首抽

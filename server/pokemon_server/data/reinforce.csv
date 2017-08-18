@@ -1,0 +1,6 @@
+id,fbid,area,monsterid|unit|location1,monsterid|unit|location2,monsterid|unit|location3,monsterid|unit|location4
+1,100211,2,1003347|1|4,,,
+2,100213,2,1006314|2|1,1006315|2|2,1004347|1|4,
+3,100217,2,1004347|1|4,,,
+3,100220,1,1006314|2|1,1006315|2|2,,
+4,100316,2,1007309|2|1,1007315|2|2,,

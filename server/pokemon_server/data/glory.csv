@@ -1,0 +1,4 @@
+id,campaignid,planvalue,pointtype1,reward1,pointtype2,reward2,titledesc,desc
+1,28001,160,abs_def,500,per_def,5,小花农,315活动中送出[colorindex:colorIndex=3]160[colorindex:colorIndex=0]朵花[endl:num=1]精灵[colorindex:colorIndex=10]防御提升[colorindex:colorIndex=3]5%+500[colorindex:colorIndex=0]
+2,28001,360,abs_def,1000,per_def,10,花王,315活动中送出[colorindex:colorIndex=3]360[colorindex:colorIndex=0]朵花[endl:num=1]精灵[colorindex:colorIndex=10]防御提升[colorindex:colorIndex=3]10%＋1000[colorindex:colorIndex=0]
+3,28001,2160,abs_def,3000,per_def,15,花中之神,315活动中送出[colorindex:colorIndex=3]2160[colorindex:colorIndex=0]朵花[endl:num=1]精灵[colorindex:colorIndex=10]防御提升[colorindex:colorIndex=3]15%＋3000[colorindex:colorIndex=0]

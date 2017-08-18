@@ -1,0 +1,3 @@
+id ,group,old_monster_id,new_monster_id,type|itemID|amount1,type|itemID|amount2,type|itemID|amount3,type|itemID|amount4,renovate_count,bg
+10001,1,1000325,1000394,14|721008|10,14|721009|4,0,0,10|25|0|0,5Nb_2121_1.png
+10002,2,1000325,1000394,14|721008|10,14|721009|4,0,0,10|25|0|0,5Nb_2121_1.png

@@ -1,0 +1,4 @@
+id,dowm_index,count_down,type|itemID|amount1,type|itemID|amount2,type|itemID|amount3,type|itemID|amount4,golden,fixed_price,store_png
+1,2,172800,14|350067|15,14|21000367|15,14|120002|2,0,388,1000,[colorindex:colorIndex=3]S级[colorindex:colorIndex=0]精灵超梦 + 专属
+2,3,86400,14|350067|35,14|21000367|35,16|16|50000,0,888,2000,[colorindex:colorIndex=3]S级[colorindex:colorIndex=0]精灵超梦 + 专属
+3,0,86400,14|350067|60,14|21000367|60,21|21|50,0,1888,5000,[colorindex:colorIndex=3]S级[colorindex:colorIndex=0]精灵超梦 + 专属

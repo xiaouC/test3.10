@@ -1,0 +1,35 @@
+[uwsgi]
+daemonize = session_uwsgi.log 
+socket = :21013
+master = true
+workers = 4
+gevent = 100
+gevent-monkey-patch = 1
+#reload-on-as = 1024
+harakiri = 30
+wsgi = session.main
+#virtualenv = ../../envs/fiction
+post-buffering = 8096
+py-tracebacker = /tmp/tbsocket
+pythonpath = /home/qiuzq/yzzh/server
+pythonpath = .
+uid = qiuzq
+gid = qiuzq
+touch-reload = session_uwsgi.ini
+plugin = logpipe
+log-master = 1
+req-logger = file:session_access.log
+logger = file:session_error.log
+logger = pipe:./scripts/logpipe.sh
+logfile-chown = 1
+log-reopen = 1
+logdate = 1
+stats = 127.0.0.1:9191
+wsgi-accept-buffer = 1
+#http-raw-body = 1
+protocol = http
+#http-socket = 1
+#cron2 = minute=0,hour=-1,unique=1 ./scripts/uploadlonglog.py
+set = main-package=session
+cheap = 0
+idle = 60
