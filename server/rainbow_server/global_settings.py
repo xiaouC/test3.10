@@ -831,11 +831,6 @@ SKIP_GUIDE = False  # 用来给客户端同步是否跳过指引
 
 # SENTRY_DSN = 'gevent+http://8e061988c3e5421094d3969f8ce893bc:28697211dc7f41f5870aec9ae83ab42f@sentry.yunyuegame.com/9'
 
-REGION = {
-    'ID': 100,
-    'name': "服务器",
-}
-
 SDKAPP = {
     'host': '192.168.0.39',
     'port': 20002,
