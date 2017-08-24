@@ -1,0 +1,8 @@
+*.swp
+*.pyc
+*.pyo
+.sconsign.dblite
+*.os
+*.o
+src/mahjong/libmahjong.so
+src/mahjong/main
