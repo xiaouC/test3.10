@@ -34,13 +34,13 @@ protected:
     std::unordered_map<int, int> _map_card_id_index;
 
     // 最多双鬼
-    int _ghost_card_id_1 = 0;
-    int _ghost_card_id_2 = 0;
+    int _ghost_card_id_1 = -1;      // 0 是 1 万，所以鬼牌 ID 不能初始化为 0
+    int _ghost_card_id_2 = -1;
 
     // 0 - 8    : 万字牌
     // 9 - 17   : 索子牌
     // 18 - 26  : 筒子牌
-    // 27 - 33  : 番字牌
+    // 27 - 33  : 番字牌 东南西北中发白
     int _card_id[34];
 
     // 万字牌值，索子牌值，筒子牌值，番牌值

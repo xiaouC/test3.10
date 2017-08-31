@@ -162,8 +162,9 @@ void game_win_check::convert(int* hand_cards, int hand_card_num, int new_card) {
         int card_id = hand_cards[i];
 
         if (card_id != _ghost_card_id_1 && card_id != _ghost_card_id_2) {
-            int index = _map_card_id_index[card_id];
-            ++_card_id[index];
+            // int index = _map_card_id_index[card_id];
+            // ++_card_id[index];
+            ++_card_id[card_id];
         } else {
             ++_ghost_num;
         }
@@ -171,8 +172,9 @@ void game_win_check::convert(int* hand_cards, int hand_card_num, int new_card) {
 
     // 新添加进来的牌
     if (new_card != _ghost_card_id_1 && new_card != _ghost_card_id_2) {
-        int index = _map_card_id_index[new_card];
-        ++_card_id[index];
+        // int index = _map_card_id_index[new_card];
+        // ++_card_id[index];
+        ++_card_id[new_card];
     } else {
         ++_ghost_num;
     }
@@ -293,9 +295,10 @@ bool game_win_check::check_value_2(int ghost_num, bool need_eyes) {
 
 std::list<int> game_win_check::get_ting_list(int* hand_cards, int hand_card_num) {
     std::list<int> win_cards;
-    for (const auto& iter : _map_card_id_index) {
-        if (check_is_win(hand_cards, hand_card_num, iter.first)) {
-            win_cards.push_back(iter.first);
+    for (int card_id=0; card_id < 34; ++card_id) {
+    // for (const auto& iter : _map_card_id_index) {
+        if (check_is_win(hand_cards, hand_card_num, card_id)) {
+            win_cards.push_back(card_id);
         }
     }
 
