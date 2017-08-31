@@ -1,5 +1,7 @@
 #pragma once
 #include <unordered_map>
+#include <list>
+#include <tuple>
 
 class game_win_check {
 public:
@@ -13,18 +15,20 @@ public:
     void set_ghost_card_id_2(int card_id);
 
     bool check_is_win(int* hand_cards, int hand_card_num, int new_card);
-	int* get_ting_list(int* hand_cards, int hand_card_num);
+	std::list<int> get_ting_list(int* hand_cards, int hand_card_num);
     char* get_win_sequence(int* hand_cards, int hand_card_num, int win_card);
 
 protected:
     void convert(int* hand_cards, int hand_card_num, int new_card);
 
-    bool check_value(int index, int ghost_num, bool need_eyes);
+    bool check_value_1(int index, int ghost_num, bool need_eyes);       // 判断万条筒
+    bool check_value_2(int ghost_num, bool need_eyes);       // 判断番牌
 
 protected:
     // first: 牌型组成的 int
     // second: 鬼牌个数，是否带眼
-    std::unordered_map<int, std::tuple<int, bool>> _all_win_styles;
+    std::unordered_map<int, std::list<std::tuple<int, bool>>> _all_win_styles_1;   // 万条筒
+    std::unordered_map<int, std::list<std::tuple<int, bool>>> _all_win_styles_2;   // 番
 
     // card id => index
     std::unordered_map<int, int> _map_card_id_index;
