@@ -1,12 +1,43 @@
 #include <unordered_set>
+#include <set>
 
-std::unordered_set<int> all_win_styles_no_eyes[9];
-std::unordered_set<int> all_win_styles_with_eyes[9];
+//std::unordered_set<int> all_win_styles_no_eyes[9];
+//std::unordered_set<int> all_win_styles_with_eyes[9];
+std::set<int> all_win_styles_no_eyes[9];
+std::set<int> all_win_styles_with_eyes[9];
+
+std::set<int> all_check_no_eyes[9];
+std::set<int> all_check_with_eyes[9];
+
+void save() {
+    for (int i=0; i < 9; ++i) {
+        char szFileName_1[64] = { 0 };
+        sprintf(szFileName_1, "no_eyes_%d.txt", i);
+        FILE* fp_1 = fopen(szFileName_1, "w");
+        for (const auto& iter : all_win_styles_no_eyes[i]) {
+            fprintf(fp_1, "%d\n", iter);
+        }
+        fclose(fp_1);
+
+        char szFileName_2[64] = { 0 };
+        sprintf(szFileName_2, "with_eyes_%d.txt", i);
+        FILE* fp_2 = fopen(szFileName_2, "w");
+        for (const auto& iter : all_win_styles_with_eyes[i]) {
+            fprintf(fp_2, "%d\n", iter);
+        }
+        fclose(fp_2);
+    }
+}
 
 bool add_style(int cards[], int ghost_num, bool has_eyes) {
+    bool check_flag = false;
     int style = 0;
     for (int i=0; i < 9; ++i) {
         style = style * 10 + cards[i];
+
+        if (cards[i] > 4) {
+            check_flag = true;
+        }
     }
 
     // 能够等于 0，那就是都已经被鬼牌给替换掉了
@@ -15,15 +46,24 @@ bool add_style(int cards[], int ghost_num, bool has_eyes) {
         return false;
     }
 
+    // 
+    auto& check_styles = has_eyes ? all_check_with_eyes[ghost_num] : all_check_no_eyes[ghost_num];
+    if (check_styles.find(style) != check_styles.end()) {
+        return false;
+    }
+
+    check_styles.insert(style);
+    if (check_flag) {
+        return true;
+    }
+
     // 缓存起来
     auto& win_styles = has_eyes ? all_win_styles_with_eyes[ghost_num] : all_win_styles_no_eyes[ghost_num];
     if (win_styles.find(style) == win_styles.end()) {
         win_styles.insert(style);
-
-        return true;
     }
 
-    return false;
+    return true;
 }
 
 void ghost_derive_style(int cards[], int ghost_num, bool has_eyes) {
@@ -74,8 +114,12 @@ void gen_cards(int cards[], int level, bool has_eyes) {
     // 后面 7 次，每次都把 3 个球按 1，1，1 丢到连续的框中  => 组成顺子
     for (int i=0; i < 16; ++i) {
         if (i <= 8) {
-            // 每个框中最多只能有 4 个球
-            if (cards[i] > 1)
+            // 每个框中最多只能有 4 个球，不过。。。
+            // 在有鬼的情况下，一个框可以最多有 6 个球(2鬼)
+            // 因为如果 7 个球(3鬼)的话，那和 4 个球(0鬼)没有区别了
+            // 这 3 鬼可以自个玩去了
+            // 8 球(4鬼)和 5 球(1鬼)同理，9 球(5鬼)和 6 球(2鬼)同理，10 球(6鬼)和 7 球(3鬼)也就是 4 球(0鬼)同理
+            if (cards[i] > 3)
                 continue;
 
             cards[i] += 3;
@@ -83,7 +127,8 @@ void gen_cards(int cards[], int level, bool has_eyes) {
             int index = i - 9;
 
             // 每个框中最多只能有 4 个球
-            if (cards[index] > 3 || cards[index+1] > 3 || cards[index+2] > 3)
+            // 在有鬼的情况下，一个框可以最多有 6 个球(2鬼)
+            if (cards[index] > 5 || cards[index+1] > 5 || cards[index+2] > 5)
                 continue;
 
             cards[index] += 1;
@@ -139,6 +184,7 @@ void gen_with_eyes() {
 int main() {
     gen_no_eyes();
     gen_with_eyes();
+    save();
 
     return 0;
 }
