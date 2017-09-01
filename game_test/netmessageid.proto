@@ -1,0 +1,36 @@
+package rainbow;
+option optimize_for = LITE_RUNTIME;
+
+enum NetMsgID
+{
+    SESSION_LOGIN                           = 100;                  // session 登陆
+    SESSION_LOGIN_WX                        = 101;                  // session 微信登陆
+
+    ENTER_SCENE                             = 200;                  // 进入世界场景
+    RECONNECT                               = 201;                  // 重连
+    NOTICE                                  = 202;                  // 公告
+    HEART_BEAT                              = 203;                  // 心跳
+    RECHARGE_LIST                           = 204;                  // 充值列表
+    SYNC_PROPERTY                           = 205;                  // 属性同步
+
+    ROOM_CREATE                             = 1000;                 // 创建房间
+    ROOM_USER_JOIN                          = 1001;                 // 请求加入房间
+    ROOM_USER_IN                            = 1002;                 // 玩家进入房间
+    ROOM_USER_KICK_OUT                      = 1003;                 // 请求把玩家踢出房间
+    ROOM_USER_BACK                          = 1004;                 // 玩家回到房间
+    ROOM_USER_LEAVE                         = 1005;                 // 玩家离开房间
+    ROOM_APPLY_FOR_DISMISS                  = 1006;                 // 玩家请求解散房间
+    ROOM_DISMISS_RESPONSE                   = 1007;                 // 玩家对于请求解散房间的回应
+    ROOM_DISMISS_RESULT                     = 1008;                 // 解散房间的结果
+    ROOM_USER_OFFLINE                       = 1009;                 // 玩家是否离开了房间的状态
+    ROOM_USER_READY                         = 1010;                 // 玩家准备就绪或者取消准备
+
+    GAME_ROUND_START                        = 1100;                 // 小局游戏开始
+    GAME_ROUND_END                          = 1101;                 // 小局游戏结束
+    GAME_FINAL_END                          = 1102;                 // 大局结束
+
+    MAHJONG_DRAW_CARD                       = 1200;                 // 玩家摸牌
+    MAHJONG_OUT_CARD                        = 1201;                 // 玩家出牌
+    MAHJONG_BLOCK_CARD                      = 1202;                 // 玩家拦牌
+    MAHJONG_BU_FLOWER                       = 1203;                 // 玩家补花
+}

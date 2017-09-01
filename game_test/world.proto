@@ -1,0 +1,254 @@
+package rainbow;
+option optimize_for = LITE_RUNTIME;
+import "attributes.proto";
+import "sdk.proto";
+
+// 进入世界
+message EnterRequest {                      
+    required int32          userID          = 1;     
+    required int32          entityID        = 2;     
+    required string         verify_code     = 3;             //特征串
+    optional string         clientVersion   = 4;     
+    optional DeviceInfo     deviceInfo      = 5;     
+}   
+    
+// 进入世界返回
+message EnterResponse {                    
+    optional bool           gift_exchange   = 1;            // 是否可以礼包兑换            
+    required int32          time            = 2;            // 服务器时间
+}
+
+// 属性同步
+message SyncProperty {                      
+    enum EntityType {                       
+        Me      = -1;
+        Player  = 0;                        
+        Pet     = 1;                        
+        Npc     = 2;                        
+        Monster = 3;                        
+        Equip   = 4;                        
+    }
+    required int32      entityID    = 1;       
+    required EntityType type        = 2;       
+    optional Property   properties  = 3;       
+}
+
+// 心跳
+message HeartBeat {
+    required int32 timestamp = 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+message RoomUserInfo {
+    required    int32       entityID            = 1;            // 
+    required    string      username            = 2;
+    required    int32       sex                 = 3;
+    required    bool        offline             = 4;
+    required    int32       pos_index           = 5;            // 在房间中的位置
+    required    bool        is_ready            = 6;            // 是否准备就绪
+}
+
+// 请求创建房间
+message CreateRoomRequest {
+    required    int32       game_id         = 1;                // 对应的游戏 ID
+    required    string      game_settings   = 2;                // 对应的游戏规则等的选项，这是一个 json
+}
+
+// 请求加入房间
+message JoinRoomRequest {
+    required    int32       room_id         = 1;
+}
+
+// 
+message JoinRoomResponse {
+    required    int32           room_id                 = 1;            // 对应的房间ID
+    required    int32           master_id               = 2;            // 房主的entityID
+    required    int32           master_server_index     = 3;            // 进入房间后，房主的座位索引，这个是服务器的索引，从 0 开始
+    required    int32           server_index            = 4;            // 进入房间后，自己的座位索引，这个是服务器的索引，从 0 开始
+    repeated    RoomUserInfo    users                   = 5;            // 房间中所有玩家的基本信息
+    required    int32           game_id                 = 6;            // 对应的游戏 ID
+    required    string          game_settings           = 7;            // 对应的游戏规则等的选项，这是一个 json
+    required    int32           play_count              = 8;            // 当前小局局数
+    required    int32           min_player_count        = 9;            // 最少开始游戏人数
+    required    int32           max_player_count        = 10;           // 最多游戏人数
+}
+
+// 请求踢人
+message KickOutRequest {
+    required    int32           kick_out_id     = 1;            // 被踢的玩家的entityID
+}
+
+// 玩家被踢出房间
+message KickOutResponse {
+    required    int32           kick_out_id     = 1;            // 被踢的玩家的entityID
+}
+
+message UserOffline {
+    required    int32           entityID        = 1;
+    required    bool            offline         = 2;            // 房间内的玩家是否离开了房间
+}
+
+// 是否同意解散房间
+message AgreeDismiss {
+    required    bool            is_agree        = 1;
+}
+
+// 解散房间的结果
+message DismissRoomResult {
+    // 0 : 没有人申请解散房间
+    // 1 : 正在等待其他玩家的回应
+    // 2 : 解散成功
+    // 3 : 解散失败
+    required    int32           result          = 1;            // 解散房间的状态, 
+    optional    int32           apply_id        = 2;            // 发起解散的玩家的entityID
+    optional    int32           agree_num       = 3;            // 同意的玩家个数
+    optional    int32           waiting_num     = 4;            // 等待的玩家个数
+}
+
+// 玩家准备就绪
+message UserReadyRequest {
+    required    bool            is_ready        = 1;            // 玩家准备就绪
+}
+
+message UserReadyResponse {
+    required    int32           pos_index       = 1;            // 玩家的位置
+    required    bool            is_ready        = 2;            // 玩家准备就绪
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 已经吃碰杠过的牌，展示在牌桌上
+message BlockCardData {
+    repeated    int32           card_ids        = 1;            // 吃碰杠的牌，如果希望背面展示的话，就把那个牌的ID设为0
+}
+
+// 当前的听啤列表
+message TingCard {
+    required    int32           card_id                 = 1;            // 所听的牌ID
+    required    int32           remain_count            = 2;            // 牌墙上可能剩余的这张牌的数据，当然，这张牌也有可能是在别的玩家手上
+    optional    int32           points                  = 3;            // 胡牌番数，如果胡这张牌的话，所对应的番数，不一定所有的麻将都有这个，需要根据具体情况而定
+}
+
+// 拦牌的可能的操作，吃碰杠风箭听胡等
+enum BlockType {
+    Cancel      = 0;        // 取消
+    Chow        = 1;        // 吃
+    Pong        = 2;        // 碰
+    Kong        = 3;        // 杠
+    Wind        = 4;        // 风，有些麻将，东南西北可以组成顺子
+    Arrow       = 5;        // 箭，有些麻将，中发白可以组成顺子
+    Ting        = 6;        // 听，有些麻将，需要报听之后才能胡牌
+    Win         = 7;        // 胡
+}
+
+// 当前的可操作的拦牌数据
+message BlockOperationData {
+    required    BlockType       block_type              = 1;            // 拦牌类型
+    optional    int32           src_server_index        = 2;            // 出牌的玩家   (在暗杠，补杠的时候，就没有这两个值了)
+    optional    int32           src_card_id             = 3;            // 出的牌的ID
+    repeated    int32           self_card_ids           = 4;            // 需要从自己手牌中拿起的牌
+    repeated    int32           meld_card_ids           = 5;            // 组成的最终的组合
+}
+
+// 玩家当前的游戏数据，一般包括（手牌，出牌，吃碰杠牌，花牌）
+message UserGameData {
+    repeated    int32               hand_card_ids   = 1;            // 手牌，如果不希望显示具体的牌出来的话，就把ID置为0
+    repeated    int32               out_card_ids    = 2;            // 出牌，就是玩家已经出了的显示在牌桌上的牌
+    repeated    BlockCardData       block_cards     = 3;            // 吃碰杠牌
+    repeated    int32               flower_card_ids = 4;            // 花牌，已经补花后，展示在牌桌上的花牌
+    repeated    TingCard            ting_list       = 7;            // 当前的听牌列表，可能有，可能没有
+    repeated    BlockOperationData  block_list      = 8;            // 当前的可拦牌操作，可能有，可能没有
+    required    int32               pos_index       = 9;            // 
+}
+
+// 骰子点数，一般是两个骰子
+message DiceData {
+    required    int32           dice_num_1      = 1;            // 点数1
+    required    int32           dice_num_2      = 2;            // 点数2
+}
+
+// 鬼牌数据
+message GhostData {
+    repeated    int32           ghost_card_ids          = 1;            // 鬼牌的ID，有些是一个鬼牌，有些是两个鬼牌，当然也有没有鬼牌的
+    optional    int32           flop_card_id            = 2;            // 翻牌时候翻出来的牌的ID
+    optional    DiceData        dice_data               = 3;            // 骰子点数，有些麻将，是通过二次掷骰子来决定鬼牌，有些麻将鬼牌是确定的(如红中麻将)，而有些麻将，是根据第一次掷骰子的点数决定的
+}
+
+// 开始游戏后，麻将的数据，这是一份全量的数据
+message GameDataMahjong {
+    enum GameStatus {
+        Start         = 1;        // 游戏开始
+        Reconn        = 2;        // 重连上来，或者重新进入房间
+    }
+
+    required    GameStatus          game_status             = 1;            // 状态，客户端可以根据这个状态来决定下面的数据怎么使用
+    required    int32               play_count              = 2;            // 当前的小局局数
+    required    int32               total_play_count        = 3;            // 总的小局局数
+    optional    GhostData           ghost_data              = 4;            // 鬼牌数据
+    repeated    UserGameData        user_data               = 5;            // 玩家的游戏数据
+    required    int32               user_turn_server_index  = 6;            // 当前轮到哪个玩家出牌
+    required    int32               banker_server_index     = 7;            // 庄家是谁
+    repeated    int32               dice_num                = 8;            // 骰子点数
+}
+
+// 服务器下发的，玩家可以选择的拦牌操作
+// 拦牌操作，玩家发起的吃碰杠胡等操作请求
+message BlockRequest {
+    required    int32           block_index             = 1;
+}
+
+// 拦牌结果的返回
+// 在拦牌的时候，如果同时有多个玩家可拦牌，那么可能需要等待其他玩家的拦牌操作
+message BlockResponse {
+    required    bool                waiting_others          = 1;            // 是否需要等待其他玩家的拦牌操作
+    optional    BlockType           block_type              = 2;            // 拦牌类型
+    repeated    int32               show_card_list          = 3;            // 如果希望显示出来的牌是盖着的，就设为0
+    optional    int32               src_server_index        = 4;            // 出牌的玩家   (在暗杠，补杠的时候，就没有这两个值了)
+    optional    int32               src_card_id             = 5;            // 出的牌的ID
+    optional    int32               dest_server_index       = 6;            // 拦牌的玩家
+    repeated    int32               dest_card_ids           = 7;            // 拦牌的玩家需要从手牌中拿起的牌
+    optional    int32               kong_card_id            = 8;            // 如果是杠的话，这是从牌墙末尾杠回来的新牌
+    repeated    TingCard            ting_list               = 9;            // 当前的听牌列表，可能有，可能没有
+    repeated    BlockOperationData  block_list              = 10;           // 当前的可拦牌操作，可能有，可能没有
+}
+
+// 玩家摸牌，这个摸牌，是正常的从牌墙摸牌，杠的时候，从牌墙末尾摸的，不是这里
+message UserDrawCard {
+    required    int32               server_index            = 1;
+    required    int32               card_id                 = 2;
+    repeated    TingCard            ting_list               = 3;            // 当前的听牌列表，可能有，可能没有
+    repeated    BlockOperationData  block_list              = 4;            // 当前的可拦牌操作，可能有，可能没有
+}
+
+// 玩家出牌
+message UserOutCardRequest {
+    required    int32           card_id                 = 2;
+}
+
+message UserOutCardResponse {
+    required    int32               server_index            = 1;
+    required    int32               card_id                 = 2;
+    optional    UserDrawCard        next_user_draw_card     = 3;            // 一个玩家出牌后，接着就有可能是下一个摸牌了，当然也有可能会有碰杠等拦牌操作
+    repeated    BlockOperationData  block_list              = 4;            // 当前的可拦牌操作，可能有，可能没有
+}
+
+// 玩家补花
+message UserBuHuaRequest {
+    required    int32           flower_card_id          = 1;
+}
+
+message UserBuHuaResponse {
+    required    int32               server_index            = 1;
+    required    int32               flower_card_id          = 2;
+    required    int32               new_card_id             = 3;
+    repeated    TingCard            ting_list               = 4;            // 当前的听牌列表，可能有，可能没有
+    repeated    BlockOperationData  block_list              = 5;            // 当前的可拦牌操作，可能有，可能没有
+}
+
+// 小局结算
+message RoundSettleResponse {
+    repeated    UserGameData        user_data               = 5;            // 玩家的游戏数据
+}
+
+// 大局结算
+message FinalSettleResponse {
+}
