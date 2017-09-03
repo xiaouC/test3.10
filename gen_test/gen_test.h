@@ -15,7 +15,7 @@ struct meld_info {
 
 class compare_meld {
 public:
-	bool compare_meld::operator () (const meld_info m1, const meld_info m2) const {
+	bool operator () (const meld_info m1, const meld_info m2) const {
 		return m1.x < m2.x;
 	}
 };

@@ -1,6 +1,8 @@
 *.swp
 *.pyc
 .DS_Store
+*.o
+.sconsign.dblite
 
 xcuserdata
 userconf.ini

@@ -3,23 +3,7 @@
 #include <stdlib.h>
 #include <functional>
 
-void string_split(const std::string& src, const std::string& s, std::vector<std::string>& result) {
-    result.clear();
 
-    std::string::size_type pos1 = 0;
-    std::string::size_type pos2 = src.find(s);
-
-    while (pos2 != std::string::npos) {
-		result.push_back(src.substr(pos1, pos2 - pos1));
-
-        pos1 = pos2 + s.size();
-        pos2 = src.find(s, pos1);
-    }
-
-    if (pos1 != src.length()) {
-        result.push_back(src.substr(pos1));
-    }
-}
 
 game_win_check::game_win_check() {
 }

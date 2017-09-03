@@ -1,0 +1,37 @@
+common_env = Environment(
+        CPPDEFINES = ['TARGET_PLATFORM_LINUX', ('DEBUG', 1), 'NO_WEBP', 'PROFILE'],
+        CFLAGS = ['-O2', '-Wall', '-g2', '-pedantic', '-Wno-pedantic'],
+        CXXFLAGS = ['-O2', '-fPIC', '-g2', '-Wall', '-std=c++11', '-frtti', '-D__STDC_LIMIT_MACROS', '-Werror=format', '-Wno-unknown-pragmas', '-Wno-error=format-zero-length'],
+        )
+if common_env['PLATFORM'] == 'darwin':
+    common_env.Replace(
+        CC = 'clang',
+        CXX = 'clang++',
+    )
+else:
+    common_env.Replace(
+        CC = 'gcc-5',
+        CXX = 'g++-5',
+    )
+
+Export('common_env')
+
+env = common_env.Clone()
+env.Append(
+    CFLAGS = ['-std=c11'],
+    CPPPATH = [
+        '.',
+    ],
+    LIBS = ['pthread'],
+)
+
+# shared_lib = env.SharedLibrary(target='gen', source=[ ['gen_test.cpp'] ])
+# env.Install('../../libs', shared_lib)
+# env.Alias('install', '../../libs')
+
+# env.Program('main', [ ['main.cpp', 'game_win_check.cpp', 'gen_test.cpp', 'gen_test_new.cpp', 'gen_test_wtt.cpp', 'common.cpp'] ])
+
+# env.Program('gentest', [ ['main_gen.cpp', 'gen_test_fan.cpp', 'gen_test_wtt.cpp', 'common.cpp'] ])
+env.Program('test', [ ['main_gen.cpp', 'gen_wtt_no_eyes.cpp', 'gen_wtt_with_eyes.cpp', 'gen_fan_no_eyes.cpp', 'gen_fan_with_eyes.cpp', 'common.cpp'] ])
+
+# env.Program('maintest', [ ['main.cpp', 'mahjong_win_check.cpp', 'common.cpp', 'cJSON.c'] ])
