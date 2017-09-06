@@ -128,6 +128,9 @@ message TingCard {
     optional    int32           points                  = 3;            // 胡牌番数，如果胡这张牌的话，所对应的番数，不一定所有的麻将都有这个，需要根据具体情况而定
 }
 
+message AllTingList {
+}
+
 // 拦牌的可能的操作，吃碰杠风箭听胡等
 enum BlockType {
     Cancel      = 0;        // 取消
@@ -229,6 +232,7 @@ message UserOutCardResponse {
     required    int32               card_id                 = 2;
     optional    UserDrawCard        next_user_draw_card     = 3;            // 一个玩家出牌后，接着就有可能是下一个摸牌了，当然也有可能会有碰杠等拦牌操作
     repeated    BlockOperationData  block_list              = 4;            // 当前的可拦牌操作，可能有，可能没有
+    optional    bool                is_game_failed          = 5;            // 是否流局
 }
 
 // 玩家补花

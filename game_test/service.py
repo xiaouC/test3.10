@@ -8,7 +8,7 @@ from yy.rpc import RpcService, rpcmethod
 from yy.message.header import success_msg, fail_msg
 
 from game.manager import RoleIterator
-from game.manager import g_roomManager
+from game.manager import g_gameManager
 from entity.manager import g_entityManager
 from player.manager import g_playerManager
 
@@ -17,7 +17,7 @@ from player.manager import g_playerManager
 def room_required():
     def dec_func(func):
         def inner(self, msgtype, body):
-            room_obj = g_roomManager.get_room(self.player.room_id)
+            room_obj = g_gameManager.get_room(self.player.room_id)
             if not room_obj or not room_obj.has_player(self.player.entityID):
                 self.player.room_id = 0
                 self.player.save()
@@ -28,11 +28,32 @@ def room_required():
     return dec_func
 
 
+# 
+def room_sit_down_required():
+    def dec_func(func):
+        def inner(self, msgtype, body):
+            room_obj = g_gameManager.get_room(self.player.room_id)
+            is_valid = False
+            if room_obj:
+                role_info = room_obj.get_role_info(self.player.entityID)
+                if role_info and role_info['server_index'] != -1:
+                    is_valid = True
+            if not is_valid:
+                self.player.room_id = 0
+                self.player.save()
+                self.player.sync()
+                return fail_msg(msgtype, msgTips.FAIL_MSG_ROOM_NOT_EXIST)
+            return func(self, msgtype, body)
+        return inner
+    return dec_func
+
+
+#
 def no_room_required():
     def dec_func(func):
         def inner(self, msgtype, body):
             if self.player.room_id != 0:
-                room_obj = g_roomManager.get_room(self.player.room_id)
+                room_obj = g_gameManager.get_room(self.player.room_id)
                 if room_obj and room_obj.has_player(self.player.entityID):
                     return fail_msg(msgtype, msgTips.FAIL_MSG_ROOM_CREATE_HAS_ROOM)
             return func(self, msgtype, body)
@@ -48,7 +69,7 @@ class RoomService(RpcService):
         req = rainbow_pb.CreateRoomRequest()
         req.ParseFromString(body)
 
-        room_obj = g_roomManager.create_room(self.player, req.game_id, req.game_settings)
+        room_obj = g_gameManager.create_room(self.player, req.game_id, req.game_settings)
 
         self.player.room_id = room_obj.room_id
         self.player.save()
@@ -75,7 +96,7 @@ class RoomService(RpcService):
         req = rainbow_pb.JoinRoomRequest()
         req.ParseFromString(body)
 
-        room_obj = g_roomManager.get_room(req.room_id)
+        room_obj = g_gameManager.get_room(req.room_id)
         if not room_obj:
             return fail_msg(msgtype, msgTips.FAIL_MSG_ROOM_NOT_EXIST)
 
@@ -144,7 +165,7 @@ class RoomService(RpcService):
         req = rainbow_pb.KickOutRequest()
         req.ParseFromString(body)
 
-        room_obj = g_roomManager.get_room(self.player.room_id)
+        room_obj = g_gameManager.get_room(self.player.room_id)
         if room_obj.master_entity_id != self.player.entityID:
             return fail_msg(msgtype, msgTips.FAIL_MSG_ROOM_KICK_OUT_PERMISSION_DENY)
 
@@ -177,7 +198,7 @@ class RoomService(RpcService):
     @rpcmethod(msgid.ROOM_USER_BACK)
     @room_required()
     def user_back(self, msgtype, body):
-        room_obj = g_roomManager.get_room(self.player.room_id)
+        room_obj = g_gameManager.get_room(self.player.room_id)
 
         rsp_user_offline = rainbow_pb.UserOffline()
         rsp_user_offline.entityID = self.player.entityID
@@ -206,7 +227,7 @@ class RoomService(RpcService):
     @rpcmethod(msgid.ROOM_USER_LEAVE)
     @room_required()
     def user_leave(self, msgtype, body):
-        room_obj = g_roomManager.get_room(self.player.room_id)
+        room_obj = g_gameManager.get_room(self.player.room_id)
         role = room_obj.get_role(self.player.entityID)
         role['offline'] = True
 
@@ -223,13 +244,13 @@ class RoomService(RpcService):
     @rpcmethod(msgid.ROOM_APPLY_FOR_DISMISS)
     @room_required()
     def apply_for_dismiss(self, msgtype, body):
-        room_obj = g_roomManager.get_room(self.player.room_id)
+        room_obj = g_gameManager.get_room(self.player.room_id)
 
         rsp = rainbow_pb.DismissRoomResult()
 
         # 如果只有自己一个人的话，那就直接解散吧
         if room_obj.get_roles_count() == 1:
-            g_roomManager.dismiss_room(self.player)
+            g_gameManager.dismiss_room(self.player)
             rsp.result = 2
             return success_msg(msgtype, rsp)
 
@@ -269,7 +290,7 @@ class RoomService(RpcService):
     @rpcmethod(msgid.ROOM_DISMISS_RESPONSE)
     @room_required()
     def user_dismiss_response(self, msgtype, body):
-        room_obj = g_roomManager.get_room(self.player.room_id)
+        room_obj = g_gameManager.get_room(self.player.room_id)
 
         rsp = rainbow_pb.DismissRoomResult()
 
@@ -319,7 +340,7 @@ class RoomService(RpcService):
                 if role['entityID'] != 0 and not role['offline'] and role['entityID'] != self.player.entityID:
                     g_playerManager.sendto(role['entityID'], msg)
 
-            g_roomManager.dismiss_room(self.player)
+            g_gameManager.dismiss_room(self.player)
 
             return msg
 
@@ -345,7 +366,7 @@ class RoomService(RpcService):
     @rpcmethod(msgid.ROOM_USER_READY)
     @room_required()
     def user_ready(self, msgtype, body):
-        room_obj = g_roomManager.get_room(self.player.room_id)
+        room_obj = g_gameManager.get_room(self.player.room_id)
 
         req = rainbow_pb.UserReadyRequest()
         req.ParseFromString(body)
@@ -370,44 +391,35 @@ class RoomService(RpcService):
         room_obj.broadcast(self.player.entityID, msg)
         return msg
 
-    # 第一小局游戏的开始，房主触发
-    # 后面的小局开始，都是房间所有玩家都准备就绪触发
-    @rpcmethod(msgid.GAME_ROUND_START)
-    @room_required()
-    def game_round_start(self, msgtype, body):
-        room_obj = g_roomManager.get_room(self.player.room_id)
-
-        # 判断是否所有玩家都准备就绪了，如果是的话，就开始游戏吧
-        is_all_ready = True
-        for role in RoleIterator(room_obj):
-            if not role['is_ready']:
-                is_all_ready = False
-
-        if is_all_ready:
-            room_obj.game_start()
-            return success_msg(msgtype, '')
-
-        return fail_msg(msgtype, FAIL_MSG_NOT_ALL_USER_READY)
-
     @rpcmethod(msgid.MAHJONG_OUT_CARD)
-    @room_required()
+    @room_sit_down_required()
     def mahjong_out_card(self, msgtype, body):
         req = rainbow_pb.UserOutCardRequest()
         req.ParseFromString(body)
 
-        room_obj = g_roomManager.get_room(self.player.room_id)
-        result = room_obj.get_game_proxy().user_out_card(self.player, req)
-        if result != SUCCESS_MSG:
+        room_obj = g_gameManager.get_room(self.player.room_id)
+        result = room_obj.player_out_card(self.player, req.card_id)
+        if result != msgTips.SUCCESS:
             return fail_msg(msgtype, result)
-
         return success_msg(msgtype, result)
 
     @rpcmethod(msgid.MAHJONG_BLOCK_CARD)
-    @room_required()
+    @room_sit_down_required()
     def mahjong_block_card(self, msgtype, body):
         pass
 
-    @rpcmethod(msgid.MAHJONG_BU_FLOWER)
-    @room_required()
-    def mahjong_bu_flower(self, msgtype, body):
-        pass
+    @rpcmethod(msgid.GAME_RECONN)
+    @room_sit_down_required()
+    def game_reconn(self, msgtype, body):
+        room_obj = g_gameManager.get_room(self.player.room_id)
+        room_obj.player_reconn(self.player)
+
+        offline_rsp = rainbow_pb.UserOffline()
+        offline_rsp.entityID = self.player.entityID
+        offline_rsp.offline = False
+        for role_info in RoomRoleSitDownIterator(room_obj):
+            if role_info['entityID'] == self.player.entityID:
+                continue
+            g_playerManager.sendto(role_info['entityID'], success_msg(msgid.ROOM_USER_OFFLINE, offline_rsp))
+
+        return success_msg(msgtype, room_obj.pack_game_data(rainbow_pb.GameDataMahjong.Reconn, self.player.entityID))

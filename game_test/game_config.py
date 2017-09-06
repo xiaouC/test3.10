@@ -3,6 +3,7 @@
 
 all_game_config = {
     '100001': {
+        'game_proxy': '',
         'expire': 3 * 60 * 60,              # 3 hours
         'min_player_count': 2,              # 最少开始游戏人数
         'max_player_count': 4,              # 最多游戏人数

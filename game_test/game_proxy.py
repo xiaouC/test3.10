@@ -38,68 +38,68 @@ class GameProxyMahjong(GameProxyBase):
         # 有万字牌
         if room_obj.game_config['has_wan']:
             self.all_origin_lei_cards.extend([
-                0x01, 0x01, 0x01, 0x01,             # 4 张 一万
-                0x02, 0x02, 0x02, 0x02,             # 4 张 二万
-                0x03, 0x03, 0x03, 0x03,             # 4 张 三万
-                0x04, 0x04, 0x04, 0x04,             # 4 张 四万
-                0x05, 0x05, 0x05, 0x05,             # 4 张 五万
-                0x06, 0x06, 0x06, 0x06,             # 4 张 六万
-                0x07, 0x07, 0x07, 0x07,             # 4 张 七万
-                0x08, 0x08, 0x08, 0x08,             # 4 张 八万
-                0x09, 0x09, 0x09, 0x09,             # 4 张 九万
+                0, 0, 0, 0,             # 4 张 一万
+                1, 1, 1, 1,             # 4 张 二万
+                2, 2, 2, 2,             # 4 张 三万
+                3, 3, 3, 3,             # 4 张 四万
+                4, 4, 4, 4,             # 4 张 五万
+                5, 5, 5, 5,             # 4 张 六万
+                6, 6, 6, 6,             # 4 张 七万
+                7, 7, 7, 7,             # 4 张 八万
+                8, 8, 8, 8,             # 4 张 九万
                 ])
 
         # 有索子牌
         if room_obj.game_config['has_tiao']:
             self.all_origin_lei_cards.extend([
-                0x11, 0x11, 0x11, 0x11,             # 4 张 一索
-                0x12, 0x12, 0x12, 0x12,             # 4 张 二索
-                0x13, 0x13, 0x13, 0x13,             # 4 张 三索
-                0x14, 0x14, 0x14, 0x14,             # 4 张 四索
-                0x15, 0x15, 0x15, 0x15,             # 4 张 五索
-                0x16, 0x16, 0x16, 0x16,             # 4 张 六索
-                0x17, 0x17, 0x17, 0x17,             # 4 张 七索
-                0x18, 0x18, 0x18, 0x18,             # 4 张 八索
-                0x19, 0x19, 0x19, 0x19,             # 4 张 九索
+                 9,  9,  9,  9,             # 4 张 一索
+                10, 10, 10, 10,             # 4 张 二索
+                11, 11, 11, 11,             # 4 张 三索
+                12, 12, 12, 12,             # 4 张 四索
+                13, 13, 13, 13,             # 4 张 五索
+                14, 14, 14, 14,             # 4 张 六索
+                15, 15, 15, 15,             # 4 张 七索
+                16, 16, 16, 16,             # 4 张 八索
+                17, 17, 17, 17,             # 4 张 九索
                 ])
 
         # 有筒子牌
         if room_obj.game_config['has_tong']:
             self.all_origin_lei_cards.extend([
-                0x21, 0x21, 0x21, 0x21,             # 4 张 一筒
-                0x22, 0x22, 0x22, 0x22,             # 4 张 二筒
-                0x23, 0x23, 0x23, 0x23,             # 4 张 三筒
-                0x24, 0x24, 0x24, 0x24,             # 4 张 四筒
-                0x25, 0x25, 0x25, 0x25,             # 4 张 五筒
-                0x26, 0x26, 0x26, 0x26,             # 4 张 六筒
-                0x27, 0x27, 0x27, 0x27,             # 4 张 七筒
-                0x28, 0x28, 0x28, 0x28,             # 4 张 八筒
-                0x29, 0x29, 0x29, 0x29,             # 4 张 九筒
+                18, 18, 18, 18,              # 4 张 一筒
+                19, 19, 19, 19,              # 4 张 二筒
+                20, 20, 20, 20,              # 4 张 三筒
+                21, 21, 21, 21,              # 4 张 四筒
+                22, 22, 22, 22,              # 4 张 五筒
+                23, 23, 23, 23,              # 4 张 六筒
+                24, 24, 24, 24,              # 4 张 七筒
+                25, 25, 25, 25,              # 4 张 八筒
+                26, 26, 26, 26,              # 4 张 九筒
                 ])
 
         # 有风牌
         if room_obj.game_config['has_wind']:
             self.all_origin_lei_cards.extend([
-                0x31, 0x31, 0x31, 0x31,             # 4 张 东
-                0x32, 0x32, 0x32, 0x32,             # 4 张 南
-                0x33, 0x33, 0x33, 0x33,             # 4 张 西
-                0x34, 0x34, 0x34, 0x34,             # 4 张 北
-                0x35, 0x35, 0x35, 0x35,             # 4 张 中
-                0x36, 0x36, 0x36, 0x36,             # 4 张 发
-                0x37, 0x37, 0x37, 0x37,             # 4 张 白
+                27, 27, 27, 27,              # 4 张 东
+                28, 28, 28, 28,              # 4 张 南
+                29, 29, 29, 29,              # 4 张 西
+                30, 30, 30, 30,              # 4 张 北
+                31, 31, 31, 31,              # 4 张 中
+                32, 32, 32, 32,              # 4 张 发
+                33, 33, 33, 33,              # 4 张 白
                 ])
 
         # 有花牌
         if room_obj.game_config['has_flower']:
             self.all_origin_lei_cards.extend([
-                0x38,      # 春夏秋冬梅兰菊竹
-                0x39,
-                0x3a,
-                0x3b,
-                0x3c,
-                0x3d,
-                0x3e,
-                0x3f,
+                34,      # 春夏秋冬梅兰菊竹
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
                 ])
         # 
 
@@ -166,11 +166,12 @@ class GameProxyMahjong(GameProxyBase):
                 self.all_lei_cards = self.all_lei_cards[13:]
 
             # 更新一下听牌列表
-            self.update_ting_cards()
+            self.update_ting_cards(role)
 
         # 下发给玩家
         for role in RoleIterator(self.room_obj):
-            self.send_game_data(rainbow_pb.GameDataMahjong.Start, role)
+            rsp = self.pack_game_data(rainbow_pb.GameDataMahjong.Start, role['entityID'])
+            g_playerManager.sendto(role['entityID'], success_msg(msgid.GAME_ROUND_START, rsp))
 
     # 初始化庄家，这个只在第一局开始的时候会被调用
     # 后面庄家，应该是在这一局结束的时候，根据状态来决定下一局的庄家是谁
@@ -190,13 +191,14 @@ class GameProxyMahjong(GameProxyBase):
     def update_block_op(self, role):
         pass
 
-    # 把当前游戏的数据全量的下发给玩家
-    def send_game_data(self, game_status, role):
+    # 把当前游戏的数据全量打包，这个会在游戏开始的时候，以及玩家断线重连的时候需要用到
+    def pack_game_data(self, game_status, entity_id):
         rsp = rainbow_pb.GameDataMahjong()
         rsp.game_status = game_status
         rsp.play_count = self.play_count
         rsp.total_play_count = self.total_play_count
 
+        # 鬼牌数据
         if self.room_obj.game_config['has_ghost_card']:
             for card_id in self.ghost_card_data['ghost_card_ids']:
                 rsp.ghost_data.ghost_card_ids.append(card_id)
@@ -208,12 +210,12 @@ class GameProxyMahjong(GameProxyBase):
 
         # 所有玩家的数据
         for r in RoleIterator(self.room_obj):
-            rud = self.all_user_data[role.entityID]
+            rud = self.all_user_data[entity_id]
 
             ud = rsp.user_data.add()
 
             # 手牌，下发真ID
-            if r.entityID == role.entityID:
+            if r.entityID == entity_id:
                 for card_id in rud['hand_cards']:
                     ud.hand_card_ids.append(card_id)
 
@@ -253,11 +255,11 @@ class GameProxyMahjong(GameProxyBase):
             for card_id in rud['flower_cards']:
                 ud.flower_card_ids.append(card_id)
 
-        # 
-        rsp.user_turn_server_index = self.user_turn_index
+        # 当前庄家是谁，以及轮到谁出牌
         rsp.banker_server_index = self.banker_index
+        rsp.user_turn_server_index = self.user_turn_index
 
-        g_playerManager.sendto(role['entityID'], success_msg(msgid.GAME_ROUND_START, rsp))
+        return rsp
 
     # 玩家从牌墙摸牌，如果是杠的话，就从牌墙的末尾拿牌
     def user_draw_card(self, is_kong):

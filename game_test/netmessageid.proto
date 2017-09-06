@@ -28,6 +28,7 @@ enum NetMsgID
     GAME_ROUND_START                        = 1100;                 // 小局游戏开始
     GAME_ROUND_END                          = 1101;                 // 小局游戏结束
     GAME_FINAL_END                          = 1102;                 // 大局结束
+    GAME_RECONN                             = 1103;                 // 重连上来
 
     MAHJONG_DRAW_CARD                       = 1200;                 // 玩家摸牌
     MAHJONG_OUT_CARD                        = 1201;                 // 玩家出牌
