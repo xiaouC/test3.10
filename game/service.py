@@ -424,9 +424,9 @@ class RoomService(RpcService):
         if room_obj.game_status != 'playing':
             return fail_msg(msgtype, msgTips.GAME_STATUS_NOT_PLAYING)
 
-        # 没有找到对应的拦牌数据
+        # 没有找到对应的拦牌数据，-1 代表取消
         role_info = room_obj.get_role_info(self.player.entityID)
-        if not role_info['block_op'][req.block_index]:
+        if req.block_index != -1 and not role_info['block_op'][req.block_index]:
             return fail_msg(msgtype, msgTips.BLOCK_INDEX_ERROR)
 
         return success_msg(msgtype, room_obj.player_do_block(self.player, req.block_index))

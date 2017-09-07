@@ -139,7 +139,7 @@ class RoomMahjong(RoomBase):
                 role_info['hand_cards'] = self.all_lei_cards[:14]
                 self.all_lei_cards = self.all_lei_cards[14:]
 
-                self.update_block_op(role_info)
+                self.update_block_op()
                 self.update_ting_cards(role_info)
             else:
                 role_info['hand_cards'] = self.all_lei_cards[:13]
@@ -162,23 +162,19 @@ class RoomMahjong(RoomBase):
         rsp.card_id = card_id
 
         # if no one can block, then next user draw card
-        need_block_op = self.update_out_card_block_op(player.entityID, card_id)
+        self.update_block_op(role_info['server_index'], card_id)
+        need_block_op = True if self.all_block_op else False
         new_card_id = -1
         if not need_block_op:
-            new_card_id = self.player_draw_card(False)
+            # next turn user
+            self.user_turn_index = self.get_next_user_turn(self.user_turn_index)
+            next_role_info = self.get_role_info_by_server_index(self.user_turn_index)
+
+            new_card_id = self.player_draw_card(next_role_info, False)
             if new_card_id == -1:
                 rsp.game_faile = True
             else:
-                # next user
-                self.user_turn_index = self.get_next_user_turn(self.user_turn_index)
-                next_role_info = self.get_role_info_by_server_index(self.user_turn_index)
-
-                # update block op & ting list
-                self.update_block_op(next_role_info)
-                self.update_ting_cards(next_role_info)
-
-                rsp.user_draw_card.server_index = self.user_turn_index
-                rsp.user_draw_card.card_id = 0
+                self.pack_user_draw_card(role_info, rsp.user_draw_card, new_card_id)
 
         # send msg
         for other_role_info in RoomRoleIterator(self):
@@ -197,13 +193,7 @@ class RoomMahjong(RoomBase):
             else:
                 # 如果没有摸到牌，就是流局了
                 if new_card_id != -1:
-                    rsp_other.user_draw_card.server_index = self.user_turn_index
-                    if other_role_info['server_index'] == self.user_turn_index:
-                        rsp_other.user_draw_card.card_id = new_card_id
-                        self.pack_all_ting_list(other_role_info, rsp_other.user_draw_card.ting_list)
-                        self.pack_block_op_list(other_role_info, rsp_other.user_draw_card.block_list)
-                    else:
-                        rsp_other.user_draw_card.card_id = 0
+                    self.pack_user_draw_card(other_role_info, rsp_other.user_draw_card, new_card_id)
                 else:
                     rsp_other.game_faile = True
 
@@ -211,40 +201,39 @@ class RoomMahjong(RoomBase):
 
         return rsp
 
-    def player_do_block(self, player, block_index, is_cancel):
+    def player_do_block(self, player, block_index):
         role_info = self.get_role_info(player.entityID)
+
+        # block_index == -1 的话，就是取消
+        block_op_data = self.all_block_op[block_index] if block_index != -1 else None
+        need_wait_others = False
 
         # 更新拦牌列表的状态
         # 如果是取消的话，那么就把这个玩家的所有拦牌操作全部无效
-        if is_cancel:
-            for index, v in enumerate(self.all_block_op):
-                if v['dest_server_index'] == role_info['server_index']:
-                    v['block_status'] = rainbow_pb.Block_Status_Invalid
-        else:
-            for index, v in enumerate(self.all_block_op):
-                if index == block_index:
-                    v['block_status'] = rainbow_pb.Block_Status_Finish
-                    continue
-
-                # 如果是同一个玩家的，那么这个玩家所对应的其他拦牌操作全部无效
-                if v['dest_server_index'] == role_info['server_index']:
-                    v['block_status'] = rainbow_pb.Block_Status_Invalid
-
-        # 判断是否需要等待其他玩家的操作
-        block_op_data = self.all_block_op[block_index]
-        need_wait_others = False
         for index, v in enumerate(self.all_block_op):
-            if index == block_index:
-                continue
-
             if v['block_status'] = rainbow_pb.Block_Status_Invalid:
                 continue
 
-            # 如果还有相同优先级或者更高优先级的玩家未操作的话，需要等待
-            # 相同优先级，应该就只有一炮多响了
-            if v['block_priority'] >= block_op_data['block_priority'] and v['block_status'] == rainbow_pb.Block_Status_Waiting_Player:
-                need_wait_others = True
-                break
+            if index == block_index:
+                v['block_status'] = rainbow_pb.Block_Status_Finish
+                continue
+
+            # 如果是同一个玩家的，那么这个玩家所对应的其他拦牌操作全部无效
+            if v['dest_server_index'] == role_info['server_index']:
+                v['block_status'] = rainbow_pb.Block_Status_Invalid
+                continue
+
+            # 如果是取消的话，只要还有等待玩家操作的，那么就需要等待
+            if block_index == -1:
+                if v['block_status'] == rainbow_pb.Block_Status_Waiting_Player:
+                    need_wait_others = True
+                    break
+            else:
+                # 如果还有相同优先级或者更高优先级的玩家未操作的话，需要等待
+                # 相同优先级，应该就只有一炮多响了
+                if v['block_priority'] >= block_op_data['block_priority'] and v['block_status'] == rainbow_pb.Block_Status_Waiting_Player:
+                    need_wait_others = True
+                    break
 
         # 需要等待
         rsp = rainbow_pb.BlockResponse()
@@ -252,27 +241,83 @@ class RoomMahjong(RoomBase):
             rsp.waiting_others = True
             return rsp
 
-        # 不需要等待其他玩家的操作
-        rsp.block_type = block_op_data['block_type']
-        for id in block_op_data['show_card_list']:
-            rsp.show_card_list.append(id)
-        rsp.dest_server_index = block_op_data['dest_server_index']
-        for id in block_op_data['dest_card_ids']:
-            rsp.dest_card_ids.append(id)
-            role_info['hand_cards'].remove(id)      # 从手牌移除
+        # 不需要等待其他玩家的操作，就找出真出起作用的操作
+        effect_priority = rainbow_pb.Block_Status_Unknown
+        effect_indices = []
+        for index, v in enumerate(self.all_block_op):
+            if v['block_status'] != rainbow_pb.Block_Status_Finish:
+                continue
 
-        # 如果是吃或者碰或者杠别人的牌的话，就要把对方出的牌从 out_cards 里面拿走
-        if block_op_data['src_server_index']:
-            rsp.src_server_index = block_op_data['src_server_index']
-            rsp.src_card_id = block_op_data['src_card_id']
+            if v['block_priority'] == effect_priority:
+                effect_indices.append(index)
+                continue
 
-            src_role_info = self.get_role_info_by_server_index(block_op_data['src_server_index'])
-            src_role_info['out_cards'].pop()    # 这个肯定是最后一个
+            if v['block_priority'] > effect_priority:
+                effect_priority = v['block_priority']
+                effect_indices = [ index ]
 
-        # 如果是杠的话，需要从牌墙未摸一张牌
-        kong_card_id = -1
-        if block_op_data['block_type'] == rainbow_pb.Kong:
-            kong_card_id = self.player_draw_card(True)
+        # 大家都取消了，那就到下一个玩家摸牌了
+        if len(effect_indices) == 0:
+            self.user_turn_index = self.get_next_user_turn(self.user_turn_index)
+            next_role_info = self.get_role_info_by_server_index(self.user_turn_index)
+            new_card_id = self.player_draw_card(next_role_info, False)
+            if new_card_id == -1:
+                rsp.game_faile = True
+            else:
+                self.pack_user_draw_card(role_info, rsp.user_draw_card, new_card_id)
+
+            # 发送给其他玩家的拦牌结果
+            for other_role_info in RoomRoleIterator(self):
+                if other_role_info['entityID'] == player.entityID:
+                    continue
+
+                rsp_other = rainbow_pb.BlockResponse()
+
+                # 如果没有摸到牌，就是流局了
+                if new_card_id != -1:
+                    self.pack_user_draw_card(other_role_info, rsp_other.user_draw_card, new_card_id)
+                else:
+                    rsp_other.game_faile = True
+
+                g_playerManager.sendto(other_role_info['entityID'], success_msg(msgid.MAHJONG_BLOCK_CARD, rsp_other))
+
+            return rsp
+
+        # 遍历所有起作用的操作
+        kong_card_id = None       # 有可能是杠，这个时候需要从牌墙末尾拿一张牌
+        for index in effect_indices:
+            block_result = rsp.block_results.add()
+            bo_data = self.all_block_op[index]
+
+            # 如果是杠的话，从牌墙未摸一张牌
+            if bo_data['block_type'] == rainbow_pb.Kong:
+                # 到杠牌的玩家出牌
+                self.user_turn_index = bo_data['server_index']
+                kong_role_info = self.get_role_info_by_server_index(self.user_turn_index)
+                kong_card_id = self.player_draw_card(kong_role_info, True)
+
+                # 流局
+                if kong_card_id == -1:
+                    rsp.game_faile = True
+
+            self.pack_block_result(role_info, block_result, index, kong_card_id, False)
+
+        # 发送给其他玩家的拦牌结果
+        for other_role_info in RoomRoleIterator(self):
+            if other_role_info['entityID'] == player.entityID:
+                continue
+
+            rsp_other = rainbow_pb.BlockResponse()
+            for index in effect_indices:
+                block_result = rsp.block_results.add()
+                bo_data = self.all_block_op[index]
+
+                self.pack_block_result(other_role_info, block_result, index, kong_card_id, True)
+
+                if kong_card_id == -1:
+                    rsp_other.game_faile = True
+
+            g_playerManager.sendto(other_role_info['entityID'], success_msg(msgid.MAHJONG_BLOCK_CARD, rsp_other))
 
         return rsp
         
@@ -288,27 +333,201 @@ class RoomMahjong(RoomBase):
     def update_ting_cards(self, role):
         pass
 
-    def update_block_op(self, role):
+    def check_is_win(self, role_info, card_id=None):
+        input_data = InputData()
         pass
 
-    def update_out_card_block_op(self, ignore_entity_id, card_id):
-        pass
+    def check_kong(self, role_info, card_id=None):
+        card_num = {}
+        for id in role_info['hand_cards']:
+            if id in card_num:
+                ++card_num[id]
+            else:
+                card_num[id] = 0
 
-    def player_draw_card(self, is_kong):
+        if card_id:
+            if card_id in card_num:
+                ++card_num[card_id]
+            else:
+                card_num[card_id] = 0
+
+        kong_card_ids = []
+        for id, num in card_num.items():
+            if num == 4:
+                kong_card_ids.append(id)
+
+        return kong_card_ids
+
+    def check_pong(self, role_info, card_id=None):
+        card_num = {}
+        for id in role_info['hand_cards']:
+            if id in card_num:
+                ++card_num[id]
+            else:
+                card_num[id] = 0
+
+        if card_id:
+            if card_id in card_num:
+                ++card_num[card_id]
+            else:
+                card_num[card_id] = 0
+
+        pong_card_ids = []
+        for id, num in card_num.items():
+            if num == 3:
+                pong_card_ids.append(id)
+
+        return pong_card_ids
+
+    def check_chow(self, role_info, card_id=None):
+        chow_card_ids = []
+
+        # 3万 - 7万，3条 - 7条，3筒 - 7筒
+        if (card_id >= 2 and card_id <= 6) or (card_id >= 11 and card_id <= 15) or (card_id >= 20 and card_id <= 24):
+            if card_id - 1 in role_info['hand_cards']:
+                if card_id - 2 in role_info['hand_cards']:
+                    chow_card_ids.append([card_id - 2, card_id - 1, card_id])
+
+                if card_id + 1 in role_info['hand_cards']:
+                    chow_card_ids.append([card_id - 1, card_id, card_id + 1])
+
+            if card_id + 1 in role_info['hand_cards'] and card_id + 2 in role_info['hand_cards']:
+                chow_card_ids.append([card_id, card_id + 1, card_id + 2])
+
+        # 2万，8万，2条，8条，2筒，8筒
+        if card_id == 1 or card_id == 7 or card_id == 10 or card_id == 16 or card_id == 19 or card_id == 25:
+            if card_id - 1 in role_info['hand_cards'] and card_id + 1 in role_info['hand_cards']:
+                chow_card_ids.append([card_id - 1, card_id, card_id + 1])
+
+        # 1万，1条，1筒
+        if card_id == 0 or card_id == 9 or card_id == 18:
+            if card_id + 1 in role_info['hand_cards'] and card_id + 2 in role_info['hand_cards']:
+                chow_card_ids.append([card_id, card_id + 1, card_id + 2])
+
+        # 9万，9条，9筒
+        if card_id == 8 or card_id == 17 or card_id == 26:
+            if card_id - 2 in role_info['hand_cards'] and card_id - 1 in role_info['hand_cards']:
+                chow_card_ids.append([card_id - 2, card_id - 1, card_id])
+
+        return chow_card_ids
+
+    def update_block_op(self, out_server_index, out_card_id):
+        # 当前的所有玩家的拦牌操作:
+        self.all_block_op = []
+
+        # 如果是摸牌的话，那就只更新 self.user_turn_index
+        # 如果是出牌的话，那就更新除了 out_server_index 以外的所有其他玩家
+        if not out_server_index:
+            role_info = self.get_role_info_by_server_index(self.user_turn_index)
+
+            # win
+            if self.check_is_win(role_info):
+                self.all_block_op.append({
+                    'block_priority': rainbow_pb.Block_Priority_Win,
+                    'block_type': rainbow_pb.Win,
+                    'dest_server_index': self.user_turn_index,
+                    'dest_card_ids': [],
+                    'show_card_ids': [],
+                    'block_status': rainbow_pb.Block_Status_Waiting_Player,
+                })
+
+            # kong    
+            kong_card_ids = self.check_kong(role_info)
+            for card_id in kong_card_ids:
+                self.all_block_op.append({
+                    'block_priority': rainbow_pb.Block_Priority_Kong,
+                    'block_type': rainbow_pb.Kong,
+                    'dest_server_index': self.user_turn_index,
+                    'dest_card_ids': [card_id, card_id, card_id, card_id],
+                    'show_card_ids': [card_id, card_id, card_id, card_id],
+                    'block_status': rainbow_pb.Block_Status_Waiting_Player,
+                })
+        else:
+            for role_info in RoomRoleIterator(self):
+                if role_info['server_index'] == out_server_index:
+                    continue
+
+            # win
+            if self.check_is_win(role_info, out_card_id):
+                self.all_block_op.append({
+                    'block_priority': rainbow_pb.Block_Priority_Win,
+                    'block_type': rainbow_pb.Win,
+                    'src_server_index': out_server_index,
+                    'src_card_id': out_card_id,
+                    'dest_server_index': role_info['server_index'],
+                    'dest_card_ids': [],
+                    'show_card_ids': [],
+                    'block_status': rainbow_pb.Block_Status_Waiting_Player,
+                })
+
+            # kong    
+            kong_card_ids = self.check_kong(role_info, out_card_id)
+            for card_id in kong_card_ids:
+                self.all_block_op.append({
+                    'block_priority': rainbow_pb.Block_Priority_Kong,
+                    'block_type': rainbow_pb.Kong,
+                    'src_server_index': out_server_index,
+                    'src_card_id': out_card_id,
+                    'dest_server_index': role_info['server_index'],
+                    'dest_card_ids': [card_id, card_id, card_id],
+                    'show_card_ids': [card_id, card_id, card_id, card_id],
+                    'block_status': rainbow_pb.Block_Status_Waiting_Player,
+                })
+
+            # pong
+            pong_card_ids = self.check_pong(role_info, out_card_id)
+            for card_id in pong_card_ids:
+                self.all_block_op.append({
+                    'block_priority': rainbow_pb.Block_Priority_Pong,
+                    'block_type': rainbow_pb.Pong,
+                    'src_server_index': out_server_index,
+                    'src_card_id': out_card_id,
+                    'dest_server_index': role_info['server_index'],
+                    'dest_card_ids': [card_id, card_id],
+                    'show_card_ids': [card_id, card_id, card_id],
+                    'block_status': rainbow_pb.Block_Status_Waiting_Player,
+                })
+
+            # chow
+            if out_server_index + 1 == role_info['server_index'] or out_server_index - 3 == role_info['server_index']:
+                chow_card_ids = self.check_chow(role_info, out_card_id)
+                for card_ids in chow_card_ids:
+                    dest_card_ids = []
+                    for card_id in card_ids:
+                        if card_id != out_card_id:
+                            dest_card_ids.append(card_id)
+
+                    self.all_block_op.append({
+                        'block_priority': rainbow_pb.Block_Priority_Chow,
+                        'block_type': rainbow_pb.Chow,
+                        'src_server_index': out_server_index,
+                        'src_card_id': out_card_id,
+                        'dest_server_index': role_info['server_index'],
+                        'dest_card_ids': dest_card_ids,
+                        'show_card_ids': card_ids,
+                        'block_status': rainbow_pb.Block_Status_Waiting_Player,
+                    })
+
+    def player_draw_card(self, draw_role_info, is_kong):
         if len(self.all_lei_cards) == 0:
             return -1
 
+        new_card_id = -1
         if not is_kong:
-            card_id = self.all_lei_cards[:1]
+            new_card_id = self.all_lei_cards[:1]
             self.all_lei_cards = self.all_lei_cards[1:]
         else:
-            card_id = self.all_lei_cards[:1]
+            new_card_id = self.all_lei_cards[:1]
             self.all_lei_cards = self.all_lei_cards[1:]
 
-        # 摸牌后，判断是否有拦牌
+        # append to hand cards
+        draw_role_info['hand_cards'].append(new_card_id)
+
+        # update block op & ting list
+        self.update_block_op()
+        self.update_ting_cards(draw_role_info)
 
         return card_id
-
 
     # 把游戏数据打包进：
     # rainbow_pb.GameDataMahjong
@@ -397,3 +616,48 @@ class RoomMahjong(RoomBase):
 
             for j in range(0, c_item.valid_count):
                 item.ting_ids.append(c_item.valid_ids[j])
+
+    # pack_role_info 这个摸牌数据，是打包给谁的
+    # user_draw_card : rainbow_pb.UserDrawCard
+    def pack_user_draw_card(self, pack_role_info, user_draw_card, new_card_id):
+        user_draw_card.server_index = self.user_turn_index
+        if pack_role_info['server_index'] == self.user_turn_index:
+            user_draw_card.card_id = new_card_id
+            self.pack_all_ting_list(pack_role_info, user_draw_card.ting_list)
+            self.pack_block_op_list(pack_role_info, user_draw_card.block_list)
+        else:
+            user_draw_card.card_id = 0
+
+    # pack_role_info 这是将一个拦牌的结果数据，打包给谁
+    # block_result : rainbow_pb.BlockResult
+    def pack_block_result(self, pack_role_info, block_result, block_index, kong_card_id, only_pack_data):
+        bo_data = self.all_block_op[block_index]
+
+        block_result.block_type = bo_data['block_type']
+
+        for id in bo_data['show_card_list']:
+            block_result.show_card_list.append(id)
+
+        block_result.dest_server_index = bo_data['dest_server_index']
+        dest_role_info = self.get_role_info_by_server_index(bo_data['dest_server_index']) if not only_pack_data else None
+
+        for id in bo_data['dest_card_ids']:
+            block_result.dest_card_ids.append(id)
+
+            if not dest_role_info:
+                dest_role_info['hand_cards'].remove(id)      # 从手牌移除
+
+        # 如果是吃或者碰或者杠别人的牌的话，就要把对方出的牌从 out_cards 里面拿走
+        if bo_data['src_server_index']:
+            block_result.src_server_index = bo_data['src_server_index']
+            block_result.src_card_id = bo_data['src_card_id']
+
+            src_role_info = self.get_role_info_by_server_index(bo_data['src_server_index']) if not only_pack_data else None
+            if not src_role_info:
+                src_role_info['out_cards'].pop()    # 这个肯定是最后一个
+
+        # 如果是杠的话，需要从牌墙未摸一张牌
+        if not kong_card_id and kong_card_id != -1:
+            self.pack_user_draw_card(pack_role_info, block_result.user_draw_card, kong_card_id)
+
+        pass
