@@ -23,11 +23,8 @@ function RollDiceView:init(args)
     self.csb_node:setPosition(display.width * 0.5, display.height * 0.5)
 
     -- title
-    local text_label = cc.Label:createWithTTF(args.flop_title, 'font/jxk.TTF', 54)
-    text_label:setColorTextureIndex(2)
-    text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-    text_label:enableShadow()
-    self.csb_node:getChildByName('node_text_title'):addChild(text_label)
+    local title_sprite = createSpriteWithName(args.flop_title, ccui.TextureResType.localType)
+    self.csb_node:getChildByName('node_text_title'):addChild(title_sprite)
 
     local all_temp_nodes = {}
 

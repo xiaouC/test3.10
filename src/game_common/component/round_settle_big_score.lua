@@ -9,6 +9,7 @@ function round_settle_big_score:init(args)
     self:listenGameSignal('settle_score', function(server_index, settle_score)
         local location_index = self.game_scene.server_index_to_local_index[server_index]
         if location_index ~= args.location_index then return end
+        if settle_score == 0 then return end
 
         -- 
         if self.score_node then

@@ -22,9 +22,7 @@ function battery_net_state:init(args)
     -- 
     local time_label = self.csb_node:getChildByName('text_time')
     self.time_handler = self.game_scene:schedule_circle(1, function()
-        print('111111111111111')
         local text = os.date("%H:%M", os.time())
-        print('text : ' .. tostring(text))
         time_label:setString(text)
     end, true)
 

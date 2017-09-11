@@ -1,3 +1,4 @@
+-- ./app/platform/game/game_common/components/game_room_info_view.lua
 require 'app.platform.game.game_common.game_component_base'
 
 local game_room_info_view = class('game_room_info_view', view_component_base)

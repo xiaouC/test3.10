@@ -1,6 +1,4 @@
 -- ./app/platform/game/game_common/game_sound.lua
-require 'app.platform.common.game_music'
-
 require 'app.platform.game.game_common.game_component_base'
 
 local game_sound = class('game_sound_component', component_base)
@@ -21,13 +19,13 @@ function game_sound:init(args)
     -- 打骰子
     self:listenGameSignal('roll_dice', function(banker_server_index, dice_num_1, dice_num_2, callback_func)
         self.game_scene:schedule_once_time(0.5, function()
-            play_mahjong_effect('roll_dice')
+            self.game_scene.game_music:dice()
         end)
     end)
 
     self:listenGameSignal('roll_dice_custom', function(server_index, dice_num_1, dice_num_2, callback_func)
         self.game_scene:schedule_once_time(0.5, function()
-            play_mahjong_effect('roll_dice')
+            self.game_scene.game_music:dice()
         end)
     end)
 
@@ -37,29 +35,31 @@ function game_sound:init(args)
             if result_info.m_win[i] then
                 local sex = __get_sex_by_server_index__(i)
 
-                local effect_type = nil
                 if result_info.m_win_type == 1 then
-                    effect_type = 'zimo'
+                    self.game_scene.game_music:zimo()
                 elseif result_info.m_win_type == 2 or result_info.m_win_type == 3 then
-                    effect_type = 'win'
+                    self.game_scene.game_music:huPai()
                 end
 
-                if effect_type then play_mahjong_sex_effect(sex, effect_type) end
-
-                play_mahjong_effect('light')
+                self.game_scene.game_music:light()
             end
         end
     end)
 
     -- 出牌
     self:listenGameSignal('out_card', function(location_index, card_id)
-        play_mahjong_sex_effect(__get_sex_by_location_index__(location_index), 'card', card_id)
-        play_mahjong_effect('drop_card')
+        self.game_scene.game_music:chuPai(card_id, __get_sex_by_location_index__(location_index))
+        self.game_scene.game_music:drop()
     end)
 
     -- 摸牌
     self:listenGameSignal('draw_card', function(location_index, card_id, is_kong, callback_func)
-        play_mahjong_effect('draw_card')
+        self.game_scene.game_music:mopai()
+    end)
+
+    -- 补花
+    self:listenGameSignal('on_flower', function(location_index, card_id)
+        self.game_scene.game_music:buhua(__get_sex_by_location_index__(location_index))
     end)
 
     -- 拦牌
@@ -70,7 +70,9 @@ function game_sound:init(args)
         if block_type == 'ting' then effect_type = 'ting' end
         if block_type == 'kong_bu' or block_type == 'kong_ming' or block_type == 'kong_an' then effect_type = 'kong' end
 
-        if effect_type then play_mahjong_sex_effect(__get_sex_by_location_index__(dest_location_index), effect_type) end
+        if effect_type then
+            self.game_scene.game_music:lanPai(effect_type, __get_sex_by_location_index__(dest_location_index))
+        end
     end)
 end
 

@@ -26,19 +26,26 @@ function voice_chat:init(args)
     -- 
     self.send_voice_flag = false
     clientmain:get_instance():get_voice_mgr():get_event_mgr():BsAddNotifyEvent(basic_def.NOTIFY_VOICE_EVENT, function(event)
+        BASIC_LOG_ERROR('basic_def.NOTIFY_VOICE_EVENT 111111111111111111111111111111111')
         if not event or not event.args then return end
+        BASIC_LOG_ERROR('basic_def.NOTIFY_VOICE_EVENT 222222222222222222222222222222222')
         if event.id ~= basic_def.NOTIFY_VOICE_EVENT then return end
-        if m_def.NOTIFY_VOICE_EVENT_UPLOAD_FILE ~= event.args.event_id then return end
+        BASIC_LOG_ERROR('basic_def.NOTIFY_VOICE_EVENT 333333333333333333333333333333333')
+        if basic_def.NOTIFY_VOICE_EVENT_UPLOAD_FILE ~= event.args.event_id then return end
+        BASIC_LOG_ERROR('basic_def.NOTIFY_VOICE_EVENT 444444444444444444444444444444444')
 
         if not self.send_voice_flag then return end
         self.send_voice_flag = false
+        BASIC_LOG_ERROR('basic_def.NOTIFY_VOICE_EVENT 555555555555555555555555555555555')
 
         local data = event.args.event_data.data
         local ret = event.args.event_data.ret
         if tonumber(ret) == 11 then
-            m_clientmain:get_instance():get_voice_mgr():start_play(data.file_path)
-            m_clientmain:get_instance():get_game_manager():get_game_room_mgr():send_game_chat_msg(self.game_scene.self_user_id, 2, 1, data.file_id)
+            BASIC_LOG_ERROR('basic_def.NOTIFY_VOICE_EVENT 666666666666666666666666666666666')
+            clientmain:get_instance():get_voice_mgr():start_play(data.file_path)
+            clientmain:get_instance():get_game_manager():get_game_room_mgr():send_game_chat_msg(self.game_scene.self_user_id, 2, 1, data.file_id)
         end
+        BASIC_LOG_ERROR('basic_def.NOTIFY_VOICE_EVENT 777777777777777777777777777777777')
     end)
 
     -- 大局结算的时候，隐藏
@@ -61,6 +68,7 @@ function voice_chat:on_touch_began(touch, event)
         self.csb_node_voice:getChildByName('text_tips'):setString('手指上滑，取消发送')
 
         self.voicing_flag = true
+        clientmain:get_instance():get_voice_mgr():start_record_voice()
     end
 
     --return view_component_base.on_touch_began(self, touch, event)
@@ -115,8 +123,9 @@ function voice_chat:on_touch_ended(touch, event)
         if self.cd_handler then self.game_scene:unschedule(self.cd_handler) end
         if self.cd_sprite then self.cd_sprite:removeFromParent(true) end
 
+        local x, y = self.voice_chat_sprite:getPosition()
         self.cd_sprite = cc.Sprite:createWithSpriteFrameName('voice_chat_time_3.png')
-        self.cd_sprite:setPosition(1230, 345)
+        self.cd_sprite:setPosition(x, y + 10)
         self.bg_layer:addChild(self.cd_sprite)
 
         self.voice_chat_sprite:setTexture('game_common_res/component/voice_chat/voice_chat_button_2.png')

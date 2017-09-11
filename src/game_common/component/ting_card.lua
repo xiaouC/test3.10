@@ -55,6 +55,7 @@ function ting_card:init(args)
             self.node_card:removeAllChildren()
             self.all_ting_cards = {}
             self.csb_node:setVisible(false)
+            self.cb_ting:setVisible(false)
         end
 
         local server_index = self.game_scene.local_index_to_server_index[dest_location_index]
@@ -114,6 +115,13 @@ end
 
 function ting_card:resetTingCard(card_list)
     self.all_ting_cards = {}
+
+    -- 要么是听牌，要么是游戏中
+    if #card_list > 0 then
+        self.game_scene.game_music:play_ting()
+    else
+        self.game_scene.game_music:play_game_bg()
+    end
 
     -- 
     self.node_card:removeAllChildren()

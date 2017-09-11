@@ -11,10 +11,13 @@ function out_card_guild:init(args)
     end
 
     -- 
+    self.show_flag = false
     self:listenGameSignal('user_turn', function(server_index)
         if self.show_guild_effect_handler then __cancel__() end
 
         if server_index ~= self.game_scene.my_server_index then return end
+        if self.show_flag then return end
+        self.show_flag = true
 
         -- 
         self.show_guild_effect_handler = self.game_scene:schedule_once_time(5, function()

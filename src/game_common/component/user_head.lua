@@ -1,6 +1,8 @@
 -- ./app/platform/game/game_common/user_head.lua
 require 'app.platform.game.game_common.game_component_base'
 
+local clientmain = require 'app.platform.room.clientmain'
+
 local chat_side_config = {
     ['right'] = {
         offset_x = 50,
@@ -8,7 +10,7 @@ local chat_side_config = {
         background = 'game_common_chat_scale9_bg.png',
         anchor_point = { x = 0, y = 0.5 },
         background_cap_insets = { x= 16, y = 6, width = 6, height = 5 },
-        text_width = 120,
+        text_width = 180,
         text_offset_x = 15,
         text_offset_y = -2,
         voice_offset_x = 100,
@@ -21,7 +23,7 @@ local chat_side_config = {
         background = 'game_common_chat_scale9_bg_2.png',
         anchor_point = { x = 1, y = 0.5 },
         background_cap_insets = { x= 6, y = 6, width = 6, height = 5 },
-        text_width = 120,
+        text_width = 180,
         text_offset_x = -15,
         text_offset_y = -2,
         voice_offset_x = -100,
@@ -39,7 +41,7 @@ local function __create_text_chat_node__(chat_config, text)
     iv:setCapInsets(chat_config.background_cap_insets)
     node:addChild(iv)
 
-    local text_label = cc.Label:createWithTTF(text, 'font/jxk.TTF', 20, cc.size(chat_config.text_width, 0))
+    local text_label = cc.Label:createWithTTF(text, 'hall_res/font/jxk.TTF', 24, cc.size(chat_config.text_width, 0))
     text_label:setAnchorPoint(chat_config.anchor_point.x, chat_config.anchor_point.y)
     text_label:setPosition(chat_config.text_offset_x, chat_config.text_offset_y)
     node:addChild(text_label)
@@ -83,9 +85,9 @@ function user_head:init(args)
     self.node_left_top = self.node_head:getChildByName('node_left_top')
     self.node_right_top = self.node_head:getChildByName('node_right_top')
 
-    -- 
+    ---- 
     self.node_background = self.csb_node:getChildByName('node_background')
-    self.node_background:setVisible(false)
+    --self.node_background:setVisible(false)
 
     button('btn_head_frame', function()
         local server_index = self.game_scene.local_index_to_server_index[self.location_index]
@@ -94,6 +96,27 @@ function user_head:init(args)
             self.game_scene:fire('show_user_detail', user_id)
         end
     end, self.node_head)
+
+    -- 
+    self.ps_origin_x = args.x - display.width * 0.5
+    self.ps_origin_y = args.y - display.height * 0.5
+
+    self.node_ps = cc.Node:create()
+    self.node_ps:setPosition(self.ps_origin_x, self.ps_origin_y)
+    self.node_ps:setVisible(false)
+    self.game_scene:addChild(self.node_ps, 11000)
+
+    local sun = cc.ParticleSun:create()
+    sun:setTexture(cc.Director:getInstance():getTextureCache():addImage('game_res/majiang/particle-stars.png'))
+    sun:setTotalParticles(80)
+    sun:setStartSize(9)
+    sun:setStartSizeVar(3)
+    sun:setSpeed(6)
+    sun:setSpeedVar(1.5)
+    self.node_ps:addChild(sun, 11)
+
+    self.background_sprite = self.node_background:getChildByName('background')
+    self.background_sprite:setVisible(false)
 
     -- 
     self:listenGameSignal('on_user_sit', function(server_index, user_id) self:on_user_sit(server_index, user_id) end)
@@ -106,12 +129,22 @@ function user_head:init(args)
     self:listenGameSignal('on_user_chat', function(chat_type, sub_type, server_index, user_id, msg) self:on_user_chat(chat_type, sub_type, server_index, user_id, msg) end)
     self:listenGameSignal('user_turn', function(server_index) self:on_user_turn(server_index) end)
     self:listenGameSignal('out_card', function(location_index, card_id) self:on_out_card(location_index, card_id) end)
+
+    self.node_round_ready = self.csb_node:getChildByName('round_ready')
+    self:listenGameSignal('on_user_ready', function(server_index, is_ready) self:on_user_ready(server_index, is_ready) end)
 end
 
 function user_head:on_game_state(game_state)
     view_component_base.on_game_state(self, game_state)
 
     self.user_head_node:setVisible((game_state ~= 'waiting') and true or false)
+end
+
+function user_head:on_game_start()
+    self.node_round_ready:setVisible(false)
+    self.background_sprite:setVisible(false)
+
+    view_component_base.on_game_start(self)
 end
 
 function user_head:on_user_sit(server_index, user_id)
@@ -144,9 +177,14 @@ function user_head:on_user_offline(server_index, is_offline)
     local location_index = self.game_scene.server_index_to_local_index[server_index]
     if location_index ~= self.location_index then return end
 
-    if self.user_head_sprite then
-        self.user_head_sprite:setColor(is_offline and cc.c3b(125, 125, 125) or cc.WHITE)
+    if not self.offline_sprite then
+        self.offline_sprite = cc.Sprite:create('game_res/majiang/userinfo/img_cut.png')
+        self.offline_sprite:setScale(1.4)
+        self.offline_sprite:setVisible(false)
+        self.node_head:getChildByName('node_head_sprite'):addChild(self.offline_sprite, 1)
     end
+
+    self.offline_sprite:setVisible(is_offline)
 end
 
 function user_head:on_bankder_server_index(server_index)
@@ -217,7 +255,7 @@ function user_head:on_user_chat(chat_type, sub_type, server_index, user_id, msg)
         __show_text__(sound_text.text)
 
         local user_info = self.game_scene.all_user_info[server_index]
-        play_chat_effect(user_info.m_bBoy and 'boy' or 'girl', sound_text.index)
+        self.game_scene.game_music:chatVoice(sound_text.index, user_info.m_bBoy and 'boy' or 'girl')
     elseif chat_type == 3 then
         local index = tonumber(sub_type)
 
@@ -229,7 +267,7 @@ function user_head:on_user_chat(chat_type, sub_type, server_index, user_id, msg)
         performWithDelay(anim_node, function() anim_node:removeFromParent(true) end, 1.2)
     else
         if user_id ~= self.game_scene.self_user_id then
-            clientmain:get_instance():get_voice_mgr():play_net_record(msg)    
+            clientmain:get_instance():get_voice_mgr():play_net_record(msg)
 
             local anim_node = createAnimNode('game_common_res/anim_play_voice_chat.csb')
             anim_node:setPosition(self.chat_config.voice_offset_x, self.chat_config.voice_offset_y)
@@ -246,7 +284,8 @@ function user_head:on_user_turn(server_index)
     if location_index ~= self.location_index then return end
 
     --
-    self.node_background:setVisible(true)
+    self.node_ps:setVisible(true)
+    --self.node_background:setVisible(true)
 
     -- 
     if not self.game_scene.is_replay then
@@ -261,16 +300,37 @@ function user_head:on_user_turn(server_index)
         self.progress:runAction(cc.ProgressTo:create(10, 100))
 
         -- 
-        local background_sprite = self.node_background:getChildByName('background')
         local action_1 = cc.DelayTime:create(10)
         local action_2 = cc.CallFunc:create(function()
-            background_sprite:runAction(cc.RepeatForever:create(cc.Blink:create(1, 1)))
+            self.node_ps:setVisible(false)
+
+            -- 只有轮到出牌的那个的头像底才闪
+            if server_index == self.game_scene.my_server_index then
+                self.background_sprite:runAction(cc.RepeatForever:create(cc.Blink:create(1, 1)))
+            end
         end) 
-        background_sprite:runAction(cc.Sequence:create(action_1, action_2))
+        self.background_sprite:runAction(cc.Sequence:create(action_1, action_2))
     else
-        local background_sprite = self.node_background:getChildByName('background')
-        background_sprite:runAction(cc.RepeatForever:create(cc.Blink:create(1, 1)))
+        self.background_sprite:runAction(cc.RepeatForever:create(cc.Blink:create(1, 1)))
     end
+
+    -- 
+    self.node_ps:stopAllActions()
+    self.node_ps:setPosition(self.ps_origin_x, self.ps_origin_y + 64)
+    self.node_ps:setVisible(true)
+    self.background_sprite:setVisible(true)
+
+    local time1 = 10*90/((90+128)*2)
+    local time2 = 10*128/((90+128)*2)
+    local move1 = cc.MoveBy:create(time1/2+0.1, cc.p(44,0)); --88 124
+    local move2 = cc.MoveBy:create(time2-0.35, cc.p(0,-124));
+    local move3 = cc.MoveBy:create(time1+0.4, cc.p(-88,0));
+    local move4 = cc.MoveBy:create(time2-0.35, cc.p(0,124));
+    local move5 = cc.MoveBy:create(time1/2+0.1, cc.p(44,0));
+    local callback = cc.CallFunc:create(function()
+        self.node_ps:setVisible(false)
+    end)
+    self.node_ps:runAction(cc.Sequence:create(move1, move2, move3, move4, move5, callback))
 end
 
 function user_head:on_out_card(location_index, card_id)
@@ -280,8 +340,19 @@ function user_head:on_out_card(location_index, card_id)
         self.progress:setVisible(false)
         self.progress:stopAllActions()
     end
-    self.node_background:setVisible(false)
-    self.node_background:getChildByName('background'):stopAllActions()
+    --self.node_background:setVisible(false)
+    self.background_sprite:setVisible(false)
+    self.background_sprite:stopAllActions()
+
+    self.node_ps:setVisible(false)
+end
+
+function user_head:on_user_ready(server_index, is_ready)
+    local location_index = self.game_scene.server_index_to_local_index[server_index]
+    if location_index ~= self.location_index then return end
+
+    self.node_round_ready:setVisible(is_ready)
+    self.background_sprite:setVisible(is_ready)
 end
 
 return user_head

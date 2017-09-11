@@ -20,6 +20,8 @@ local hand_card_z_order = {
 local hand_card = class('hand_card_component', component_base)
 function hand_card:ctor(game_scene)
     component_base.ctor(self, game_scene)
+
+    self.init_hand_card_schedule_handlers = {}
 end
 
 function hand_card:init(args)
@@ -35,6 +37,7 @@ function hand_card:init(args)
 
     -- 
     self.hand_card_node = self:create_hand_card_node()
+    self.node_cards = {}
     self.game_scene:addChild(self.hand_card_node, self.hand_card_config.z_order)
 
     -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -48,9 +51,11 @@ function hand_card:init(args)
     self:listenGameSignal('draw_card', function(location_index, card_id, is_kong, callback_func) self:draw_card(location_index, card_id, is_kong, callback_func) end)
     self:listenGameSignal('reconn_draw_card', function(location_index, card_id, is_kong) self:reconn_draw_card(location_index, card_id, is_kong) end)
     self:listenGameSignal('out_card', function(location_index, card_id) self:out_card(location_index, card_id) end)
+    self:listenGameSignal('on_flower', function(location_index, flower_card_id, new_card_id) self:on_flower(location_index, flower_card_id, new_card_id) end)
 
     -- 亮牌
     self:listenGameSignal('liang_card', function(location_index, card_list, card_num, win_card) self:liang_card(location_index, card_list, card_num, win_card) end)
+    self:listenGameSignal('gai_card', function(location_index) self:gai_card(location_index) end)
 
     self:listenGameSignal('user_ready', function(location_index, is_ready) self:on_user_ready(location_index, is_ready) end)
 
@@ -60,9 +65,12 @@ function hand_card:init(args)
     end)
 
     -- 鬼牌确定后，要给手牌加上鬼牌标识，还要对手牌排个序
+    self.has_gai_card = false   -- 如果已经盖牌了，就不用了
     self:listenGameSignal('ghost_card_confirm', function(fake_card_ids, really_card_ids, dice_num_1, dice_num_2)
-        self:update_ghost_flag()
-        self:update_position()
+        if not self.has_gai_card then
+            self:update_ghost_flag()
+            self:update_position()
+        end
     end)
 
     local zm_offset_y = { 120, 110, 120, 110 }
@@ -84,14 +92,25 @@ end
 function hand_card:on_prepare_next_round()
     self.cur_draw_card = nil
 
-    self.hand_card_node:removeAllChildren()
-    self.node_cards = {}
+    self:clear_all_hand_card()
 
     self.is_back = self.origin_is_back
+
+    self.has_gai_card = false
 end
 
 function hand_card:create_hand_card_node()
     return cc.Node:create()
+end
+
+function hand_card:clear_all_hand_card()
+    for _, handler in ipairs(self.init_hand_card_schedule_handlers) do
+        self.game_scene:unschedule(handler)
+    end
+    self.init_hand_card_schedule_handlers = {}
+
+    self.hand_card_node:removeAllChildren()
+    self.node_cards = {}
 end
 
 function hand_card:create_card(card_id, area)
@@ -104,7 +123,7 @@ function hand_card:create_card(card_id, area)
     local card = __create_card__()
 
     -- 
-    if self.game_scene:is_ghost_card(card_id) then
+    if not self.is_back and self.game_scene:is_ghost_card(card_id) then
         card:addChild(self.game_scene:createGhostSubscript(self.location_index, area or CARD_AREA.HAND))
     end
 
@@ -115,7 +134,7 @@ function hand_card:get_card_position(card_num, card_index, is_liang)
     local card_location_attr = {
         [USER_LOCATION_SELF] = function()
             local card_width = ((is_liang or self.area == CARD_AREA.TAN) and 65 or 77)
-            local start_x, start_y = 1060, 55
+            local start_x, start_y = (is_liang and 960 or 1060), 55
             if card_index > 0 then
                 return start_x - card_width * (card_num - card_index), start_y, card_index
             else
@@ -124,7 +143,7 @@ function hand_card:get_card_position(card_num, card_index, is_liang)
         end,
         [USER_LOCATION_RIGHT] = function()
             local card_height = ((is_liang or not self.is_back) and 38 or 30)
-            local start_x, start_y = 1160, 610
+            local start_x, start_y = 1168, 610
             if card_index > 0 then
                 return start_x, start_y - card_height * (card_num - card_index), -card_index
             else
@@ -133,7 +152,7 @@ function hand_card:get_card_position(card_num, card_index, is_liang)
         end,
         [USER_LOCATION_FACING] = function()
             local card_width = ((is_liang or not self.is_back) and 38 or 30)
-            local start_x, start_y = 450, 690
+            local start_x, start_y = (is_liang and 400 or 400), 675
             if card_index > 0 then
                 return start_x + card_width * (card_num - card_index), start_y, card_index
             else
@@ -142,7 +161,7 @@ function hand_card:get_card_position(card_num, card_index, is_liang)
         end,
         [USER_LOCATION_LEFT] = function()
             local card_height = ((is_liang or not self.is_back) and 38 or 30)
-            local start_x, start_y = 120, 180
+            local start_x, start_y = 113, 180
             if card_index > 0 then
                 return start_x, start_y + card_height * (card_num - card_index), card_index
             else
@@ -159,8 +178,7 @@ function hand_card:init_hand_card(location_index, card_list, card_num, callback_
     if location_index ~= self.location_index then return end
 
     -- 
-    self.hand_card_node:removeAllChildren()
-    self.node_cards = {}
+    self:clear_all_hand_card()
 
     for i=1, card_num do
         local x, y, z_order = self:get_card_position(card_num, i)
@@ -180,7 +198,7 @@ function hand_card:init_hand_card(location_index, card_list, card_num, callback_
     local delay = 0
     local count = math.floor(card_num / 4) + 1
     for i=0, count - 1 do
-        self.game_scene:schedule_once_time(delay, function()
+        local handler = self.game_scene:schedule_once_time(delay, function()
             local index = i * 4
             if self.node_cards[index+1] then self.node_cards[index+1].card:setVisible(true) end
             if self.node_cards[index+2] then self.node_cards[index+2].card:setVisible(true) end
@@ -194,6 +212,7 @@ function hand_card:init_hand_card(location_index, card_list, card_num, callback_
                 if callback_func then callback_func() end
             end
         end)
+        table.insert(self.init_hand_card_schedule_handlers, handler)
 
         delay = delay + 0.8
     end
@@ -203,8 +222,7 @@ function hand_card:reconn_hand_card(location_index, card_list, card_num)
     if location_index ~= self.location_index then return end
 
     -- 
-    self.hand_card_node:removeAllChildren()
-    self.node_cards = {}
+    self:clear_all_hand_card()
 
     for i=1, card_num do
         local x, y, z_order = self:get_card_position(card_num, i)
@@ -220,7 +238,19 @@ function hand_card:reconn_hand_card(location_index, card_list, card_num)
         }
     end
 
+    -- 
     self:update_position()
+
+    -- 指向最后一张牌，用于提示玩家出牌
+    if self.game_scene.local_index_to_server_index[location_index] == self.game_scene.user_turn_server_index then
+        self.cur_draw_card = self.node_cards[#self.node_cards].card
+
+        local x, y, z_order = self:get_card_position(#self.node_cards, -1)
+        self.cur_draw_card:setPosition(x, y)
+        self.cur_draw_card:setLocalZOrder(z_order)
+
+        self:update_position()
+    end
 end
 
 function hand_card:play_draw_card_anim(card_id, callback)
@@ -240,6 +270,8 @@ function hand_card:draw_card(location_index, card_id, is_kong, callback_func)
 
         local x, y, z_order = self:get_card_position(#self.node_cards, -1)
 
+        local need_update_position = (self.cur_draw_card and true or false)
+
         -- 记录下刚摸的牌，在手牌排序的时候，忽略这张牌
         self.cur_draw_card = self:create_card(card_id, self.area)
         self.cur_draw_card:setPosition(x, y)
@@ -249,6 +281,8 @@ function hand_card:draw_card(location_index, card_id, is_kong, callback_func)
             card = self.cur_draw_card,
             card_id = card_id,
         })
+
+        if need_update_position then self:update_position() end
 
         -- 
         if callback_func then callback_func() end
@@ -277,16 +311,50 @@ function hand_card:out_card(location_index, card_id)
     -- 手牌出牌还原点
     self:pushRestorePoint()
 
+    -- 在出牌后，要重置
+    self.cur_draw_card = nil
+
     -- 
     if self.is_back then
         self:remove_card_by_num(1)
     else
         self:remove_card_by_ids({card_id})
     end
+end
 
-    -- 在出牌后，要重置
-    self.cur_draw_card = nil
+function hand_card:on_flower(location_index, flower_card_id, new_card_id)
+    if location_index ~= self.location_index then return end
 
+    -- 手牌出牌还原点
+    self:pushRestorePoint()
+
+    local last_cur_draw_card = self.cur_draw_card
+
+    -- 
+    if self.is_back then
+        self:remove_card_by_num(1)
+    else
+        self:remove_card_by_ids({flower_card_id})
+    end
+
+    -- 
+    local card_num = #self.node_cards
+    local index = (last_cur_draw_card and -1 or (card_num - 1))
+    local x, y, z_order = self:get_card_position(card_num, index)
+
+    -- 记录下刚摸的牌，在手牌排序的时候，忽略这张牌
+    local new_card = self:create_card(new_card_id, self.area)
+    new_card:setPosition(x, y)
+    self.hand_card_node:addChild(new_card, z_order)
+
+    table.insert(self.node_cards, {
+        card = new_card,
+        card_id = new_card_id,
+    })
+
+    if last_cur_draw_card then self.cur_draw_card = new_card end
+
+    -- 
     self:update_position()
 end
 
@@ -294,8 +362,7 @@ function hand_card:liang_card(location_index, card_list, card_num, win_card)
     if location_index ~= self.location_index then return end
 
     -- 
-    self.hand_card_node:removeAllChildren()
-    self.node_cards = {}
+    self:clear_all_hand_card()
 
     -- 
     self.is_back = false
@@ -328,15 +395,41 @@ function hand_card:liang_card(location_index, card_list, card_num, win_card)
     end
 end
 
+function hand_card:gai_card(location_index)
+    if location_index ~= self.location_index then return end
+
+    -- 
+    local card_num = #self.node_cards
+
+    -- 
+    self:clear_all_hand_card()
+
+    -- 
+    for i=1, card_num do
+        local x, y, z_order = self:get_card_position(card_num, i, true)
+
+        local card = create_card_back(self.location_index, CARD_AREA.TAN)
+        card:setPosition(x, y)
+        self.hand_card_node:addChild(card, z_order)
+
+        self.node_cards[i] = {
+            card = card,
+            card_id = 0,
+        }
+    end
+
+    self.has_gai_card = true
+end
+
 function hand_card:on_user_ready(location_index, is_ready)
     if location_index == self.location_index and is_ready then
-        self.hand_card_node:removeAllChildren()
-        self.node_cards = {}
+        self:clear_all_hand_card()
     end
 end
 
 function hand_card:on_block_result(block_type, show_card_list, src_location_index, src_card_list, dest_location_index, dest_card_list)
     if dest_location_index ~= self.location_index then return end
+    if block_type == 'pass' then return end
 
     -- 手牌拦牌还原点
     self:pushRestorePoint()
@@ -345,6 +438,15 @@ function hand_card:on_block_result(block_type, show_card_list, src_location_inde
 
     -- 
     self:remove_card_by_ids(dest_card_list)
+
+    -- 指向最后一张牌，用于提示玩家出牌
+    self.cur_draw_card = self.node_cards[#self.node_cards].card
+
+    local x, y, z_order = self:get_card_position(#self.node_cards, -1)
+    self.cur_draw_card:setPosition(x, y)
+    self.cur_draw_card:setLocalZOrder(z_order)
+
+    self:update_position()
 end
 
 -- remove card by ids/num
@@ -377,8 +479,10 @@ end
 
 function hand_card:remove_card_by_num(rm_card_num)
     for i=1, rm_card_num do
-        self.node_cards[#self.node_cards].card:removeFromParent(true)
-        self.node_cards[#self.node_cards] = nil
+        if #self.node_cards > 0 then
+            self.node_cards[#self.node_cards].card:removeFromParent(true)
+            self.node_cards[#self.node_cards] = nil
+        end
     end
 
     -- 
@@ -386,8 +490,8 @@ function hand_card:remove_card_by_num(rm_card_num)
 end
 
 function hand_card:update_ghost_flag()
-    for _, v in ipairs(self.node_cards) do
-        if self.game_scene:is_ghost_card(v.card_id) then
+    for _, v in ipairs(self.node_cards or {}) do
+        if not self.is_back and self.game_scene:is_ghost_card(v.card_id) then
             v.card:addChild(self.game_scene:createGhostSubscript(self.location_index, CARD_AREA.HAND))
         end
     end
@@ -395,20 +499,22 @@ end
 
 function hand_card:update_position()
     if self.location_index == USER_LOCATION_SELF or not self.is_back then
-        table.sort(self.node_cards, function(card_a, card_b)
-            local card_id_1 = card_a.card_id
-            local card_id_2 = card_b.card_id
-            return self.game_scene:sort_card_by_id(card_id_1, card_id_2)
-        end)
+        if self.node_cards then
+            table.sort(self.node_cards, function(card_a, card_b)
+                local card_id_1 = card_a.card_id
+                local card_id_2 = card_b.card_id
+                return self.game_scene:sort_card_by_id(card_id_1, card_id_2)
+            end)
+        end
     end
 
-    local card_num = #self.node_cards
+    local card_num = (self.node_cards and #self.node_cards or 0)
 
     -- 忽略刚摸到的牌
     if self.cur_draw_card then card_num = card_num - 1 end
 
     local index = 1
-    for _, v in ipairs(self.node_cards) do
+    for _, v in ipairs(self.node_cards or {}) do
         if self.cur_draw_card ~= v.card then
             local x, y, z_order = self:get_card_position(card_num, index)
             v.card:setPosition(x, y)

@@ -33,24 +33,16 @@ function GameWaitingView:init(args)
             self:inviteFriends()
         end
     end, self.csb_node)
-
-    local btn_size = self.btn_start_or_invite:getContentSize()
-
-    self.btn_text_label = cc.Label:createWithTTF('开始游戏', 'font/fzzyjt.ttf', 40)
-    self.btn_text_label:setColorTextureIndex(2)
-    self.btn_text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-    self.btn_text_label:setPosition(btn_size.width * 0.5, btn_size.height * 0.5 + 5)
-    self.btn_text_label:enableOutline(cc.c3b(166, 24, 22), 2)
-    self.btn_text_label:enableShadow()
-    self.btn_start_or_invite:getRendererNormal():addChild(self.btn_text_label)
-
+    self.btn_start_or_invite:loadTextureNormal('game_res/majiang/btn_game_begin.png', ccui.TextureResType.localType)
 
     -- button cancel
     self.btn_cancel = button('btn_cancel', function()
         -- 如果是房主的话，那就是开始游戏，这个出现在少于4人时候
         -- 其他情况下，都是房主看不见的
         if self.game_scene.my_server_index == self.game_scene.homeowner_server_index then
-            self.game_scene:requestAction('user_agree', true)
+            show_msg_box_1('提示', '人数未达到 4 人，确定开始游戏吗？', function()
+                self.game_scene:requestAction('user_agree', true)
+            end)
         else
             self.game_scene:requestAction('user_agree', false)
         end
@@ -284,17 +276,11 @@ function GameWaitingView:updateReadyButton()
         self.btn_state = btn_state
 
         if btn_state == 'ready' then
-            self.btn_text_label:setString('准    备')
-            self.btn_text_label:enableOutline(cc.c3b(166, 24, 22), 2)
-            self.btn_start_or_invite:loadTextureNormal('btn_advance_2.png', ccui.TextureResType.plistType)
+            self.btn_start_or_invite:loadTextureNormal('game_res/majiang/btn_game_ready.png', ccui.TextureResType.localType)
         elseif btn_state == 'start' then
-            self.btn_text_label:setString('开始游戏')
-            self.btn_text_label:enableOutline(cc.c3b(166, 24, 22), 2)
-            self.btn_start_or_invite:loadTextureNormal('btn_advance_2.png', ccui.TextureResType.plistType)
+            self.btn_start_or_invite:loadTextureNormal('game_res/majiang/btn_game_begin.png', ccui.TextureResType.localType)
         elseif btn_state == 'invite' then
-            self.btn_text_label:setString('邀请好友')
-            self.btn_text_label:enableOutline(cc.c3b(28, 118, 14), 2)
-            self.btn_start_or_invite:loadTextureNormal('btn_advance_1.png', ccui.TextureResType.plistType)
+            self.btn_start_or_invite:loadTextureNormal('game_res/majiang/btn_invite_friend2.png', ccui.TextureResType.localType)
         end
     end
 end
@@ -345,7 +331,7 @@ function GameWaitingView:on_user_chat(chat_type, sub_type, server_index, user_id
         __show_text__(sound_text.text)
 
         local user_info = self.game_scene.all_user_info[server_index]
-        play_chat_effect(user_info.m_bBoy and 'boy' or 'girl', sound_text.index)
+        self.game_scene.game_music:chatVoice(sound_text.index, user_info.m_bBoy and 'boy' or 'girl')
     elseif chat_type == 3 then
         local index = tonumber(sub_type)
 

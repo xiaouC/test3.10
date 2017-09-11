@@ -5,7 +5,7 @@ local warning_tips = class('warning_tips_component', component_base)
 function warning_tips:ctor(game_scene)
     component_base.ctor(self, game_scene)
 
-    self.csb_z_order = GAME_VIEW_Z_ORDER.VOICE_CHAT
+    self.csb_z_order = GAME_VIEW_Z_ORDER.CHAT
 end
 
 function warning_tips:init(args)
@@ -22,13 +22,14 @@ function warning_tips:init(args)
 
     -- 30 秒出牌超时提示
     self:listenGameSignal('user_turn', function(server_index)
+        self.csb_node:setVisible(false)
         if server_index == self.game_scene.my_server_index then
             self.out_card_warning_handler = self.game_scene:schedule_once_time(30, function()
                 self.csb_node:setVisible(true)
                 self.csb_node:getChildByName('text_tips'):setString('轮到你出牌了哦！')
 
                 -- 震动一下
-                if UserData:getWarnShake() == 'on' then CBsGameManager:GetI():LuaVibrate(500) end
+                if UserData:getShakeValue() == 'on' then CBsGameManager:GetI():LuaVibrate(500) end
             end)
         end
     end)
@@ -62,6 +63,12 @@ function warning_tips:init(args)
                 self.csb_node:getChildByName('text_tips'):setString('请等待房主开始游戏')
             end
         end
+    end)
+
+    -- 自定义的提示
+    self:listenGameSignal('custom_tips', function(text)
+        self.csb_node:setVisible(true)
+        self.csb_node:getChildByName('text_tips'):setString(text)
     end)
 end
 

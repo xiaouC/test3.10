@@ -39,6 +39,14 @@ function FinalSettleView:conversion_data(result_info)
         },
     }
 
+    local max_score = 1     -- 如果都是 0 的，那就没有大赢家
+    for server_index=1, 4 do
+        local score = tonumber(result_info.m_total_score[server_index])
+        if score > max_score then
+            max_score = score
+        end
+    end
+
     -- 
     for server_index=1, 4 do
         local user_info = self.game_scene.all_user_info[server_index]
@@ -52,11 +60,12 @@ function FinalSettleView:conversion_data(result_info)
                 score = self:getUserScore(result_info, server_index),
                 ticket = result_info.m_reward_gift[server_index],
                 win_count = result_info.m_win_count[server_index],
+                is_big_winner = tonumber(result_info.m_total_score[server_index]) == max_score,
             }
 
             if server_index == self.game_scene.my_server_index then
                 self.final_settle_data.self_data = user_data
-                self.final_settle_data.self_data.more_count = self:getFinalSettleMoreCount(result_info, server_index)
+                self.final_settle_data.self_data.more_count = self:getFinalSettleMoreCount(result_info, server_index) or {}
             else
                 table.insert(self.final_settle_data.othsers_data, user_data)
                 table.insert(self.dashang_user_ids, user_data.user_id)
@@ -68,7 +77,7 @@ end
 function FinalSettleView:on_final_settle()
     self.csb_node = cc.CSLoader:createNode('game_common_res/settle/final_settle_view.csb')
     self.csb_node:setPosition(display.width * 0.5, display.height * 0.5)
-    self.game_scene:addChild(self.csb_node, GAME_VIEW_Z_ORDER.ROUND_SETTLE)
+    self.game_scene:addChild(self.csb_node, GAME_VIEW_Z_ORDER.FINAL_SETTLE)
 
     --
     local node_content = self.csb_node:getChildByName('node_content')
@@ -90,6 +99,9 @@ function FinalSettleView:on_final_settle()
 
     ------------------------------------------------------------------------------------------------------------------------------------------------
     node_content:getChildByName('homeowner_flag'):setVisible(self.final_settle_data.self_data.is_homeower and true or false)
+    if self.final_settle_data.self_data.is_big_winner then
+        node_content:getChildByName('node_big_winner_flag'):addChild(cc.Sprite:create('game_common_res/settle/big_winner.png'))
+    end
     node_content:getChildByName('node_head'):addChild(createUserHeadSprite{
         m_bLogoID = self.final_settle_data.self_data.head_id,
         m_headurl = self.final_settle_data.self_data.head_url,
@@ -109,31 +121,47 @@ function FinalSettleView:on_final_settle()
     -- 
     local p = cc.GLProgramCache:getInstance():getGLProgram('color_texture_label')
     local lv_self_count = node_content:getChildByName('lv_self_count')
-    for _, v in ipairs(self.final_settle_data.self_data.more_count or {}) do
+    lv_self_count:setScrollBarEnabled(false)
+    lv_self_count:setEnabled(false)
+
+    local all_item_widgets = {}
+    local total_count = #self.final_settle_data.self_data.more_count
+    local offset_x = (total_count > 6 and -100 or 0)
+
+    for index, v in ipairs(self.final_settle_data.self_data.more_count) do
+        local r_index = index
+        if index > 6 then
+            r_index = index - 6
+            offset_x = 250
+        end
+
+        -- 
         local item_width, item_height = 400, 50
 
-        local item_widget = ccui.Widget:create()
+        local item_widget = all_item_widgets[r_index] or ccui.Widget:create()
         item_widget:setContentSize(cc.size(item_width, item_height))
+        if r_index == index then
+            all_item_widgets[index] = item_widget
+            lv_self_count:addChild(item_widget)
+        end
 
-        local text_label = cc.Label:createWithTTF(v[1], 'res/font/jxk.TTF', 42, cc.size(item_width, item_height))
-        text_label:setColorTextureIndex(5)
-        text_label:setGLProgram(p)
-        text_label:setPosition(item_width * 0.5, item_height * 0.5)
-        text_label:enableShadow()
-        item_widget:addChild(text_label)
+        local sprite = createSpriteWithName(v.sprite_file, v.res_type)
+        sprite:setAnchorPoint(1, 0.5)
+        sprite:setPosition(item_width * 0.5 + offset_x, item_height * 0.5)
+        item_widget:addChild(sprite)
 
-        local num_label = cc.LabelAtlas:_create(tostring(v[2]), 'game_common_res/settle_count_1.png', 26, 30, string.byte('/'))
+        local num_label = cc.LabelAtlas:_create(tostring(v.num), 'game_common_res/settle_count_1.png', 26, 30, string.byte('/'))
+        num_label:setAnchorPoint(0, 0.5)
         num_label:setAnchorPoint(0.5, 0.5)
-        num_label:setPosition(item_width * 0.5 + 100, item_height * 0.5)
+        num_label:setPosition(item_width * 0.5 + offset_x + 50, item_height * 0.5)
         item_widget:addChild(num_label)
-
-        lv_self_count:addChild(item_widget)
     end
     lv_self_count:requestDoLayout()
 
     ------------------------------------------------------------------------------------------------------------------------------------------------
     local lv_others = node_content:getChildByName('lv_others')
     lv_others:setScrollBarEnabled(false)
+    lv_others:setEnabled(false)
     lv_others:setItemsMargin(self.final_settle_data.othsers_data.items_margin)
 
     local item_width = self.final_settle_data.othsers_data.item_width
@@ -168,6 +196,9 @@ function FinalSettleView:on_final_settle()
         item_csb_node:setPosition(item_width * 0.5, item_height * 0.5)
 
         item_csb_node:getChildByName('homeowner_flag'):setVisible(v.is_homeower and true or false)
+        if v.is_big_winner then
+            item_csb_node:getChildByName('node_big_winner_flag'):addChild(cc.Sprite:create('game_common_res/settle/big_winner.png'))
+        end
         item_csb_node:getChildByName('node_head'):addChild(createUserHeadSprite{
             m_bLogoID = v.head_id,
             m_headurl = v.head_url,
@@ -238,7 +269,7 @@ function FinalSettleView:on_final_settle()
             end
         end)
     end, node_content)
-    local icon_sprite_dashang = cc.Sprite:createWithSpriteFrameName('img_room_bg.png')
+    local icon_sprite_dashang = cc.Sprite:create('hall_res/hall/common/img_room_bg.png')
     icon_sprite_dashang:setScale(0.8)
     icon_sprite_dashang:setPosition(70, 50)
     btn_dashang:getRendererNormal():addChild(icon_sprite_dashang)
@@ -271,43 +302,35 @@ function FinalSettleView:on_final_settle()
             index = 0,
             name = '微信',
             node_name = 'wechat',
+            sprite_file = 'hall_res/hall/share/result_btn_WX.png',
         },
         {
             index = 1,
             name = '朋友圈',
             node_name = 'friends',
+            sprite_file = 'hall_res/hall/share/result_btn_WXfriend.png',
         },
         {
             index = 4,
             name = '支付宝',
             node_name = 'ali',
+            sprite_file = 'hall_res/hall/share/result_btn_ZFB.png',
         },
         {
             index = 2,
             name = 'QQ',
             node_name = 'qq',
+            sprite_file = 'hall_res/hall/share/result_btn_QQ.png',
         },
         {
             index = 5,
             name = '易信',
             node_name = 'yx',
+            sprite_file = 'hall_res/hall/share/result_btn_YX.png',
         },
     }
 
-    local function __create_share_label__(text)
-        local text_label = cc.Label:createWithSystemFont(text, '黑体', 30)
-        text_label:setColorTextureIndex(2)
-        text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_system_font_label'))
-        return text_label
-    end
-
     for _, v in ipairs(share_config) do
-        local text_label = cc.Label:createWithSystemFont(v.name, '黑体', 30)
-        text_label:setColorTextureIndex(2)
-        text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_system_font_label'))
-
-        node_share:getChildByName('node_text_' .. v.node_name):addChild(text_label)
-
         button('btn_' .. v.node_name, function()
             m_clientmain:get_instance():get_sdk_mgr():share_image_ext("dc_share_image.jpg", v.index)
         end, node_share)

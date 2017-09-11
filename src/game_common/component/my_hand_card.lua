@@ -139,6 +139,8 @@ function my_hand_card:on_touch_began(touch, event)
 
         if self.cur_sel_card.card then
             self.cur_sel_card.card:setPosition(self.cur_sel_card.x, self.cur_sel_card.y)
+            self.cur_sel_card.card:setScale(self.cur_sel_card.origin_scale)
+            self.cur_sel_card.card:setLocalZOrder(self.cur_sel_card.z_order)
         end
 
         local x, y = down_sel.card:getPosition()
@@ -147,13 +149,19 @@ function my_hand_card:on_touch_began(touch, event)
             card_id = down_sel.card_id,
             x = x,
             y = y,
+            z_order = down_sel.card:getLocalZOrder(),
             double_sel = false,
             mv_flag = false,
+            origin_scale = down_sel.card:getScale(),
         }
 
-        play_mahjong_effect('select_card')
+        self.game_scene.game_music:handselect()
 
         down_sel.card:setPosition(x, y + 50)
+        down_sel.card:setLocalZOrder(1000)
+        down_sel.card:setScale(1.1 * self.cur_sel_card.origin_scale)
+        self.hand_card_node:sortAllChildren()
+        self.game_scene:fire('hand_selected', down_sel.card_id)
 
         -- 
         local ting_list = self.ting_groups[down_sel.card_id]
@@ -197,6 +205,15 @@ function my_hand_card:on_touch_ended(touch, event)
         if self:request_out_card(self.cur_sel_card.card_id) then
             self.cur_sel_card.card:setVisible(false)
             self.cur_sel_card = {}
+        else
+            self.cur_sel_card.card:setPosition(self.cur_sel_card.x, self.cur_sel_card.y)
+            self.cur_sel_card.card:setScale(self.cur_sel_card.origin_scale)
+            self.cur_sel_card.card:setLocalZOrder(self.cur_sel_card.z_order)
+            self.hand_card_node:sortAllChildren()
+            self.game_scene:fire('hand_selected', -1)
+
+            if self.cur_sel_card.card.arrow_sprite then self.cur_sel_card.card.arrow_sprite:setVisible(true) end
+            self.cur_sel_card = {}
         end
 
         return
@@ -204,6 +221,11 @@ function my_hand_card:on_touch_ended(touch, event)
 
     if self.cur_sel_card.mv_flag then
         self.cur_sel_card.card:setPosition(self.cur_sel_card.x, self.cur_sel_card.y)
+        self.cur_sel_card.card:setScale(self.cur_sel_card.origin_scale)
+        self.cur_sel_card.card:setLocalZOrder(self.cur_sel_card.z_order)
+        self.hand_card_node:sortAllChildren()
+        self.game_scene:fire('hand_selected', -1)
+
         if self.cur_sel_card.card.arrow_sprite then self.cur_sel_card.card.arrow_sprite:setVisible(true) end
         self.cur_sel_card = {}
     end
@@ -213,6 +235,15 @@ function my_hand_card:on_touch_ended(touch, event)
     if cur_sel and cur_sel.card == self.cur_sel_card.card and self.cur_sel_card.double_sel then
         if self:request_out_card(self.cur_sel_card.card_id) then
             self.cur_sel_card.card:setVisible(false)
+            self.cur_sel_card = {}
+        else
+            self.cur_sel_card.card:setPosition(self.cur_sel_card.x, self.cur_sel_card.y)
+            self.cur_sel_card.card:setScale(self.cur_sel_card.origin_scale)
+            self.cur_sel_card.card:setLocalZOrder(self.cur_sel_card.z_order)
+            self.hand_card_node:sortAllChildren()
+            self.game_scene:fire('hand_selected', -1)
+
+            if self.cur_sel_card.card.arrow_sprite then self.cur_sel_card.card.arrow_sprite:setVisible(true) end
             self.cur_sel_card = {}
         end
     end
@@ -247,6 +278,11 @@ function my_hand_card:request_out_card(card_id)
     self.my_turn = false
 
     self.cur_sel_card.card:setPosition(self.cur_sel_card.x, self.cur_sel_card.y)
+    self.cur_sel_card.card:setScale(self.cur_sel_card.origin_scale)
+    self.cur_sel_card.card:setLocalZOrder(self.cur_sel_card.z_order)
+    self.hand_card_node:sortAllChildren()
+    self.game_scene:fire('hand_selected', -1)
+
     local request_out_card = self.cur_sel_card.card
     self.game_scene:requestAction('discard_card', self.game_scene.my_server_index, card_id, function()
         self.my_turn = true
@@ -261,15 +297,14 @@ function my_hand_card:play_draw_card_anim(card_id, callback)
     if not self.cur_ting_list then return callback() end
 
     -- 关闭了摸牌时候的搓牌动画
-    if UserData:getDrawCardAnim() ~= 'on' then return callback() end
+    if UserData:getRubCardValue() ~= 'on' then return callback() end
 
     -- 
-    local mopai_bg = cc.Sprite:create('mahjong/component/roll_dice/roll_dice_background.png')
+    local mopai_bg = cc.Sprite:create('mahjong/component/roll_dice/draw_card_background.png')
     mopai_bg:setPosition(640, 430)
     self.hand_card_node:addChild(mopai_bg, 911)
 
     local node = cc.Node:create()
-    node:setPosition(50, 100)
     mopai_bg:addChild(node)
 
     local mopai_hand_bg = cc.Sprite:createWithSpriteFrameName('draw_card_hand_5.png')
@@ -295,12 +330,60 @@ function my_hand_card:play_draw_card_anim(card_id, callback)
     mopai_hand:runAction(cc.Sequence:create(action_1, action_2, action_3))
 end
 
+-- remove card by ids/num
+function my_hand_card:remove_card_by_ids(rm_card_ids)
+    local function __rm_card_id__(card_id)
+        if self.is_back or card_id <= 0 then
+            if self.node_cards[#self.node_cards].anim_card then
+                self.node_cards[#self.node_cards].anim_card:removeFromParent(true)
+            end
+            self.node_cards[#self.node_cards].card:removeFromParent(true)
+            self.node_cards[#self.node_cards] = nil
+
+            return
+        end
+
+        for index, v in ipairs(self.node_cards) do
+            if v.card_id == card_id then
+                if v.anim_card then
+                    v.anim_card:removeFromParent(true)
+                end
+                v.card:removeFromParent(true)
+                table.remove(self.node_cards, index)
+
+                return
+            end
+        end
+    end
+
+    for _, card_id in ipairs(rm_card_ids or {}) do
+        __rm_card_id__(card_id)
+    end
+
+    -- 
+    self:update_position()
+end
+
+function my_hand_card:remove_card_by_num(rm_card_num)
+    for i=1, rm_card_num do
+        if #self.node_cards > 0 then
+            if self.node_cards[#self.node_cards].anim_card then
+                self.node_cards[#self.node_cards].anim_card:removeFromParent(true)
+            end
+            self.node_cards[#self.node_cards].card:removeFromParent(true)
+            self.node_cards[#self.node_cards] = nil
+        end
+    end
+
+    -- 
+    self:update_position()
+end
+
 function my_hand_card:init_hand_card(location_index, card_list, card_num, callback_func)
     if location_index ~= self.location_index then return end
 
     -- 
-    self.hand_card_node:removeAllChildren()
-    self.node_cards = {}
+    self:clear_all_hand_card()
 
     for i=1, card_num do
         local x, y, z_order = self:get_card_position(card_num, i)
@@ -320,8 +403,8 @@ function my_hand_card:init_hand_card(location_index, card_list, card_num, callba
     local delay = 0
     local count = math.floor(card_num / 4) + 1
     for i=0, count - 1 do
-        self.game_scene:schedule_once_time(delay, function()
-            play_mahjong_effect('fapai')
+        local handler = self.game_scene:schedule_once_time(delay, function()
+            self.game_scene.game_music:faPai()
 
             local index = i * 4
 
@@ -340,31 +423,38 @@ function my_hand_card:init_hand_card(location_index, card_list, card_num, callba
 
                     -- 初始化手牌的动画结束，这个是用来触发摸牌操作
                     if i == count - 1 then
-                        self.game_scene:schedule_once_time(0.4, function()
-                            play_mahjong_effect('gaipai')
+                        local handler = self.game_scene:schedule_once_time(0.4, function()
+                            self.game_scene.game_music:gaiPai()
 
                             for _, vv in ipairs(self.node_cards) do
                                 vv.card:setVisible(false)
 
-                                vv.anim_card:setVisible(true)
-                                vv.anim_card:setSpriteFrame(cc.SpriteFrameCache:getInstance():getSpriteFrame('anim_hand_card_3.png'))
+                                if vv.anim_card then
+                                    vv.anim_card:setVisible(true)
+                                    vv.anim_card:setSpriteFrame(cc.SpriteFrameCache:getInstance():getSpriteFrame('anim_hand_card_3.png'))
+                                end
                             end
 
-                            self.game_scene:schedule_once_time(0.1, function()
+                            local handler = self.game_scene:schedule_once_time(0.1, function()
                                 self:update_position()
 
                                 for _, vv in ipairs(self.node_cards) do
-                                    vv.anim_card:removeFromParent(true)
-                                    vv.anim_card = nil
+                                    if vv.anim_card then
+                                        vv.anim_card:removeFromParent(true)
+                                        vv.anim_card = nil
+                                    end
 
                                     vv.card:setVisible(true)
                                 end
 
-                                self.game_scene:schedule_once_time(0.1, function()
+                                local handler = self.game_scene:schedule_once_time(0.1, function()
                                     if callback_func then callback_func() end
                                 end)
+                                table.insert(self.init_hand_card_schedule_handlers, handler)
                             end)
+                            table.insert(self.init_hand_card_schedule_handlers, handler)
                         end)
+                        table.insert(self.init_hand_card_schedule_handlers, handler)
                     end
                 end) 
                 v.anim_card:runAction(cc.Sequence:create(action_1, action_2))
@@ -375,6 +465,7 @@ function my_hand_card:init_hand_card(location_index, card_list, card_num, callba
             __anim_zhua_pai__(self.node_cards[index+3])
             __anim_zhua_pai__(self.node_cards[index+4])
         end)
+        table.insert(self.init_hand_card_schedule_handlers, handler)
 
         delay = delay + 0.8
     end
@@ -387,6 +478,8 @@ function my_hand_card:draw_card(location_index, card_id, is_kong, callback_func)
     self:play_draw_card_anim(card_id, function()
         self.draw_card_anim = false
 
+        local need_update_position = (self.cur_draw_card and true or false)
+
         local x, y, z_order = self:get_card_position(#self.node_cards, -1)
 
         -- 记录下刚摸的牌，在手牌排序的时候，忽略这张牌
@@ -398,6 +491,8 @@ function my_hand_card:draw_card(location_index, card_id, is_kong, callback_func)
             card = self.cur_draw_card,
             card_id = card_id,
         })
+
+        if need_update_position then self:update_position() end
 
         local action_1 = cc.MoveTo:create(0.1, cc.p(x, y))
         local action_2 = cc.CallFunc:create(function() if callback_func then callback_func() end end)

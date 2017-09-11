@@ -51,6 +51,15 @@ function lei_card:init(args)
     self.pickup_location_index = USER_LOCATION_SELF
     self.pickup_stack_index = 1
 
+    -- 剩余牌数
+    self.last_card_count = 0
+    self.label_card_count = cc.LabelAtlas:_create('0', 'mahjong/common/last_card_num.png', 32, 38, string.byte('0'))
+    self.label_card_count:setAnchorPoint(0.5, 0.5)
+    self.label_card_count:setScale(0.7)
+    self.label_card_count:setPosition(641, 380)
+    self.label_card_count:setVisible(false)
+    self.game_scene:addChild(self.label_card_count, GAME_VIEW_Z_ORDER.LEI_CARD_SELF)
+
     -- 
     self:listenGameSignal('banker_server_index', function(banker_server_index) self:on_banker_server_index(banker_server_index) end)
 
@@ -59,12 +68,13 @@ function lei_card:init(args)
 
     -- 因为这个 signal 会触发四次[4个玩家]，所以在这里只选取了自己的来处理
     self:listenGameSignal('init_hand_card', function(location_index, card_list, card_num) self:on_init_hand_card(location_index, card_list, card_num) end)
-    self:listenGameSignal('reconn_lei_card', function(wall_count, kong_count) self:on_reconn_lei_card(wall_count, kong_count) end)
+    self:listenGameSignal('reconn_lei_card', function(wall_count, kong_count, dice_num_1, dice_num_2) self:on_reconn_lei_card(wall_count, kong_count, dice_num_1, dice_num_2) end)
 
     -- 鬼牌确认后，要在牌墙上翻出来
     self:listenGameSignal('ghost_card_confirm', function(fake_card_ids, really_card_ids, dice_num_1, dice_num_2) self:on_ghost_card_confirm(fake_card_ids, really_card_ids, dice_num_1, dice_num_2) end)
 
     self:listenGameSignal('draw_card', function(location_index, card_id, is_kong, callback_func) self:on_draw_card(location_index, card_id, is_kong, callback_func) end)
+    self:listenGameSignal('on_flower', function(location_index, card_id) self:on_flower(location_index, card_id) end)
 
     self:listenGameSignal('show_card', function(card_list) self:on_show_card(card_list) end)
 end
@@ -84,6 +94,7 @@ function lei_card:on_game_waiting()
     self.location_lei_card[USER_LOCATION_RIGHT].node:setVisible(false)
     self.location_lei_card[USER_LOCATION_FACING].node:setVisible(false)
     self.location_lei_card[USER_LOCATION_LEFT].node:setVisible(false)
+    self.label_card_count:setVisible(false)
 end
 
 function lei_card:on_game_start()
@@ -91,6 +102,7 @@ function lei_card:on_game_start()
     self.location_lei_card[USER_LOCATION_RIGHT].node:setVisible(true)
     self.location_lei_card[USER_LOCATION_FACING].node:setVisible(true)
     self.location_lei_card[USER_LOCATION_LEFT].node:setVisible(true)
+    self.label_card_count:setVisible(true)
 end
 
 function lei_card:on_prepare_next_round()
@@ -98,6 +110,7 @@ function lei_card:on_prepare_next_round()
     self.location_lei_card[USER_LOCATION_RIGHT].node:setVisible(true)
     self.location_lei_card[USER_LOCATION_FACING].node:setVisible(true)
     self.location_lei_card[USER_LOCATION_LEFT].node:setVisible(true)
+    self.label_card_count:setVisible(false)
 
     for _, card_info in ipairs(self.all_lei_cards) do
         if card_info.shadow_card then
@@ -125,7 +138,8 @@ end
 --   两骰子点数相加：1,5,9 自己，依次类推
 --   骰子点数小的决定墩数
 function lei_card:on_roll_dice_end(banker_server_index, dice_num_1, dice_num_2)
-    self.pickup_location_index = (self.game_scene.my_server_index + dice_num_1 + dice_num_2 - 2) % 4 + 1
+    local location_index = self.game_scene.server_index_to_local_index[banker_server_index]
+    self.pickup_location_index = (location_index + dice_num_1 + dice_num_2 - 2) % 4 + 1
     self.pickup_stack_index = math.min(dice_num_1, dice_num_2) + 1
 end
 
@@ -139,22 +153,22 @@ function lei_card:get_card_position(location_index, stack_index, is_top_card)
     local card_location_settings = {
         [USER_LOCATION_SELF] = function()
             local card_width = 31
-            local start_x, start_y = 910, 135
+            local start_x, start_y = 940, 185
             return start_x - card_width * stack_index, start_y + (is_top_card and 10 or 0), (is_top_card and 1 or 0)
         end,
         [USER_LOCATION_RIGHT] = function()
             local card_height = 28
-            local start_x, start_y = 1100, 635
+            local start_x, start_y = 1068, 635
             return start_x + (is_top_card and 6 or 0), start_y - card_height * stack_index + (is_top_card and 2 or 0), (is_top_card and 1 or 0)
         end,
         [USER_LOCATION_FACING] = function()
             local card_width = 31
-            local start_x, start_y = 350, 630
+            local start_x, start_y = 350, 575
             return start_x + card_width * stack_index, start_y + (is_top_card and 10 or 0), (is_top_card and 1 or 0)
         end,
         [USER_LOCATION_LEFT] = function()
             local card_height = 28
-            local start_x, start_y = 180, 155
+            local start_x, start_y = 213, 135
             return start_x + (is_top_card and -6 or 0), start_y + card_height * stack_index + (is_top_card and 2 or 0), (is_top_card and 1 or 0)
         end,
     }
@@ -218,42 +232,59 @@ function lei_card:get_card_info(location_index, stack_index, is_top)
     return self.location_lei_card[location_index].all_card_info[card_index]
 end
 
-function lei_card:pickup_card_info(card_info)
-    local mv_action_1 = cc.MoveBy:create(0.1, cc.p(0, 15))
-    local hide_action = cc.CallFunc:create(function()
+function lei_card:pickup_card_info(card_info, is_reconn)
+    if not card_info.is_valid then
+        return self:pickup_card_info(card_info.next_card_info, is_reconn)
+    end
+
+    if is_reconn then
         if card_info.shadow_card then card_info.shadow_card:setVisible(false) end
         card_info.card:setVisible(false)
         card_info.is_valid = false
-    end)
-    local mv_action_2 = cc.MoveBy:create(0.1, cc.p(0, -15))
-    card_info.card:runAction(cc.Sequence:create(mv_action_1, hide_action, mv_action_2))
 
-    return card_info.next_card_info
-end
+        return card_info.next_card_info
+    else
+        local mv_action_1 = cc.MoveBy:create(0.1, cc.p(0, 15))
+        local hide_action = cc.CallFunc:create(function()
+            if card_info.shadow_card then card_info.shadow_card:setVisible(false) end
+            card_info.card:setVisible(false)
+        end)
+        local mv_action_2 = cc.MoveBy:create(0.1, cc.p(0, -15))
+        card_info.card:runAction(cc.Sequence:create(mv_action_1, hide_action, mv_action_2))
+        card_info.is_valid = false
 
-function lei_card:pickup_next_card(pickup_num)
-    pickup_num = pickup_num or 1
+        -- 剩余牌数量减 1
+        self.last_card_count = self.last_card_count - 1
+        self.label_card_count:setString(tostring(self.last_card_count))
 
-    for i=1, pickup_num do
-        self.next_card_info = self:pickup_card_info(self.next_card_info)
+        -- 
+        return card_info.next_card_info
     end
 end
 
-function lei_card:pickup_last_card()
+function lei_card:pickup_next_card(pickup_num, is_reconn)
+    pickup_num = pickup_num or 1
+
+    for i=1, pickup_num do
+        self.next_card_info = self:pickup_card_info(self.next_card_info, is_reconn)
+    end
+end
+
+function lei_card:pickup_last_card(is_reconn)
     -- 取走最后一墩上面的牌
     if self.last_stack_card_info.is_valid then
-        self:pickup_card_info(self.last_stack_card_info)
+        self:pickup_card_info(self.last_stack_card_info, is_reconn)
     else
         -- 取走最后一墩下面的牌
         if self.last_stack_card_info.next_card_info.is_valid then
-            self:pickup_card_info(self.last_stack_card_info.next_card_info)
+            self:pickup_card_info(self.last_stack_card_info.next_card_info, is_reconn)
 
             -- 往前移一墩
             self.last_stack_card_info = self.last_stack_card_info.pre_card_info.pre_card_info
         else
             -- 如果这最后的一墩牌都是无效的话，嗯，往前一墩试试吧
             self.last_stack_card_info = self.last_stack_card_info.pre_card_info.pre_card_info
-            self:pickup_last_card()     -- 其实，这里是不是不应该递归呢，如果到这里，是不是自己写错逻辑了呢，暂时先这么写吧
+            self:pickup_last_card(is_reconn)     -- 其实，这里是不是不应该递归呢，如果到这里，是不是自己写错逻辑了呢，暂时先这么写吧
         end
     end
 end
@@ -266,21 +297,31 @@ function lei_card:on_init_hand_card(location_index, card_list, card_num)
     self.next_card_info = self:get_card_info(self.pickup_location_index, self.pickup_stack_index, true)
     self.last_stack_card_info = self.next_card_info.pre_card_info.pre_card_info     -- 指向最后一墩上面的那张牌
 
-    -- 
-    local counter = 0
-    local total_counter = 13        -- 4 * 4 * 3 + 1 * 4
-    self.handler = self.game_scene:schedule_circle(0.05, function()
-        self:pickup_next_card(4)
+    self.last_card_count = self.max_card_count
 
-        counter = counter + 1
-        if counter >= total_counter then
+    -- 
+    local index = 1
+    -- local total_counter = 13        -- 4 * 4 * 3 + 1 * 4
+    local total_counter = {}
+    local user_count = self.game_scene:getUserCount()
+    for i=1, user_count do
+        total_counter[(i-1)*3+1] = 4
+        total_counter[(i-1)*3+2] = 4
+        total_counter[(i-1)*3+3] = 4
+    end
+    total_counter[user_count*3+1] = user_count
+    self.handler = self.game_scene:schedule_circle(0.05, function()
+        self:pickup_next_card(total_counter[index])
+
+        index = index + 1
+        if index > #total_counter then
             self.game_scene:unschedule(self.handler)
             self.handler = nil
         end
     end)
 end
 
-function lei_card:on_reconn_lei_card(wall_count, kong_count)
+function lei_card:on_reconn_lei_card(wall_count, kong_count, dice_num_1, dice_num_2)
     -- 重新还原牌墙的牌
     self:on_prepare_next_round()
 
@@ -288,19 +329,36 @@ function lei_card:on_reconn_lei_card(wall_count, kong_count)
     self.next_card_info = self:get_card_info(self.pickup_location_index, self.pickup_stack_index, true)
     self.last_stack_card_info = self.next_card_info.pre_card_info.pre_card_info     -- 指向最后一墩上面的那张牌
 
+    -- 先给鬼牌留个位置
+    if self.game_scene.scene_config.has_ghost_card then
+        self:update_ghost_card_position(dice_num_1, dice_num_2)
+        self.ghost_card_info.is_valid = false
+    end
+
     -- 
     local pickup_count = self.max_card_count - wall_count - kong_count - 1
-    self:pickup_next_card(pickup_count)
+    self:pickup_next_card(pickup_count, true)
 
     --
     for i=1, kong_count do
-        self:pickup_last_card()
+        self:pickup_last_card(true)
     end
+
+    -- 重连后更新剩余牌数
+    self.last_card_count = wall_count
+    self.label_card_count:setString(tostring(self.last_card_count))
+    self.label_card_count:setVisible(true)
+    self.reconn_last_card_count = true
 end
 
 -- 翻出来的鬼牌所在的牌墙位置
 function lei_card:update_ghost_card_position(dice_num_1, dice_num_2)
     self.ghost_card_info = self.last_stack_card_info
+
+    local count = dice_num_1 + dice_num_2 - 2
+    for i=1, count do
+        self.ghost_card_info = self.ghost_card_info.pre_card_info.pre_card_info
+    end
 end
 
 function lei_card:on_ghost_card_confirm(fake_card_ids, really_card_ids, dice_num_1, dice_num_2)
@@ -309,9 +367,18 @@ function lei_card:on_ghost_card_confirm(fake_card_ids, really_card_ids, dice_num
     local card = self:create_card(self.ghost_card_info.location_index, false, fake_card_ids[1])
     card:setPosition(self.ghost_card_info.card:getPosition())
     self.ghost_card_info.card:getParent():addChild(card, self.ghost_card_info.card:getLocalZOrder())
+    self.ghost_card_info.is_valid = false
     self.ghost_card_info.card:setVisible(false)
 
     self.ghost_card_info.shadow_card = card
+
+    -- 鬼牌不能被摸走，剩余牌数量减 1
+    if not self.reconn_last_card_count then
+        self.reconn_last_card_count = nil
+
+        self.last_card_count = self.last_card_count - 1
+        self.label_card_count:setString(tostring(self.last_card_count))
+    end
 end
 
 function lei_card:on_draw_card(location_index, card_id, is_kong, callback_func)
@@ -324,6 +391,13 @@ function lei_card:on_draw_card(location_index, card_id, is_kong, callback_func)
     else
         self:pickup_next_card()
     end
+end
+
+function lei_card:on_flower(location_index, card_id)
+    -- 牌墙的还原点
+    self:pushRestorePoint(false)
+
+    self:pickup_next_card()
 end
 
 function lei_card:on_show_card(card_list)

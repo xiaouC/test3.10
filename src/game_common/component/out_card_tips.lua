@@ -29,15 +29,18 @@ function out_card_tips:init(args)
         self.icon_tips:setVisible(false)
     end)
 
-    local fp_offset_y = { 70, 55, 60, 55 }
-    self:listenGameSignal('win_effect', function(win_effect_type, location_index)
+    local fp_offset_y = { 70, 70, 70, 70 }
+    self:listenGameSignal('win_effect', function(win_effect_type, win_location_index, fp_location_index)
         if win_effect_type == 'fp' then
             local anim_node = createAnimNode('mahjong/anim/win_effect/fp_zhua.csb', false)
             anim_node:setScale(2)
-            anim_node:setPosition(self.last_out_card_x, self.last_out_card_y + fp_offset_y[location_index])
+            anim_node:setPosition(self.last_out_card_x, self.last_out_card_y + fp_offset_y[fp_location_index])
             self.game_scene:addChild(anim_node, GAME_VIEW_Z_ORDER.OUT_CARD_TIPS)
 
-            performWithDelay(anim_node, function() anim_node:removeFromParent(true) end, 1.9)
+            performWithDelay(anim_node, function()
+                anim_node:removeFromParent(true)
+                self.game_scene:fire('fp_effect_end', fp_location_index)
+            end, 1.9)
         end
     end)
 end

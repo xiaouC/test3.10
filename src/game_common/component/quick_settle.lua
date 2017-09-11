@@ -38,17 +38,7 @@ function quick_settle:showRoundSettleDetailView(result_info)
 
         round_settle.showRoundSettleDetailView(self, result_info)
     end, csb_node)
-
-    -- 
-    local btn_settle_detail_size = btn_settle_detail:getContentSize()
-
-    local btn_text_label = cc.Label:createWithTTF('结算详情', 'font/jxk.TTF', 50)
-    btn_text_label:setColorTextureIndex(2)
-    btn_text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-    btn_text_label:setPosition(btn_settle_detail_size.width * 0.5, btn_settle_detail_size.height * 0.5 + 5)
-    btn_text_label:enableOutline(cc.c3b(166, 24, 22), 2)
-    btn_text_label:enableShadow()
-    btn_settle_detail:getRendererNormal():addChild(btn_text_label)
+    btn_settle_detail:loadTextureNormal('game_res/majiang/result/btn_detail.png', ccui.TextureResType.localType)
 
     -- 继续游戏
     local btn_continue = button('btn_continue_game', function()
@@ -57,26 +47,30 @@ function quick_settle:showRoundSettleDetailView(result_info)
         -- 
         csb_node:removeFromParent(true)
 
-        if self.game_scene.cur_play_count == self.game_scene.total_play_count then
+        if self:isGameEnd(result_info) then
             self.game_scene:tryToShowFinalSettle()
         else
             self.game_scene:restart()
         end
     end, csb_node)
 
-    -- 
-    local btn_continue_size = btn_continue:getContentSize()
+    -- btn_last: 查看战绩，btn_continue: 继续游戏
+    local text = (self:isGameEnd(result_info) and 'game_res/majiang/result/btn_last.png' or 'game_res/majiang/result/btn_continue.png')
+    if self.game_scene.is_replay then text = 'game_res/majiang/result/btn_return.png' end
+    btn_continue:loadTextureNormal(text, ccui.TextureResType.localType)
 
-    local text = (self.game_scene.cur_play_count == self.game_scene.total_play_count and '查看战绩' or '继续游戏')
-    if self.game_scene.is_replay then text = '退出游戏' end
+    -- 流局
+    local win_index = nil
+    for server_index=1, 4 do
+        if result_info.m_win[server_index] then
+            win_index = server_index
+        end
+    end
 
-    local btn_text_label = cc.Label:createWithTTF(text, 'font/jxk.TTF', 50)
-    btn_text_label:setColorTextureIndex(2)
-    btn_text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-    btn_text_label:setPosition(btn_continue_size.width * 0.5, btn_continue_size.height * 0.5 + 5)
-    btn_text_label:enableOutline(cc.c3b(28, 118, 14), 2)
-    btn_text_label:enableShadow()
-    btn_continue:getRendererNormal():addChild(btn_text_label)
+    if not win_index then
+        csb_node:getChildByName('node_draw'):setVisible(true)
+        csb_node:getChildByName('node_draw'):addChild(cc.Sprite:create(self.game_result_draw_sprite_file))
+    end
 end
 
 return quick_settle

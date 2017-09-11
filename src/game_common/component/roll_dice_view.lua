@@ -28,10 +28,18 @@ function RollDiceView:init()
 
     -- 
     self:listenGameSignal('roll_dice', function(banker_server_index, dice_num_1, dice_num_2, callback_func)
-        self:roll_dice(banker_server_index, dice_num_1, dice_num_2, callback_func)
+        if dice_num_1 then
+            self:roll_dice(banker_server_index, dice_num_1, dice_num_2, callback_func)
+        else
+            if callback_func then callback_func() end
+        end
     end)
     self:listenGameSignal('roll_dice_custom', function(server_index, dice_num_1, dice_num_2, callback_func)
-        self:roll_dice(server_index, dice_num_1, dice_num_2, callback_func)
+        if dice_num_1 then
+            self:roll_dice(server_index, dice_num_1, dice_num_2, callback_func)
+        else
+            if callback_func then callback_func() end
+        end
     end)
 end
 

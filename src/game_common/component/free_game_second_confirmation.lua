@@ -6,6 +6,7 @@ function free_game_second_confirmation:init(args)
     component_base.init(self)
 
     self.second_confirmation_flag = false
+    self.node_msg_box = nil
 
     -- 
     self:listenGameSignal('second_confirmation_free_game', function(callback_func)
@@ -13,13 +14,36 @@ function free_game_second_confirmation:init(args)
         self.second_confirmation_flag = true
 
         -- 
-        show_msg_box_1('申请解散包间', '您确认要解散包间吗？', function()
+        self.node_msg_box = show_msg_box_1('申请解散包间', '您确认要解散包间吗？', function()
             self.second_confirmation_flag = false
+            self.node_msg_box = nil
             callback_func(true)
         end, function()
             self.second_confirmation_flag = false
+            self.node_msg_box = nil
             callback_func(false)
         end)
+    end)
+
+    -- 
+    self:listenGameSignal('key_back_pressed', function(callback_func)
+        if not tolua.cast(self.node_msg_box, 'Node') then
+            self.second_confirmation_flag = true
+
+            self.node_msg_box = show_msg_box_1('申请解散包间', '您确认要解散包间吗？', function()
+                self.second_confirmation_flag = false
+                self.node_msg_box = nil
+                callback_func(true)
+            end, function()
+                self.second_confirmation_flag = false
+                self.node_msg_box = nil
+                callback_func(false)
+            end)
+        else
+            self.node_msg_box:removeFromParent(true)
+            self.second_confirmation_flag = false
+            self.node_msg_box = nil
+        end
     end)
 end
 

@@ -5,6 +5,8 @@ require 'app.platform.game.game_common.game_component_base'
 local RoundSettleView = class('RoundSettleView', view_component_base)
 function RoundSettleView:ctor(game_scene)
     view_component_base.ctor(self, game_scene)
+
+    self.csb_z_order = GAME_VIEW_Z_ORDER.ROUND_SETTLE
 end
 
 function RoundSettleView:init(args)
@@ -50,6 +52,8 @@ function RoundSettleView:on_touch_began(touch, event)
                 break
             end
         end
+
+        return true
     end
 
     return view_component_base.on_touch_began(self, touch, event)
@@ -59,7 +63,35 @@ function RoundSettleView:get_score(server_index, result_info)
     return result_info.m_win_score[server_index]
 end
 
-function RoundSettleView:get_special_status(server_index, result_info) return '' end
+function RoundSettleView:get_special_status(server_index, result_info)
+    local special_status = nil
+
+    -- 胡
+    if result_info.m_win_type == 1 and result_info.m_win[server_index] then
+        special_status = {
+            { 'game_res/majiang/result/result_hu.png', ccui.TextureResType.localType }
+        }
+    end
+
+    -- 点炮
+    if result_info.m_win_type == 2 then
+        -- 抓炮的
+        if result_info.m_win[server_index] then
+            special_status = {
+                { 'game_res/majiang/result/result_hu.png', ccui.TextureResType.localType }
+            }
+        end
+
+        -- 放炮的
+        if result_info.m_dianpao_id + 1 == server_index then
+            special_status = {
+                { 'game_res/majiang/result/result_dianpao.png', ccui.TextureResType.localType }
+            }
+        end
+    end
+
+    return special_status
+end
 function RoundSettleView:get_line_simple_1(server_index, result_info) return '' end
 function RoundSettleView:get_line_simple_2(server_index, result_info) return '' end
 function RoundSettleView:get_line_simple_3(server_index, result_info) return '' end
@@ -107,8 +139,10 @@ function RoundSettleView:get_card_data(server_index, result_info)
     --     win_card = 9,
     --     ghost_card_ids = {},
     --     additional_reward = {
-    --         text_1 = '一张定码：',
-    --         text_2 = '码',
+    --         left_sprite = 'label_quanzhong.png',     -- 一码全中
+    --         left_sprite_res_type = ccui.TextureResType.plistType,
+    --         right_sprite = 'label_zhongma_1.png',    -- 中 xx 码
+    --         right_sprite_res_type = ccui.TextureResType.plistType,
     --         cards = { 17, 18, 19 },
     --         num = 3,
     --     },
@@ -192,19 +226,21 @@ function RoundSettleView:showZhongMaView(result_info, callback_func)
     if self.game_scene.game_rule.m_luck_mode > 0 and not result_info.m_all_king then
         local card_id, num = self:getMoMaCardID(result_info)
         self:showMoMaAnim(card_id, function()
-            self:showFanMaAnim({ card_list = { card_id }, num = num }, false, callback_func)
+            self:showFanMaAnim(result_info, { card_list = { card_id }, num = num }, false, callback_func)
         end)
     else
-        self:showFanMaAnim(self:getFanMaCardData(result_info), true, callback_func)
+        self:showFanMaAnim(result_info, self:getFanMaCardData(result_info), true, callback_func)
     end
 end
 
-function RoundSettleView:getMoMaTitleText(result_info)
+function RoundSettleView:getMoMaTitleSprite(result_info)
     if self.game_scene.game_rule.m_luck_mode ~= 2 then
-        return '一张定马'
+        -- 一张定码
+        return 'mahjong/settle_round/round_settle_yizhangdingma_1.png', ccui.TextureResType.localType
     end
 
-    return '一马全中'
+    -- 一码全中
+    return 'mahjong/settle_round/round_settle_yimaquanzhong_1.png', ccui.TextureResType.localType
 end
 
 function RoundSettleView:getMoMaCardID(result_info)
@@ -235,12 +271,9 @@ function RoundSettleView:showMoMaAnim(card_id, callback_func)
     mopai_bg:addChild(title_sprite)
 
     -- 
-    local text_label = cc.Label:createWithTTF(self:getMoMaTitleText(result_info), 'font/jxk.TTF', 60)
-    text_label:setColorTextureIndex(10)
-    text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-    text_label:setPosition(bg_size.width * 0.5 - 10, bg_size.height - 15)
-    text_label:enableShadow(cc.c4b(0, 0, 0, 255), cc.size(0, -5), 2)
-    mopai_bg:addChild(text_label)
+    local sprite = createSpriteWithName(self:getMoMaTitleSprite(result_info))
+    sprite:setPosition(bg_size.width * 0.5 - 10, bg_size.height - 15)
+    mopai_bg:addChild(sprite)
 
     -- 
     local node = cc.Node:create()
@@ -270,9 +303,18 @@ function RoundSettleView:showMoMaAnim(card_id, callback_func)
     mopai_hand:runAction(cc.Sequence:create(action_1, action_2, action_3))
 end
 
-function RoundSettleView:getFanMaTitleText(result_info) return '奖码' end
-function RoundSettleView:getFanMaLeftTopText(result_info) return '中马数：' end
-function RoundSettleView:getFanMaRepeatCardText(result_info) return '余牌不足，尾牌重复记马' end
+function RoundSettleView:getFanMaTitleText(result_info)
+    -- 奖码
+    return 'mahjong/settle_round/round_settle_jiangma_1.png', ccui.TextureResType.localType
+end
+function RoundSettleView:getFanMaLeftTopText(result_info)
+    -- 中码数
+    return 'mahjong/settle_round/round_settle_zhongmashu_1.png', ccui.TextureResType.localType
+end
+function RoundSettleView:getFanMaRepeatCardText(result_info)
+    -- '余牌不足，尾牌重复记马'
+    return 'mahjong/settle_round/round_settle_yupai.png', ccui.TextureResType.localType
+end
 
 function RoundSettleView:getFanMaCardData(result_info)
     local card_list = {}
@@ -290,7 +332,15 @@ function RoundSettleView:getFanMaCardData(result_info)
     }
 end
 
-function RoundSettleView:showFanMaAnim(card_data, anim_flag, callback_func)
+function RoundSettleView:isValidMa(result_info, card_id)
+    return ((card_id % 16 == 1) or (card_id % 16 == 5) or (card_id % 16 == 9))
+end
+
+function RoundSettleView:getMaTitleSprite(result_info)
+    return 'flop_background_title.png', ccui.TextureResType.plistType
+end
+
+function RoundSettleView:showFanMaAnim(result_info, card_data, anim_flag, callback_func)
     local node_zhong_ma = cc.Node:create()
     node_zhong_ma:setPosition(display.width * 0.5, display.height * 0.5)
     self.game_scene:addChild(node_zhong_ma, GAME_VIEW_Z_ORDER.ROUND_SETTLE)
@@ -329,31 +379,19 @@ function RoundSettleView:showFanMaAnim(card_data, anim_flag, callback_func)
     local top_y = bg_height * 0.5
 
     -- title background
-    local title_sprite = cc.Sprite:createWithSpriteFrameName('flop_background_title.png')
+    local title_sprite = createSpriteWithName(self:getMaTitleSprite())
     title_sprite:setPosition(0, top_y)
     node_zhong_ma:addChild(title_sprite)
 
     -- title text
-    local text_label = cc.Label:createWithTTF(self:getFanMaTitleText(result_info), 'font/jxk.TTF', 60)
-    text_label:setColorTextureIndex(10)
-    text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-    text_label:setPosition(-10, top_y)
-    text_label:enableShadow(cc.c4b(0, 0, 0, 255), cc.size(0, -5), 2)
-    node_zhong_ma:addChild(text_label)
+    local sprite = createSpriteWithName(self:getFanMaTitleText(result_info))
+    sprite:setPosition(-10, top_y)
+    node_zhong_ma:addChild(sprite)
 
     local function __show_ma_count__(x, y)
-        local left_top_bg_sprite = cc.Sprite:create('mahjong/component/round_settle/zhong_ma_num_bg.png')
-        left_top_bg_sprite:setPosition(x + 100, y)
-        node_zhong_ma:addChild(left_top_bg_sprite)
-
-        -- 
-        local text_label = cc.Label:createWithTTF(self:getFanMaLeftTopText(result_info), 'font/jxk.TTF', 30)
-        text_label:setColorTextureIndex(10)
-        text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-        text_label:setAnchorPoint(0, 0.5)
-        text_label:setPosition(x, y)
-        text_label:enableShadow(cc.c4b(0, 0, 0, 255), cc.size(0, -2), 2)
-        node_zhong_ma:addChild(text_label)
+        local sprite = createSpriteWithName(self:getFanMaLeftTopText(result_info))
+        sprite:setPosition(x, y)
+        node_zhong_ma:addChild(sprite)
     end
 
     -- 中码数
@@ -362,11 +400,10 @@ function RoundSettleView:showFanMaAnim(card_data, anim_flag, callback_func)
 
     -- 
     local row_count = math.floor((card_count - 1) / 12) + 1
-    --local offset_x = -card_width * (row_count > 1 and 12 or card_count) * 0.5 + card_width * 0.5
     local offset_x = -bg_width * 0.5 + card_width * 0.5 + border_width * 0.5
     local offset_y = top_y - card_height * 0.5 - 60
     for index, card_id in ipairs(card_data.card_list) do
-        play_mahjong_effect('award_card')
+        self.game_scene.game_music:fanPai()
 
         local row = math.floor((index - 1) / 12)
         local col = math.floor((index - 1) % 12)
@@ -377,7 +414,7 @@ function RoundSettleView:showFanMaAnim(card_data, anim_flag, callback_func)
 
         local is_valid = true
         if anim_flag then
-            is_valid = ((card_id % 16 == 1) or (card_id % 16 == 5) or (card_id % 16 == 9))
+            is_valid = self:isValidMa(result_info, card_id)
             if is_valid then
                 total_count = total_count + 1
 
@@ -399,16 +436,16 @@ function RoundSettleView:showFanMaAnim(card_data, anim_flag, callback_func)
             card_bg_sprite:setPosition(x, y)
 
             -- 
-            local repeated_card_text = self:getFanMaRepeatCardText(result_info)
-
-            -- 
-            local repeated_count_label = cc.Label:createWithTTF('X' .. card_data.repeated_count .. '　' .. repeated_card_text, 'font/jxk.TTF', 30)
-            repeated_count_label:setColorTextureIndex(10)
-            repeated_count_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
+            local repeated_count_label = cc.Label:createWithTTF('X' .. card_data.repeated_count, 'hall_res/font/jxk.TTF', 30)
             repeated_count_label:setPosition(x + card_width * 0.5, y)
             repeated_count_label:setAnchorPoint(0, 0.5)
             repeated_count_label:enableShadow(cc.c4b(0, 0, 0, 255), cc.size(0, -2), 2)
             node_zhong_ma:addChild(repeated_count_label)
+
+            local sprite = createSpriteWithName(self:getFanMaRepeatCardText(result_info))
+            sprite:setPosition(x + 100, y)
+            sprite:setAnchorPoint(0, 0.5)
+            node_zhong_ma:addChild(sprite)
         end
 
         local function __card_show__()
@@ -431,7 +468,7 @@ function RoundSettleView:showFanMaAnim(card_data, anim_flag, callback_func)
                 self.game_scene:schedule_once_time(0.3, function()
                     -- 中码数
                     local count_label = cc.LabelAtlas:_create(tostring(total_count), 'game_common_res/settle_count_1.png', 26, 30, string.byte('/'))
-                    count_label:setPosition(show_ma_x + 150, show_ma_y)
+                    count_label:setPosition(show_ma_x + 50, show_ma_y)
                     count_label:setAnchorPoint(0, 0.5)
                     count_label:setScale(8)
                     node_zhong_ma:addChild(count_label)
@@ -471,6 +508,10 @@ function RoundSettleView:on_round_settle(result_info)
     end
 end
 
+function RoundSettleView:isGameEnd(result_info)
+    return self.game_scene.cur_play_count == self.game_scene.total_play_count
+end
+
 function RoundSettleView:showRoundSettleDetailView(result_info)
     if self.csb_node then return end
 
@@ -494,7 +535,9 @@ function RoundSettleView:showRoundSettleDetailView(result_info)
         self.csb_node:removeFromParent(true)
         self.csb_node = nil
 
-        if self.game_scene.cur_play_count == self.game_scene.total_play_count then
+        self.user_click_nodes = {}
+
+        if self:isGameEnd(result_info) then
             self.game_scene:tryToShowFinalSettle()
         else
             self.game_scene:restart()
@@ -502,7 +545,7 @@ function RoundSettleView:showRoundSettleDetailView(result_info)
     end, self.node_content)
 
     -- 
-    if self.game_scene.cur_play_count == self.game_scene.total_play_count then
+    if self:isGameEnd(result_info) then
         btn_continue:setTitleText('查看战绩')
     end
 
@@ -515,7 +558,7 @@ function RoundSettleView:showRoundSettleDetailView(result_info)
     self.cur_sel_index = -1
     self.user_click_nodes = {}
 
-    local win_index = nil
+    self.win_index = nil
 
     local location_file_name = { 'location_self.png', 'location_right.png', 'location_facing.png', 'location_left.png' }
     for index=1, 4 do
@@ -524,14 +567,13 @@ function RoundSettleView:showRoundSettleDetailView(result_info)
         -- 
         local data = self.round_settle_data[index]
         if data then
-            if data.is_win then win_index = index end
+            if data.is_win then self.win_index = index end
 
             local effect = data.is_win and string.format('mahjong/settle_round/win_effect_%d.csb', index) or string.format('mahjong/settle_round/lose_effect_%d.csb', index)
             self.user_click_nodes[index] = { node_user, nil, effect }
 
             local sprite_user_bg = node_user:getChildByName('settle_round_bg')
-            sprite_user_bg:setColorTextureIndex(data.is_win and 7 or 8)
-            sprite_user_bg:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_sprite'))
+            setSpriteTexture(sprite_user_bg, data.is_win and 'round_settle_user_bg_winer.png' or 'round_settle_user_bg_lose.png', ccui.TextureResType.plistType)
 
             node_user:getChildByName('banker_flag'):setVisible(data.is_banker and true or false)
 
@@ -559,28 +601,17 @@ function RoundSettleView:showRoundSettleDetailView(result_info)
 
             -- 
             if data.special_status then
-                local node_special_status = node_user:getChildByName('node_special_status')
-
-                local ss_label = cc.Label:createWithTTF(data.special_status, 'res/font/jxk.TTF', 30)
-                ss_label:setColorTextureIndex(9)
-                ss_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-                ss_label:setAnchorPoint(0.5, 0.5)
-                ss_label:setColor(cc.WHITE)
-                ss_label:setAdditionalKerning(-5)
-                ss_label:enableOutline(cc.c3b(83, 30, 11), 2)
-
-                local count = ss_label:getStringLength()
-                local ss_black_width = 25
-                local start_x = -ss_black_width * count * 0.5
-                for i=0, count - 1 do
-                    local ss_sprite = cc.Sprite:createWithSpriteFrameName(string.format('black_%d.png', math.random(1, 2)))
-                    ss_sprite:setRotation(math.random(0, 360))
-                    ss_sprite:setScale(1.1)
-                    ss_sprite:setPosition(start_x + i * ss_black_width + 0.5 * ss_black_width, 0)
-                    node_special_status:addChild(ss_sprite)
+                if data.special_status[1] then
+                    local sprite = createSpriteWithName(data.special_status[1][1], data.special_status[1][2])
+                    local node_special_status = node_user:getChildByName('node_special_status_1')
+                    node_special_status:addChild(sprite)
                 end
 
-                node_special_status:addChild(ss_label)
+                if data.special_status[2] then
+                    local sprite = createSpriteWithName(data.special_status[2][1], data.special_status[2][2])
+                    local node_special_status = node_user:getChildByName('node_special_status_2')
+                    node_special_status:addChild(sprite)
+                end
             end
 
             -- score
@@ -589,11 +620,12 @@ function RoundSettleView:showRoundSettleDetailView(result_info)
             local score_label = cc.LabelAtlas:_create(text_score, file_name, 28, 34, string.byte('.'))
             score_label:setAnchorPoint(0.5, 0.5)
             node_user:getChildByName('node_score'):addChild(score_label)
-        else
-            local sprite_user_bg = node_user:getChildByName('settle_round_bg')
-            sprite_user_bg:setColorTextureIndex(8)
-            sprite_user_bg:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_sprite'))
 
+            -- 如果三个都是空的话，就把分数往中间移
+            if data.line_simple_1 == '' and data.line_simple_2 == '' and data.line_simple_3 == '' then
+                score_label:setPosition(-77, 0)
+            end
+        else
             node_user:getChildByName('location_sprite'):setVisible(false)
             node_user:getChildByName('banker_flag'):setVisible(false)
             node_user:getChildByName('head_frame'):setVisible(false)
@@ -612,13 +644,17 @@ function RoundSettleView:showRoundSettleDetailView(result_info)
 
     -- 
     self.bg_sprite = self.node_content:getChildByName('settle_round_bg_2')
-    self.bg_sprite:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_sprite'))
 
-    self:setCurSel(win_index or 1)
+    self:setCurSel(self.win_index or 1)
 
+    -- 
+    self:showSettleFlag(result_info)
+end
+
+function RoundSettleView:showSettleFlag(result_info)
     -- 流局/荒庄/
-    if not win_index then
-        self.csb_node:getChildByName('node_result_draw'):addChild(cc.Sprite:create(self.game_result_draw_sprite_file))
+    if not self.win_index then
+        self.csb_node:getChildByName('node_content'):getChildByName('node_result_draw'):addChild(cc.Sprite:create(self.game_result_draw_sprite_file))
     end
 end
 
@@ -642,7 +678,7 @@ function RoundSettleView:setCurSel(index)
 
         -- 
         local data = self.round_settle_data[index]
-        self.bg_sprite:setColorTextureIndex(data.is_win and 7 or 8)
+        setSpriteTexture(self.bg_sprite, data.is_win and 'mahjong/settle_round/settle_round_bg_2.png' or 'mahjong/settle_round/settle_round_bg_1.png', ccui.TextureResType.localType)
 
         self.cur_sel_index = index
 
@@ -682,7 +718,7 @@ function RoundSettleView:updateDetail()
     self:updateCards(data)
 
     -- 3 lines
-    local font_name, font_size = 'font/fzzyjt.ttf', 26
+    local font_name, font_size = 'hall_res/font/fzzyjt.ttf', 24
     local text_color = (data.is_win and cc.c3b(255, 234, 0) or cc.c3b(109, 255, 253))
     local function __init_line__(index)
         local rt = self.rich_text_label[index]
@@ -706,13 +742,13 @@ function RoundSettleView:updateDetail()
         -- init re
         if data.line_detail then
             for _, v in ipairs(data.line_detail[index] or {}) do
-                local rich_ele_1 = ccui.RichElementText:create(0, cc.WHITE, 255, v.text_1 .. '　', font_name, font_size)
+                local rich_ele_1 = ccui.RichElementText:create(0, v.text_1_color or cc.WHITE, 255, v.text_1 .. '　', font_name, font_size)
                 rt.line_label:pushBackElement(rich_ele_1)
 
                 table.insert(rt.re_list, rich_ele_1)
 
                 if v.text_2 then
-                    local rich_ele_2 = ccui.RichElementText:create(0, text_color, 255, v.text_2 .. '　　', font_name, font_size)
+                    local rich_ele_2 = ccui.RichElementText:create(0, v.text_2_color or text_color, 255, v.text_2 .. '　　', font_name, font_size)
                     rt.line_label:pushBackElement(rich_ele_2)
 
                     table.insert(rt.re_list, rich_ele_2)
@@ -787,6 +823,10 @@ function RoundSettleView:updateCards(data)
     end
 
     -- additional reward
+    self:updateAdditionalReward(data)
+end
+
+function RoundSettleView:updateAdditionalReward(data)
     local node_additional_reward_1 = self.node_content:getChildByName('node_additional_reward_1')
     node_additional_reward_1:removeAllChildren()
 
@@ -794,52 +834,89 @@ function RoundSettleView:updateCards(data)
     node_additional_reward_2:removeAllChildren()
 
     if data.card_data.additional_reward then
-        local text_label = cc.Label:createWithTTF(data.card_data.additional_reward.text_1, 'font/jxk.TTF', 30)
-        text_label:setColorTextureIndex(11)
-        text_label:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-        text_label:setPosition(0, 0)
-        text_label:enableOutline(cc.c3b(0, 0, 0), 3)
-        text_label:enableShadow(cc.c4b(0, 0, 0, 255), cc.size(0, -4), 2)
-        node_additional_reward_1:addChild(text_label)
+        local all_sprites = {}
+        local total_width = 0
 
+        if data.card_data.additional_reward.left_num then
+            local text_count = tostring(data.card_data.additional_reward.left_num)
+            local count_label = cc.LabelAtlas:_create(text_count, 'game_common_res/settle_count_1.png', 26, 30, string.byte('/'))
+            count_label:setAnchorPoint(0.5, 0.5)
+            node_additional_reward_2:addChild(count_label)
+
+            local sprite_width = count_label:getContentSize().width
+            local interval_width = 10
+            total_width = total_width + sprite_width + interval_width
+            table.insert(all_sprites, {
+                node = count_label,
+                width = sprite_width,
+                interval_width = interval_width,
+            })
+        end
+
+        if data.card_data.additional_reward.left_sprite then
+            local sprite = createSpriteWithName(data.card_data.additional_reward.left_sprite, data.card_data.additional_reward.left_sprite_res_type)
+            node_additional_reward_2:addChild(sprite)
+
+            local sprite_width = sprite:getContentSize().width
+            local interval_width = 10
+            total_width = total_width + sprite_width + interval_width
+            table.insert(all_sprites, {
+                node = sprite,
+                width = sprite_width,
+                interval_width = interval_width,
+            })
+        end
 
         -- 
         local card_scale = 0.5
         local card_width = 85 * card_scale
-        local text_size = text_label:getContentSize()
-        local card_offset_x = text_size.width * 0.5 + card_width * 0.5 + 10
+        local card_interval_width_1, card_interval_width_2 = 1, 10
 
         for index, card_id in ipairs(data.card_data.additional_reward.cards or {}) do
-            --local is_valid = ((card_id % 16 == 1) or (card_id % 16 == 5) or (card_id % 16 == 9))
-            --if card_id > 0 and is_valid then
             if card_id > 0 then
                 local card = create_card_front(USER_LOCATION_SELF, CARD_AREA.HAND, card_id)
-                card:setPosition(card_offset_x, 0)
                 card:setScale(card_scale)
-                node_additional_reward_1:addChild(card)
+                node_additional_reward_2:addChild(card)
 
-                card_offset_x = card_offset_x + card_width
+                local interval_width = ((index == #data.card_data.additional_reward.cards) and card_interval_width_2 or card_interval_width_1)
+                total_width = total_width + card_width + interval_width
+                table.insert(all_sprites, {
+                    node = card,
+                    width = card_width,
+                    interval_width = interval_width,
+                })
             end
         end
 
-        --
-        local text_label_2 = cc.Label:createWithTTF('共　　' .. data.card_data.additional_reward.text_2, 'font/jxk.TTF', 30)
-        text_label_2:setColorTextureIndex(11)
-        text_label_2:setGLProgram(cc.GLProgramCache:getInstance():getGLProgram('color_texture_label'))
-        text_label_2:setAnchorPoint(0, 0.5)
-        text_label_2:setPosition(card_offset_x, 0)
-        text_label_2:enableOutline(cc.c3b(0, 0, 0), 3)
-        text_label_2:enableShadow(cc.c4b(0, 0, 0, 255), cc.size(0, -4), 2)
-        node_additional_reward_1:addChild(text_label_2)
+        if data.card_data.additional_reward.right_sprite then
+            local sprite = createSpriteWithName(data.card_data.additional_reward.right_sprite, data.card_data.additional_reward.right_sprite_res_type)
+            node_additional_reward_2:addChild(sprite)
 
-        local text_2_size = text_label_2:getContentSize()
+            local sprite_width = sprite:getContentSize().width
+            total_width = total_width + sprite_width
+            table.insert(all_sprites, {
+                node = sprite,
+                width = sprite_width,
+                interval_width = 0,
+            })
+        end
 
-        -- 
-        local text_count = tostring(data.card_data.additional_reward.num)
-        local count_label = cc.LabelAtlas:_create(text_count, 'game_common_res/settle_count_1.png', 26, 30, string.byte('/'))
-        count_label:setPosition(card_offset_x + text_2_size.width * 0.5, 0)
-        count_label:setAnchorPoint(0.5, 0.5)
-        node_additional_reward_1:addChild(count_label)
+        local start_x = -total_width * 0.5
+        for _, v in ipairs(all_sprites) do
+            v.node:setPosition(start_x + v.width * 0.5, 0)
+            start_x = start_x + v.width + v.interval_width
+        end
+
+        if data.card_data.additional_reward.num then
+            start_x = start_x - all_sprites[#all_sprites].width * 0.5
+
+            -- 
+            local text_count = tostring(data.card_data.additional_reward.num)
+            local count_label = cc.LabelAtlas:_create(text_count, 'game_common_res/settle_count_1.png', 26, 30, string.byte('/'))
+            count_label:setPosition(start_x, 0)
+            count_label:setAnchorPoint(0.5, 0.5)
+            node_additional_reward_2:addChild(count_label)
+        end
     end
 end
 
